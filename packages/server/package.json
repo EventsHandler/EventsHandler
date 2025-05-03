@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "tsx --env-file .env --watch src/index.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "migrate": "pnpm prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
