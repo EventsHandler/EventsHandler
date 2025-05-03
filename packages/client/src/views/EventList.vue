@@ -32,7 +32,7 @@ async function createEvent() {
   <div>
     <form @submit.prevent="createEvent">
       <fieldset>
-        <label for="name">Name of new event</label>
+        <label for="name text-3xl">Name of new event</label>
         <input type="text" id="name" v-model="newEventName" placeholder="New event name" />
       </fieldset>
       <button type="submit">Create new event</button>
