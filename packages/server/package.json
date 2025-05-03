@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "tsx --watch src/index.ts",
+    "dev": "tsx --env-file .env --watch src/index.ts",
     "postinstall": "prisma generate"
   },
   "keywords": [],
