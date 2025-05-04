@@ -1,7 +1,6 @@
-mutation CreateEvent($name: String!) {
-  createEvent(name: $name) {
-    derived
+mutation CreateEvent($title: String!) {
+  createEvent(title: $title) {
     id
-    name
+    title
   }
 }

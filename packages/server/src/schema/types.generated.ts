@@ -8,6 +8,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never }
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never }
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -20,9 +21,12 @@ export type Scalars = {
 
 export type Event = {
   __typename?: 'Event'
-  derived: Scalars['String']['output']
+  createdAt: Scalars['String']['output']
+  creator: User
+  description: Scalars['String']['output']
   id: Scalars['ID']['output']
-  name: Scalars['String']['output']
+  participants: Array<User>
+  title: Scalars['String']['output']
 }
 
 export type Mutation = {
@@ -31,7 +35,7 @@ export type Mutation = {
 }
 
 export type MutationcreateEventArgs = {
-  name: Scalars['String']['input']
+  title: Scalars['String']['input']
 }
 
 export type Query = {
@@ -41,6 +45,17 @@ export type Query = {
 
 export type QueryeventsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>
+}
+
+export type User = {
+  __typename?: 'User'
+  createdAt: Scalars['String']['output']
+  createdEvents: Array<Event>
+  email: Scalars['String']['output']
+  events: Array<Event>
+  id: Scalars['ID']['output']
+  password: Scalars['String']['output']
+  username: Scalars['String']['output']
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -120,6 +135,12 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']['output']>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
+  User: ResolverTypeWrapper<
+    Omit<User, 'createdEvents' | 'events'> & {
+      createdEvents: Array<ResolversTypes['Event']>
+      events: Array<ResolversTypes['Event']>
+    }
+  >
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
 }
 
@@ -130,6 +151,10 @@ export type ResolversParentTypes = {
   ID: Scalars['ID']['output']
   Mutation: {}
   Query: {}
+  User: Omit<User, 'createdEvents' | 'events'> & {
+    createdEvents: Array<ResolversParentTypes['Event']>
+    events: Array<ResolversParentTypes['Event']>
+  }
   Boolean: Scalars['Boolean']['output']
 }
 
@@ -137,9 +162,12 @@ export type EventResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event'],
 > = {
-  derived?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  creator?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  participants?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
@@ -151,7 +179,7 @@ export type MutationResolvers<
     ResolversTypes['Event'],
     ParentType,
     ContextType,
-    RequireFields<MutationcreateEventArgs, 'name'>
+    RequireFields<MutationcreateEventArgs, 'title'>
   >
 }
 
@@ -162,8 +190,23 @@ export type QueryResolvers<
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType, Partial<QueryeventsArgs>>
 }
 
+export type UserResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
+> = {
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  createdEvents?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
 export type Resolvers<ContextType = UserContext> = {
   Event?: EventResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
+  User?: UserResolvers<ContextType>
 }

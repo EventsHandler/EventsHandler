@@ -4,6 +4,12 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// After Changes turn off the frontend and run "npx prisma migrate dev"
+// To see DB and Tables in Docker use the following:
+// psql postgresql://events:eventspwd@localhost:5432/events
+// \dt - To view all the tables
+// \d "Event" - To see the table "Event"
+
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -15,6 +21,41 @@ datasource db {
 }
 
 model Event {
-  id   String @id @default(cuid(2))
-  name String
+  id          String   @id @default(cuid(2))
+  title       String
+  description String   @default("")
+  createdAt   DateTime @default(now())
+
+  // m-1 for Event Creator
+  creator User   @relation("CreatedEvents", fields: [userId], references: [id])
+  userId  String
+
+  // m-m: for Participants
+  participants User[] @relation("EventParticipants")
+
+  // 1-m for Anouncement
+  announces Announce[] @relation("EventAnnounces")
+}
+
+model Announce {
+  id          String  @id @default(cuid(2))
+  title       String
+  description String  @default("")
+  Event       Event?  @relation("EventAnnounces", fields: [eventId], references: [id])
+  eventId     String?
+}
+
+model User {
+  id        String   @id @default(cuid(2))
+  username  String
+  password  String
+  email     String   @unique
+  //birthDate DateTime
+  createdAt DateTime @default(now())
+
+  // 1-m for Event Creator
+  createdEvents Event[] @relation("CreatedEvents")
+
+  // m-m: for Participants
+  events Event[] @relation("EventParticipants")
 }

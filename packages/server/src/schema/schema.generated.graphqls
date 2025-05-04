@@ -1,13 +1,26 @@
 type Event {
-  derived: String!
+  createdAt: String!
+  creator: User!
+  description: String!
   id: ID!
-  name: String!
+  participants: [User!]!
+  title: String!
 }
 
 type Mutation {
-  createEvent(name: String!): Event!
+  createEvent(title: String!): Event!
 }
 
 type Query {
   events(filter: String): [Event!]!
+}
+
+type User {
+  createdAt: String!
+  createdEvents: [Event!]!
+  email: String!
+  events: [Event!]!
+  id: ID!
+  password: String!
+  username: String!
 }

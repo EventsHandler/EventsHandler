@@ -14,13 +14,13 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-  'mutation CreateEvent($name: String!) {\n  createEvent(name: $name) {\n    derived\n    id\n    name\n  }\n}': typeof types.CreateEventDocument
-  'query EventsList($filter: String) {\n  events(filter: $filter) {\n    derived\n    id\n    name\n  }\n}': typeof types.EventsListDocument
+  'mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}': typeof types.CreateEventDocument
+  'query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}': typeof types.EventsListDocument
 }
 const documents: Documents = {
-  'mutation CreateEvent($name: String!) {\n  createEvent(name: $name) {\n    derived\n    id\n    name\n  }\n}':
+  'mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}':
     types.CreateEventDocument,
-  'query EventsList($filter: String) {\n  events(filter: $filter) {\n    derived\n    id\n    name\n  }\n}':
+  'query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}':
     types.EventsListDocument,
 }
 
@@ -42,14 +42,14 @@ export function graphql(source: string): unknown
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation CreateEvent($name: String!) {\n  createEvent(name: $name) {\n    derived\n    id\n    name\n  }\n}',
-): (typeof documents)['mutation CreateEvent($name: String!) {\n  createEvent(name: $name) {\n    derived\n    id\n    name\n  }\n}']
+  source: 'mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}',
+): (typeof documents)['mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query EventsList($filter: String) {\n  events(filter: $filter) {\n    derived\n    id\n    name\n  }\n}',
-): (typeof documents)['query EventsList($filter: String) {\n  events(filter: $filter) {\n    derived\n    id\n    name\n  }\n}']
+  source: 'query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}',
+): (typeof documents)['query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

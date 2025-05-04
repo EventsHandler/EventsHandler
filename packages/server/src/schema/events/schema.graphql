@@ -1,7 +1,22 @@
 type Event {
   id: ID!
-  name: String!
-  derived: String!
+  title: String!
+  description: String!
+  createdAt: String!
+
+  creator: User!
+  participants: [User!]!
+}
+
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  email: String!
+  createdAt: String!
+
+  createdEvents: [Event!]!
+  events: [Event!]!
 }
 
 extend type Query {
@@ -9,5 +24,9 @@ extend type Query {
 }
 
 extend type Mutation {
-  createEvent(name: String!): Event!
+  #createUser(username: String!, email: String!, password: String!): User!
+  
+  createEvent(title: String!): Event!
+  #addParticipant(eventId: ID!): Event!
 }
+

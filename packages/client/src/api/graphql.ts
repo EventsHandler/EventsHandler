@@ -18,9 +18,12 @@ export type Scalars = {
 
 export type Event = {
   __typename?: 'Event'
-  derived: Scalars['String']['output']
+  createdAt: Scalars['String']['output']
+  creator: User
+  description: Scalars['String']['output']
   id: Scalars['ID']['output']
-  name: Scalars['String']['output']
+  participants: Array<User>
+  title: Scalars['String']['output']
 }
 
 export type Mutation = {
@@ -29,7 +32,7 @@ export type Mutation = {
 }
 
 export type MutationCreateEventArgs = {
-  name: Scalars['String']['input']
+  title: Scalars['String']['input']
 }
 
 export type Query = {
@@ -41,13 +44,24 @@ export type QueryEventsArgs = {
   filter?: InputMaybe<Scalars['String']['input']>
 }
 
+export type User = {
+  __typename?: 'User'
+  createdAt: Scalars['String']['output']
+  createdEvents: Array<Event>
+  email: Scalars['String']['output']
+  events: Array<Event>
+  id: Scalars['ID']['output']
+  password: Scalars['String']['output']
+  username: Scalars['String']['output']
+}
+
 export type CreateEventMutationVariables = Exact<{
-  name: Scalars['String']['input']
+  title: Scalars['String']['input']
 }>
 
 export type CreateEventMutation = {
   __typename?: 'Mutation'
-  createEvent: { __typename?: 'Event'; derived: string; id: string; name: string }
+  createEvent: { __typename?: 'Event'; id: string; title: string }
 }
 
 export type EventsListQueryVariables = Exact<{
@@ -56,7 +70,7 @@ export type EventsListQueryVariables = Exact<{
 
 export type EventsListQuery = {
   __typename?: 'Query'
-  events: Array<{ __typename?: 'Event'; derived: string; id: string; name: string }>
+  events: Array<{ __typename?: 'Event'; id: string; title: string }>
 }
 
 export const CreateEventDocument = {
@@ -69,7 +83,7 @@ export const CreateEventDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
         },
       ],
@@ -82,16 +96,15 @@ export const CreateEventDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'name' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
+                name: { kind: 'Name', value: 'title' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
               },
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'derived' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
               ],
             },
           },
@@ -130,9 +143,8 @@ export const EventsListDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'derived' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
               ],
             },
           },
