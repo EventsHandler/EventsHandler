@@ -1,5 +1,7 @@
+scalar DateTime
+
 type Event {
-  createdAt: String!
+  createdAt: DateTime!
   creator: User!
   description: String!
   id: ID!
@@ -9,6 +11,8 @@ type Event {
 
 type Mutation {
   createEvent(title: String!): Event!
+  login(email: String!): User
+  register(email: String!): User
 }
 
 type Query {
@@ -16,7 +20,7 @@ type Query {
 }
 
 type User {
-  createdAt: String!
+  createdAt: DateTime!
   createdEvents: [Event!]!
   email: String!
   events: [Event!]!

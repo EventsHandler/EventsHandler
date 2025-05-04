@@ -14,11 +14,12 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
   Float: { input: number; output: number }
+  DateTime: { input: any; output: any }
 }
 
 export type Event = {
   __typename?: 'Event'
-  createdAt: Scalars['String']['output']
+  createdAt: Scalars['DateTime']['output']
   creator: User
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
@@ -29,10 +30,20 @@ export type Event = {
 export type Mutation = {
   __typename?: 'Mutation'
   createEvent: Event
+  login?: Maybe<User>
+  register?: Maybe<User>
 }
 
 export type MutationCreateEventArgs = {
   title: Scalars['String']['input']
+}
+
+export type MutationLoginArgs = {
+  email: Scalars['String']['input']
+}
+
+export type MutationRegisterArgs = {
+  email: Scalars['String']['input']
 }
 
 export type Query = {
@@ -46,7 +57,7 @@ export type QueryEventsArgs = {
 
 export type User = {
   __typename?: 'User'
-  createdAt: Scalars['String']['output']
+  createdAt: Scalars['DateTime']['output']
   createdEvents: Array<Event>
   email: Scalars['String']['output']
   events: Array<Event>

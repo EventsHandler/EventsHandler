@@ -3,10 +3,10 @@ import posts from '@/tempdb.ts'
 import { ref } from 'vue'
 import Post from '@/components/event/EventView.vue'
 
-function addToEvent(title) {
-    console.log("Adaugat", title)
+// function addToEvent(title) {
+//     console.log("Adaugat", title)
     
-}
+// }
 </script>
 
 <template>

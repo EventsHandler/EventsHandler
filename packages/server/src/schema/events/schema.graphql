@@ -1,8 +1,10 @@
+scalar DateTime
+
 type Event {
   id: ID!
   title: String!
   description: String!
-  createdAt: String!
+  createdAt: DateTime!
 
   creator: User!
   participants: [User!]!
@@ -13,7 +15,7 @@ type User {
   username: String!
   password: String!
   email: String!
-  createdAt: String!
+  createdAt: DateTime!
 
   createdEvents: [Event!]!
   events: [Event!]!
@@ -28,5 +30,7 @@ extend type Mutation {
   
   createEvent(title: String!): Event!
   #addParticipant(eventId: ID!): Event!
+  login(email: String!): User
+  register(email: String!): User
 }
 
