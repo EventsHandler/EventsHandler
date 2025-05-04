@@ -2,16 +2,22 @@ import { createYoga, createSchema } from 'graphql-yoga'
 import { createServer } from 'http'
 import { typeDefs } from './schema/typeDefs.generated'
 import { resolvers } from './schema/resolvers.generated'
+import { User } from './generated/prisma'
+import { prisma } from './prisma'
 
 type MyContext = {
-  foo: string
+  user: User | null
 }
 
 const yoga = createYoga({
   schema: createSchema<MyContext>({ typeDefs, resolvers }),
-  context: (): MyContext => {
-    // console.log("return some context")
-    return { foo: "context" }
+  context: async (req: any): Promise<MyContext> => {
+    const token = req.request.headers.get("authorization")?.split(" ")[1]
+    if(!token) return { user: null }
+    const user = await prisma.user.findUnique({
+      where: { email: token }
+    })
+    return { user }
   }
 })
 const server = createServer(yoga)

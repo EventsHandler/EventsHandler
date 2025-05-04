@@ -11,4 +11,10 @@ export const Event: EventResolvers = {
   participants: async (_parent, _arg, _ctx) => {
     /* Event.participants resolver is required because Event.participants exists but EventMapper.participants does not */
   },
+  description: async (_parent, _arg, _ctx) => {
+    /* Event.description resolver is required because Event.description exists but EventMapper.description does not */
+  },
+  title: async (_parent, _arg, _ctx) => {
+    /* Event.title resolver is required because Event.title exists but EventMapper.title does not */
+  },
 }

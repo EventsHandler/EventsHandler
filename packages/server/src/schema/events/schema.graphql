@@ -1,11 +1,13 @@
+scalar DateTime
+
 type Event {
   id: ID!
   title: String!
   description: String!
-  createdAt: String!
+  createdAt: DateTime!
 
-  creator: User!
-  participants: [User!]!
+  creator: User
+  participants: [User!]
 }
 
 type User {
@@ -13,20 +15,19 @@ type User {
   username: String!
   password: String!
   email: String!
-  createdAt: String!
+  createdAt: DateTime!
 
-  createdEvents: [Event!]!
-  events: [Event!]!
+  createdEvents: [Event!]
+  events: [Event!]
 }
 
 extend type Query {
-  events(filter: String): [Event!]!
+  events: [Event!]!
 }
 
 extend type Mutation {
-  #createUser(username: String!, email: String!, password: String!): User!
-  
-  createEvent(title: String!): Event!
-  #addParticipant(eventId: ID!): Event!
+  login(email: String!): User!
+  register(username: String!, password: String!, email: String!): User!
+  createEvent(title: String!, description: String!): Event!
+  subscribe(postId: ID!): Event!
 }
-

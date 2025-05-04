@@ -1,25 +1,30 @@
+scalar DateTime
+
 type Event {
-  createdAt: String!
-  creator: User!
+  createdAt: DateTime!
+  creator: User
   description: String!
   id: ID!
-  participants: [User!]!
+  participants: [User!]
   title: String!
 }
 
 type Mutation {
-  createEvent(title: String!): Event!
+  createEvent(description: String!, title: String!): Event!
+  login(email: String!): User!
+  register(email: String!, password: String!, username: String!): User!
+  subscribe(postId: ID!): Event!
 }
 
 type Query {
-  events(filter: String): [Event!]!
+  events: [Event!]!
 }
 
 type User {
-  createdAt: String!
-  createdEvents: [Event!]!
+  createdAt: DateTime!
+  createdEvents: [Event!]
   email: String!
-  events: [Event!]!
+  events: [Event!]
   id: ID!
   password: String!
   username: String!

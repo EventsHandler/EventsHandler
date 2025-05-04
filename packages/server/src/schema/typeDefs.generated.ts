@@ -9,14 +9,7 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'events' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'filter' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
-              directives: [],
-            },
-          ],
+          arguments: [],
           type: {
             kind: 'NonNullType',
             type: {
@@ -36,12 +29,72 @@ export const typeDefs = {
       fields: [
         {
           kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'login' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'email' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'register' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'username' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'password' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'email' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'createEvent' },
           arguments: [
             {
               kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'title' },
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'description' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'subscribe' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'postId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
               directives: [],
             },
           ],
@@ -52,6 +105,7 @@ export const typeDefs = {
       directives: [],
       interfaces: [],
     },
+    { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'DateTime' }, directives: [] },
     {
       kind: 'ObjectTypeDefinition',
       name: { kind: 'Name', value: 'Event' },
@@ -83,14 +137,14 @@ export const typeDefs = {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'createdAt' },
           arguments: [],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
           directives: [],
         },
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'creator' },
           arguments: [],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
           directives: [],
         },
         {
@@ -98,11 +152,8 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'participants' },
           arguments: [],
           type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
-            },
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
           },
           directives: [],
         },
@@ -146,7 +197,7 @@ export const typeDefs = {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'createdAt' },
           arguments: [],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
           directives: [],
         },
         {
@@ -154,11 +205,8 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'createdEvents' },
           arguments: [],
           type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
-            },
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
           },
           directives: [],
         },
@@ -167,11 +215,8 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'events' },
           arguments: [],
           type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
-            },
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
           },
           directives: [],
         },

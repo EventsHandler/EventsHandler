@@ -1,6 +1,5 @@
-query EventsList($filter: String) {
-  events(filter: $filter) {
+mutation Events() {
+  events {
     id
-    title
   }
 }

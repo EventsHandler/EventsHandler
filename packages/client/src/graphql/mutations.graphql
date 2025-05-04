@@ -1,6 +1,23 @@
-mutation CreateEvent($title: String!) {
-  createEvent(title: $title) {
+mutation CreateEvent($title: String!, $description: String!) {
+  createEvent(title: $title, description: $description) {
     id
-    title
+  }
+}
+
+mutation SubscribeEvent($postId: ID!) {
+  subscribe(postId: $postId) {
+    id
+  }
+}
+
+mutation Login($email: String!) {
+  login(email: $email) {
+    id
+  }
+}
+
+mutation Register($username: String!, $password: String!, $email: String!) {
+  register(username: $username, password: $password, email: $email) {
+    id
   }
 }
