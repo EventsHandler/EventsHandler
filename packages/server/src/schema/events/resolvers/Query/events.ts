@@ -6,7 +6,7 @@ export const events: NonNullable<QueryResolvers['events']> = async (_parent, { f
     where: !filter
       ? {}
       : {
-          name: {
+          title: {
             contains: filter,
             mode: 'insensitive',
           },

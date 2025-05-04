@@ -1,7 +1,6 @@
 query EventsList($filter: String) {
   events(filter: $filter) {
-    derived
     id
-    name
+    title
   }
 }
