@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/auth',
       name: 'auth',
-      component: () => import('../views/EventList.vue'),
+      component: () => import('../views/Auth.vue'),
     },
     {
       path: '/posts',
