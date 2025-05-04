@@ -6,8 +6,8 @@ type Event {
   description: String!
   createdAt: DateTime!
 
-  creator: User!
-  participants: [User!]!
+  creator: User
+  participants: [User!]
 }
 
 type User {
@@ -17,20 +17,17 @@ type User {
   email: String!
   createdAt: DateTime!
 
-  createdEvents: [Event!]!
-  events: [Event!]!
+  createdEvents: [Event!]
+  events: [Event!]
 }
 
 extend type Query {
-  events(filter: String): [Event!]!
+  events: [Event!]!
 }
 
 extend type Mutation {
-  #createUser(username: String!, email: String!, password: String!): User!
-  
-  createEvent(title: String!): Event!
-  #addParticipant(eventId: ID!): Event!
-  login(email: String!): User
-  register(email: String!): User
+  login(email: String!): User!
+  register(username: String!, password: String!, email: String!): User!
+  createEvent(title: String!, description: String!): Event!
+  subscribe(postId: ID!): Event!
 }
-

@@ -14,14 +14,14 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-  'mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}': typeof types.CreateEventDocument
-  'query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}': typeof types.EventsListDocument
+  'mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}\n\nmutation SubscribeEvent($postId: ID!) {\n  subscribe(postId: $postId) {\n    id\n  }\n}\n\nmutation Login($email: String!) {\n  login(email: $email) {\n    id\n  }\n}\n\nmutation Register($username: String!, $password: String!, $email: String!) {\n  register(username: $username, password: $password, email: $email) {\n    id\n  }\n}': typeof types.CreateEventDocument
+  'mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}': typeof types.CreateEventDocument
 }
 const documents: Documents = {
-  'mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}':
+  'mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}\n\nmutation SubscribeEvent($postId: ID!) {\n  subscribe(postId: $postId) {\n    id\n  }\n}\n\nmutation Login($email: String!) {\n  login(email: $email) {\n    id\n  }\n}\n\nmutation Register($username: String!, $password: String!, $email: String!) {\n  register(username: $username, password: $password, email: $email) {\n    id\n  }\n}':
     types.CreateEventDocument,
-  'query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}':
-    types.EventsListDocument,
+  'mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}':
+    types.CreateEventDocument,
 }
 
 /**
@@ -42,14 +42,14 @@ export function graphql(source: string): unknown
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}',
-): (typeof documents)['mutation CreateEvent($title: String!) {\n  createEvent(title: $title) {\n    id\n    title\n  }\n}']
+  source: 'mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}\n\nmutation SubscribeEvent($postId: ID!) {\n  subscribe(postId: $postId) {\n    id\n  }\n}\n\nmutation Login($email: String!) {\n  login(email: $email) {\n    id\n  }\n}\n\nmutation Register($username: String!, $password: String!, $email: String!) {\n  register(username: $username, password: $password, email: $email) {\n    id\n  }\n}',
+): (typeof documents)['mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}\n\nmutation SubscribeEvent($postId: ID!) {\n  subscribe(postId: $postId) {\n    id\n  }\n}\n\nmutation Login($email: String!) {\n  login(email: $email) {\n    id\n  }\n}\n\nmutation Register($username: String!, $password: String!, $email: String!) {\n  register(username: $username, password: $password, email: $email) {\n    id\n  }\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}',
-): (typeof documents)['query EventsList($filter: String) {\n  events(filter: $filter) {\n    id\n    title\n  }\n}']
+  source: 'mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}',
+): (typeof documents)['mutation CreateEvent($title: String!, $description: String!) {\n  createEvent(title: $title, description: $description) {\n    id\n  }\n}']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}
