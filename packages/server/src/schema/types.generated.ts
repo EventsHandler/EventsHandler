@@ -18,6 +18,7 @@ export type Scalars = {
   Int: { input: number; output: number }
   Float: { input: number; output: number }
   DateTime: { input: Date | string; output: Date | string }
+  Upload: { input: any; output: any }
 }
 
 export type Announces = {
@@ -48,6 +49,7 @@ export type Mutation = {
   login: User
   register: User
   subscribe: Event
+  testUpload: Scalars['String']['output']
 }
 
 export type MutationcreateEventArgs = {
@@ -67,6 +69,10 @@ export type MutationregisterArgs = {
 
 export type MutationsubscribeArgs = {
   postId: Scalars['ID']['input']
+}
+
+export type MutationtestUploadArgs = {
+  file?: InputMaybe<Scalars['Upload']['input']>
 }
 
 export type Query = {
@@ -163,6 +169,7 @@ export type ResolversTypes = {
   ID: ResolverTypeWrapper<Scalars['ID']['output']>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
+  Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
   User: ResolverTypeWrapper<
     Omit<User, 'createdEvents' | 'events'> & {
       createdEvents?: Maybe<Array<ResolversTypes['Event']>>
@@ -181,6 +188,7 @@ export type ResolversParentTypes = {
   ID: Scalars['ID']['output']
   Mutation: {}
   Query: {}
+  Upload: Scalars['Upload']['output']
   User: Omit<User, 'createdEvents' | 'events'> & {
     createdEvents?: Maybe<Array<ResolversParentTypes['Event']>>
     events?: Maybe<Array<ResolversParentTypes['Event']>>
@@ -238,6 +246,7 @@ export type MutationResolvers<
     RequireFields<MutationregisterArgs, 'email' | 'password' | 'username'>
   >
   subscribe?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationsubscribeArgs, 'postId'>>
+  testUpload?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MutationtestUploadArgs>>
 }
 
 export type QueryResolvers<
@@ -245,6 +254,10 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+}
+
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload'
 }
 
 export type UserResolvers<
@@ -266,5 +279,6 @@ export type Resolvers<ContextType = UserContext> = {
   Event?: EventResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
+  Upload?: GraphQLScalarType
   User?: UserResolvers<ContextType>
 }

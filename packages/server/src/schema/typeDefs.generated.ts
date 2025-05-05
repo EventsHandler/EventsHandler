@@ -101,11 +101,26 @@ export const typeDefs = {
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
           directives: [],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'testUpload' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'file' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+          directives: [],
+        },
       ],
       directives: [],
       interfaces: [],
     },
     { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'DateTime' }, directives: [] },
+    { kind: 'ScalarTypeDefinition', name: { kind: 'Name', value: 'Upload' }, directives: [] },
     {
       kind: 'ObjectTypeDefinition',
       name: { kind: 'Name', value: 'Announces' },

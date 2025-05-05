@@ -27,3 +27,7 @@ mutation Register($username: String!, $password: String!, $email: String!) {
     createdAt
   }
 }
+
+mutation UploadFile($file: Upload!) {
+  testUpload(file: $file)
+}

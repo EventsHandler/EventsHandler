@@ -25,11 +25,14 @@ type Mutation {
   login(email: String!): User!
   register(email: String!, password: String!, username: String!): User!
   subscribe(postId: ID!): Event!
+  testUpload(file: Upload): String!
 }
 
 type Query {
   events: [Event!]!
 }
+
+scalar Upload
 
 type User {
   createdAt: DateTime!

@@ -15,6 +15,7 @@ export type Scalars = {
   Int: { input: number; output: number }
   Float: { input: number; output: number }
   DateTime: { input: any; output: any }
+  Upload: { input: any; output: any }
 }
 
 export type Announces = {
@@ -45,6 +46,7 @@ export type Mutation = {
   login: User
   register: User
   subscribe: Event
+  testUpload: Scalars['String']['output']
 }
 
 export type MutationCreateEventArgs = {
@@ -64,6 +66,10 @@ export type MutationRegisterArgs = {
 
 export type MutationSubscribeArgs = {
   postId: Scalars['ID']['input']
+}
+
+export type MutationTestUploadArgs = {
+  file?: InputMaybe<Scalars['Upload']['input']>
 }
 
 export type Query = {
@@ -113,6 +119,12 @@ export type RegisterMutation = {
   __typename?: 'Mutation'
   register: { __typename?: 'User'; id: string; username: string; email: string; createdAt: any }
 }
+
+export type UploadFileMutationVariables = Exact<{
+  file: Scalars['Upload']['input']
+}>
+
+export type UploadFileMutation = { __typename?: 'Mutation'; testUpload: string }
 
 export type EventsQueryVariables = Exact<{ [key: string]: never }>
 
@@ -309,6 +321,39 @@ export const RegisterDocument = {
     },
   ],
 } as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>
+export const UploadFileDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UploadFile' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'testUpload' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'file' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UploadFileMutation, UploadFileMutationVariables>
 export const EventsDocument = {
   kind: 'Document',
   definitions: [

@@ -1,4 +1,5 @@
 scalar DateTime
+scalar Upload
 
 type Announces {
   title: String!
@@ -40,4 +41,5 @@ extend type Mutation {
   register(username: String!, password: String!, email: String!): User!
   createEvent(title: String!, description: String!): Event!
   subscribe(postId: ID!): Event!
+  testUpload(file: Upload): String!
 }

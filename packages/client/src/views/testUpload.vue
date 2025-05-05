@@ -1,0 +1,38 @@
+<script setup lang="ts">
+import { useMutation } from '@vue/apollo-composable'
+import { UploadFileDocument } from '@/api/graphql'
+import { ref } from 'vue'
+
+const file = ref<File | null>(null)
+function handleFileChange(event: any) {
+  file.value = event.target.files[0]
+}
+
+const { mutate } = useMutation(UploadFileDocument)
+
+async function uploadFile() {
+  const formData = new FormData()
+  if(file.value) formData.append('file', file.value)
+  try {
+    let res = await mutate({ file: formData.get('file') })
+    console.log(res)
+  } catch(error) {
+    console.error(error)
+  }
+}
+</script>
+
+<template>
+  <main>
+    <input type="file" @change="handleFileChange" />
+    <button @click="uploadFile">Încarcă fișier</button>
+  </main>
+</template>
+
+<style scoped>
+main {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+</style>
