@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import Login from '@/components/Login.vue';
-import Register from '@/components/Register.vue';
+import Login from '@/components/user/Login.vue';
+import Register from '@/components/user/Register.vue';
 
 const switchLog = ref(true); 
 const switching = () => {
@@ -10,13 +10,15 @@ const switching = () => {
 </script>
 
 <template>
-  <Login v-if="switchLog" @switch="switching"/>
-
-  <Register v-else @switch="switching"/>
+  <main>
+    <Login v-if="switchLog" @switch="switching"/>
+  
+    <Register v-else @switch="switching"/>
+  </main>
 </template>
 
 <style scoped>
-div {
+div, main {
   display: flex;
   justify-content: center;
   align-items: center;

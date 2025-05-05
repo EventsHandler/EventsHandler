@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { CreateEventDocument, EventsListDocument } from '@/api/graphql'
+import { CreateEventDocument, EventsDocument } from '@/api/graphql'
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { ref } from 'vue'
 
 const filter = ref('')
 
-const { result, refetch, loading } = useQuery(EventsListDocument, () => ({
-  filter: filter.value,
-}))
+const { result, refetch, loading } = useQuery(EventsDocument)
 
 const newEventName = ref('')
 
@@ -18,7 +16,8 @@ async function createEvent() {
 
   try {
     await mutate({
-      name: newEventName.value,
+      title: newEventName.value,
+      description: "default"
     })
     newEventName.value = ''
     refetch()
@@ -43,7 +42,7 @@ async function createEvent() {
     </div>
     <ul v-if="result?.events">
       <li v-for="event in result.events" :key="event.id">
-        <h2>{{ event.name }}</h2>
+        <h2>{{ event.title }}</h2>
       </li>
     </ul>
   </div>

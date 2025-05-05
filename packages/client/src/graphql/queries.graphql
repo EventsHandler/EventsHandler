@@ -1,5 +1,7 @@
-mutation Events() {
+query Events {
   events {
     id
+    title
+    description
   }
 }

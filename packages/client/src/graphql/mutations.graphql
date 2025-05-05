@@ -13,11 +13,15 @@ mutation SubscribeEvent($postId: ID!) {
 mutation Login($email: String!) {
   login(email: $email) {
     id
+    username
+    email
   }
 }
 
 mutation Register($username: String!, $password: String!, $email: String!) {
   register(username: $username, password: $password, email: $email) {
     id
+    username
+    email
   }
 }

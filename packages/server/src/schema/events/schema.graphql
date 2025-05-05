@@ -13,7 +13,6 @@ type Event {
 type User {
   id: ID!
   username: String!
-  password: String!
   email: String!
   createdAt: DateTime!
 
