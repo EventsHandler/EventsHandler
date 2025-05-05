@@ -23,7 +23,11 @@ datasource db {
 model Event {
   id          String   @id @default(cuid(2))
   title       String
+  image String @default("")
   description String   @default("")
+  date DateTime @default(now())
+  address String @default("")
+
   createdAt   DateTime @default(now())
 
   // m-1 for Event Creator

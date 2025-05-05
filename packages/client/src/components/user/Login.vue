@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import AuthTemplate from '@/components/AuthTemplate.vue';
+import AuthTemplate from '@/components/user/AuthTemplate.vue';
 import { ref } from 'vue';
 
+import { useMutation } from '@vue/apollo-composable';
+import { LoginDocument } from '@/api/graphql';
+
+const { mutate } = useMutation(LoginDocument)
 
 const username = ref('');
 const password = ref('');
 
-const login = () => {
-  console.log('Login with:', username.value, password.value);
+async function login() {
+  try {
+    let res = await mutate({
+      email: username.value
+    })
+    if(!res?.data?.login.email) return
+    localStorage.setItem('token', res?.data?.login.email)
+  } catch(error) {
+    console.error(error)
+  }
 };
 </script>
 

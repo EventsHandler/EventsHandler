@@ -4,6 +4,9 @@ import Participants from '@/components/user/ProfileMini.vue'
 defineProps<{
   post: any
 }>()
+function addToEvent(title: String) {
+  console.log("adaugat in ", title)
+}
 </script>
 
 <template>

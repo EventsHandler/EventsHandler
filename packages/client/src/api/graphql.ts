@@ -66,7 +66,6 @@ export type User = {
   email: Scalars['String']['output']
   events?: Maybe<Array<Event>>
   id: Scalars['ID']['output']
-  password: Scalars['String']['output']
   username: Scalars['String']['output']
 }
 
@@ -87,7 +86,10 @@ export type LoginMutationVariables = Exact<{
   email: Scalars['String']['input']
 }>
 
-export type LoginMutation = { __typename?: 'Mutation'; login: { __typename?: 'User'; id: string } }
+export type LoginMutation = {
+  __typename?: 'Mutation'
+  login: { __typename?: 'User'; id: string; username: string; email: string }
+}
 
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String']['input']
@@ -95,7 +97,17 @@ export type RegisterMutationVariables = Exact<{
   email: Scalars['String']['input']
 }>
 
-export type RegisterMutation = { __typename?: 'Mutation'; register: { __typename?: 'User'; id: string } }
+export type RegisterMutation = {
+  __typename?: 'Mutation'
+  register: { __typename?: 'User'; id: string; username: string; email: string }
+}
+
+export type EventsQueryVariables = Exact<{ [key: string]: never }>
+
+export type EventsQuery = {
+  __typename?: 'Query'
+  events: Array<{ __typename?: 'Event'; id: string; title: string; description: string }>
+}
 
 export const CreateEventDocument = {
   kind: 'Document',
@@ -210,7 +222,11 @@ export const LoginDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
             },
           },
         ],
@@ -267,7 +283,11 @@ export const RegisterDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+              ],
             },
           },
         ],
@@ -275,3 +295,30 @@ export const RegisterDocument = {
     },
   ],
 } as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>
+export const EventsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Events' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'events' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<EventsQuery, EventsQueryVariables>

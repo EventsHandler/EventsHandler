@@ -69,7 +69,6 @@ export type User = {
   email: Scalars['String']['output']
   events?: Maybe<Array<Event>>
   id: Scalars['ID']['output']
-  password: Scalars['String']['output']
   username: Scalars['String']['output']
 }
 
@@ -228,7 +227,6 @@ export type UserResolvers<
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
-  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
