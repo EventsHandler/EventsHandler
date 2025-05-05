@@ -72,7 +72,7 @@ export type MutationsubscribeArgs = {
 }
 
 export type MutationtestUploadArgs = {
-  file?: InputMaybe<Scalars['Upload']['input']>
+  file: Scalars['Upload']['input']
 }
 
 export type Query = {
@@ -246,7 +246,12 @@ export type MutationResolvers<
     RequireFields<MutationregisterArgs, 'email' | 'password' | 'username'>
   >
   subscribe?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationsubscribeArgs, 'postId'>>
-  testUpload?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<MutationtestUploadArgs>>
+  testUpload?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationtestUploadArgs, 'file'>
+  >
 }
 
 export type QueryResolvers<

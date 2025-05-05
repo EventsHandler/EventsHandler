@@ -108,7 +108,7 @@ export const typeDefs = {
             {
               kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'file' },
-              type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
               directives: [],
             },
           ],

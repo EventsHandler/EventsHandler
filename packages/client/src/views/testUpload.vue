@@ -11,10 +11,8 @@ function handleFileChange(event: any) {
 const { mutate } = useMutation(UploadFileDocument)
 
 async function uploadFile() {
-  const formData = new FormData()
-  if(file.value) formData.append('file', file.value)
   try {
-    let res = await mutate({ file: formData.get('file') })
+    let res = await mutate({ file: file.value })
     console.log(res)
   } catch(error) {
     console.error(error)

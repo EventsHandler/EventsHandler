@@ -69,7 +69,7 @@ export type MutationSubscribeArgs = {
 }
 
 export type MutationTestUploadArgs = {
-  file?: InputMaybe<Scalars['Upload']['input']>
+  file: Scalars['Upload']['input']
 }
 
 export type Query = {
