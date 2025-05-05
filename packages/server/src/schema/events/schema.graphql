@@ -1,13 +1,24 @@
 scalar DateTime
 
+type Announces {
+  title: String!
+  description: String!
+  event: Event!
+  createdAt: DateTime!
+}
+
 type Event {
   id: ID!
   title: String!
+  image: String!
   description: String!
+  date: DateTime!
+  address: String!
   createdAt: DateTime!
 
   creator: User
   participants: [User!]
+  announces: [Announces!]
 }
 
 type User {

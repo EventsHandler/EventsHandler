@@ -17,12 +17,24 @@ export type Scalars = {
   DateTime: { input: any; output: any }
 }
 
+export type Announces = {
+  __typename?: 'Announces'
+  createdAt: Scalars['DateTime']['output']
+  description: Scalars['String']['output']
+  event: Event
+  title: Scalars['String']['output']
+}
+
 export type Event = {
   __typename?: 'Event'
+  address: Scalars['String']['output']
+  announces?: Maybe<Array<Announces>>
   createdAt: Scalars['DateTime']['output']
   creator?: Maybe<User>
+  date: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
+  image: Scalars['String']['output']
   participants?: Maybe<Array<User>>
   title: Scalars['String']['output']
 }
@@ -88,7 +100,7 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = {
   __typename?: 'Mutation'
-  login: { __typename?: 'User'; id: string; username: string; email: string }
+  login: { __typename?: 'User'; id: string; username: string; email: string; createdAt: any }
 }
 
 export type RegisterMutationVariables = Exact<{
@@ -99,7 +111,7 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = {
   __typename?: 'Mutation'
-  register: { __typename?: 'User'; id: string; username: string; email: string }
+  register: { __typename?: 'User'; id: string; username: string; email: string; createdAt: any }
 }
 
 export type EventsQueryVariables = Exact<{ [key: string]: never }>
@@ -226,6 +238,7 @@ export const LoginDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'username' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
               ],
             },
           },
@@ -287,6 +300,7 @@ export const RegisterDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'username' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
               ],
             },
           },

@@ -17,15 +17,27 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
   Float: { input: number; output: number }
-  DateTime: { input: any; output: any }
+  DateTime: { input: Date | string; output: Date | string }
+}
+
+export type Announces = {
+  __typename?: 'Announces'
+  createdAt: Scalars['DateTime']['output']
+  description: Scalars['String']['output']
+  event: Event
+  title: Scalars['String']['output']
 }
 
 export type Event = {
   __typename?: 'Event'
+  address: Scalars['String']['output']
+  announces?: Maybe<Array<Announces>>
   createdAt: Scalars['DateTime']['output']
   creator?: Maybe<User>
+  date: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
+  image: Scalars['String']['output']
   participants?: Maybe<Array<User>>
   title: Scalars['String']['output']
 }
@@ -144,9 +156,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
+  Announces: ResolverTypeWrapper<Omit<Announces, 'event'> & { event: ResolversTypes['Event'] }>
+  String: ResolverTypeWrapper<Scalars['String']['output']>
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
   Event: ResolverTypeWrapper<EventMapper>
-  String: ResolverTypeWrapper<Scalars['String']['output']>
   ID: ResolverTypeWrapper<Scalars['ID']['output']>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
@@ -161,9 +174,10 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
+  Announces: Omit<Announces, 'event'> & { event: ResolversParentTypes['Event'] }
+  String: Scalars['String']['output']
   DateTime: Scalars['DateTime']['output']
   Event: EventMapper
-  String: Scalars['String']['output']
   ID: Scalars['ID']['output']
   Mutation: {}
   Query: {}
@@ -174,6 +188,17 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output']
 }
 
+export type AnnouncesResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Announces'] = ResolversParentTypes['Announces'],
+> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  event?: Resolver<ResolversTypes['Event'], ParentType, ContextType>
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime'
 }
@@ -182,10 +207,14 @@ export type EventResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event'],
 > = {
+  address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  announces?: Resolver<Maybe<Array<ResolversTypes['Announces']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   participants?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
@@ -232,6 +261,7 @@ export type UserResolvers<
 }
 
 export type Resolvers<ContextType = UserContext> = {
+  Announces?: AnnouncesResolvers<ContextType>
   DateTime?: GraphQLScalarType
   Event?: EventResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
