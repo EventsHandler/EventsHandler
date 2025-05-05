@@ -24,12 +24,14 @@ type Mutation {
   createEvent(description: String!, title: String!): Event!
   login(email: String!): User!
   register(email: String!, password: String!, username: String!): User!
-  subscribe(postId: ID!): Event!
+  subscribe(eventId: ID!): Event!
   testUpload(file: Upload!): String!
 }
 
 type Query {
+  event(eventId: ID!): Event
   events: [Event!]!
+  myEvents: [Event!]!
 }
 
 scalar Upload

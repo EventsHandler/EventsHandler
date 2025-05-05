@@ -68,7 +68,7 @@ export type MutationregisterArgs = {
 }
 
 export type MutationsubscribeArgs = {
-  postId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
 }
 
 export type MutationtestUploadArgs = {
@@ -77,7 +77,13 @@ export type MutationtestUploadArgs = {
 
 export type Query = {
   __typename?: 'Query'
+  event?: Maybe<Event>
   events: Array<Event>
+  myEvents: Array<Event>
+}
+
+export type QueryeventArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type User = {
@@ -245,7 +251,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationregisterArgs, 'email' | 'password' | 'username'>
   >
-  subscribe?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationsubscribeArgs, 'postId'>>
+  subscribe?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationsubscribeArgs, 'eventId'>
+  >
   testUpload?: Resolver<
     ResolversTypes['String'],
     ParentType,
@@ -258,7 +269,9 @@ export type QueryResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+  myEvents?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
 }
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {

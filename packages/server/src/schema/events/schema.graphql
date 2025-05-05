@@ -34,12 +34,14 @@ type User {
 
 extend type Query {
   events: [Event!]!
+  myEvents: [Event!]!
+  event(eventId: ID!): Event
 }
 
 extend type Mutation {
   login(email: String!): User!
   register(username: String!, password: String!, email: String!): User!
   createEvent(title: String!, description: String!): Event!
-  subscribe(postId: ID!): Event!
+  subscribe(eventId: ID!): Event!
   testUpload(file: Upload!): String!
 }

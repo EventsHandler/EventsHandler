@@ -4,8 +4,8 @@ mutation CreateEvent($title: String!, $description: String!) {
   }
 }
 
-mutation SubscribeEvent($postId: ID!) {
-  subscribe(postId: $postId) {
+mutation SubscribeEvent($eventId: ID!) {
+  subscribe(eventId: $eventId) {
     id
   }
 }
