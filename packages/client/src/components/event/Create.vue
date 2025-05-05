@@ -1,29 +1,159 @@
-<script setup lang="ts">
-import { ref } from "vue"
-
-const title = ref<string>("")
-const desc = ref<string>("")
-
-function createEvent() {
-  console.log(title.value, desc.value)
-}
-</script>
-
 <template>
-  <form @submit.prevent="createEvent">
-    <fieldset>
-      <label for="newPostTitle text-3xl">Titlu</label>
-      <input type="text" id="newPostTitle" v-model="title" placeholder="Titlu" />
-
-      <label for="newPostDesc text-3xl">Descriere</label>
-      <input type="text" id="newPostDesc" v-model="desc" placeholder="Descriere" />
-
-      <label for="newPostDesc text-3xl">Data</label>
-      <input type="text" id="newPostDesc" v-model="desc" placeholder="Description" />
-
-      <label for="newPostDesc text-3xl">Adresa</label>
-      <input type="text" id="newPostDesc" v-model="desc" placeholder="Description" />
-    </fieldset>
-    <button type="submit">Create new event</button>
-  </form>
+  <div class="container">
+    <div class="upload-container">
+      <slot name="upload-input"></slot>
+    </div>
+    <div class="form-container">
+      <slot name="event-name-input"></slot>
+      <slot name="event-desc-input"></slot>
+      <div class="date-and-time">
+        <slot name="event-date-input"></slot>
+        <slot name="event-time-input"></slot>
+      </div>
+      <slot name="event-location-input"></slot>
+      <slot name="event-category-input"></slot>
+      <slot name="create-button"></slot>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.container {
+  max-width: 90%;
+  margin: 100px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px #003d80;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.upload-container {
+  flex: 1;
+  min-width: 50%;
+  height: 30%;
+  padding: 20px;
+  border: 2px dashed #cccccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  cursor: default; 
+}
+
+.upload-container:hover {
+  background-color: #f0f0f0;
+  border-color: #007bff;
+}
+
+.upload-container::before {
+  content: '⬆️';
+  font-size: 2.5em;
+  color: #cccccc;
+  transition: color 0.3s ease;
+  pointer-events: none;
+  margin-bottom: 5px;
+}
+.upload-container:hover::before {
+    color: #aaaaaa;
+}
+
+.upload-container :deep(p) {
+  margin: 10px 0 0 0;
+  color: #555555;
+  font-size: 0.9em;
+  pointer-events: none; 
+}
+
+.upload-container :deep(input[type="file"]) {
+  display: none !important;
+}
+
+.form-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-container :deep(input[type="text"]),
+.form-container :deep(input[type="date"]),
+.form-container :deep(input[type="time"]),
+.form-container :deep(textarea),
+.form-container :deep(select) {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container :deep(input[type="text"]:focus),
+.form-container :deep(input[type="date"]:focus),
+.form-container :deep(input[type="time"]:focus),
+.form-container :deep(textarea:focus),
+.form-container :deep(select:focus) {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  outline: none;
+}
+
+.form-container :deep(textarea) {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-container :deep(button) {
+  padding: 12px 25px;
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+  margin-top: 10px;
+}
+
+.form-container :deep(button:hover) {
+  background: linear-gradient(45deg, #0056b3, #003d80);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 12px rgba(0, 123, 255, 0.5);
+}
+
+.form-container :deep(button:active) {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+.date-and-time {
+  display: flex;
+  gap: 15px;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    margin: 20px auto;
+    padding: 20px;
+  }
+
+  .upload-container {
+      min-width: 100%;
+  }
+
+  .form-container {
+      width: 100%;
+  }
+}
+</style>
