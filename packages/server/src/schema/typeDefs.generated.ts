@@ -132,18 +132,6 @@ export const typeDefs = {
             },
             {
               kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'image' },
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'date' },
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
-              directives: [],
-            },
-            {
-              kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'address' },
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
               directives: [],
@@ -180,6 +168,12 @@ export const typeDefs = {
               kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'file' },
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'test' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
               directives: [],
             },
           ],
