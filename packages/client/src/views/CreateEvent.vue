@@ -2,28 +2,29 @@
 import CreateEvent from '@/components/event/Create.vue';
 import { ref } from 'vue';
 
-const form = ref({
-  name: '',
+const form = ref<any>({
+  title: '',
   description: '',
   date: '',
   time: '',
   location: '',
   category: '',
-  organizer: '',
-  image: {
-    name: '',
-    url: ''
-  } 
+  creator: '',
+  image: null,
+  imagePreview: null
 });
+
+const file = ref<File | any>(null)
 
 const removeImage = () => {
   console.log('Remove image clicked');
-  // logica de remove image
+  form.value.image = null
 };
 
 const uploadPhoto = () => {
   console.log('Upload photo clicked');
-  // logica de upload photo
+  form.value.image = file.value.files[0]
+  if(form.value.image) form.value.imagePreview = URL.createObjectURL(form.value.image)
 }
 
 const addEvent = () => {
@@ -35,25 +36,25 @@ const addEvent = () => {
   <main>
     <CreateEvent>
       <template #upload-input>
-        <div v-if="form.image.url === ''" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
+        <div v-if="!form.image" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
           <input
-            ref="fileInput"
+            ref="file"
             type="file"
             accept="image/*"
-            style="display: none"
+            @change="uploadPhoto"
           />
           <p>Apasă pentru a încărca imaginea evenimentului</p>
         </div>
 
         <div v-else class="preview-item">
-          <img :src="form.image.url" :alt="form.image.name" />
+          <img v-if="form.imagePreview" :src="form.imagePreview" :alt="form.title" />
           <button class="remove-btn" @click.stop="removeImage()">X</button>
         </div>
       </template>
 
 
       <template #event-name-input>
-        <input type="text" v-model="form.name" placeholder="Denumirea evenimentului" class="event-name-input"/>
+        <input type="text" v-model="form.title" placeholder="Denumirea evenimentului" class="event-name-input"/>
       </template>
 
       <template #event-desc-input>
@@ -95,6 +96,12 @@ const addEvent = () => {
 </template>
 
 <style scoped>
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 .preview-item {
   position: relative;
   width: 100%;

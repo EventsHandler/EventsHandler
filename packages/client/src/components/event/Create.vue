@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="createEvent">
     <div class="upload-container">
       <slot name="upload-input"></slot>
     </div>
@@ -18,10 +18,10 @@
 </template>
 
 <style scoped>
-.container {
+.createEvent {
+  padding: 5rem;
+  width: 90vw;
   max-width: 90%;
-  margin: 100px auto;
-  padding: 30px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 5px 15px #003d80;
@@ -72,7 +72,9 @@
 }
 
 .upload-container :deep(input[type="file"]) {
-  display: none !important;
+  width: 100%;
+  height: 100%; 
+  opacity: 0;
 }
 
 .form-container {
@@ -142,10 +144,8 @@
 
 
 @media (max-width: 768px) {
-  .container {
+  .createEvent {
     flex-direction: column;
-    margin: 20px auto;
-    padding: 20px;
   }
 
   .upload-container {

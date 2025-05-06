@@ -2,3 +2,7 @@
 main {
   background-color: #f7f7f7;
 }
+
+body, #app {
+  min-height: 100vh;
+}
