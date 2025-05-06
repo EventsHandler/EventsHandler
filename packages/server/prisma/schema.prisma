@@ -9,6 +9,11 @@
 // psql postgresql://events:eventspwd@localhost:5432/events
 // \dt - To view all the tables
 // \d "Event" - To see the table "Event"
+//  
+// To turn off the pager use the following:
+// \x off
+// \pset pager off
+// If you don't want to turn the pager off just type "q"
 
 generator client {
   provider = "prisma-client-js"
@@ -23,12 +28,12 @@ datasource db {
 model Event {
   id          String   @id @default(cuid(2))
   title       String
-  image String @default("")
+  image       String   @default("")
   description String   @default("")
-  date DateTime @default(now())
-  address String @default("")
+  date        DateTime @default(now())
+  address     String   @default("")
 
-  createdAt   DateTime @default(now())
+  createdAt DateTime @default(now())
 
   // m-1 for Event Creator
   userId  String
@@ -39,16 +44,21 @@ model Event {
 
   // 1-m for Anouncement
   announces Announce[] @relation("EventAnnounces")
+
+  // m-1 for Category
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Announce {
-  id          String  @id @default(cuid(2))
+  id          String   @id @default(cuid(2))
   title       String
-  description String  @default("")
-  createdAt DateTime @default(now())
+  description String   @default("")
+  createdAt   DateTime @default(now())
 
-  eventId     String?
-  event       Event?  @relation("EventAnnounces", fields: [eventId], references: [id])
+  // m-1 for Anouncement
+  eventId String?
+  event   Event?  @relation("EventAnnounces", fields: [eventId], references: [id])
 }
 
 model User {
@@ -64,4 +74,12 @@ model User {
 
   // m-m: for Participants
   events Event[] @relation("EventParticipants")
+}
+
+model Category {
+  id   String @id @default(cuid(2))
+  name String @unique
+
+  // 1-m: for Participants
+  events Event[]
 }

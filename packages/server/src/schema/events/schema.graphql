@@ -8,6 +8,12 @@ type Announces {
   createdAt: DateTime!
 }
 
+type Category {
+  id: ID!
+  name: String!
+  events: [Event!]
+}
+
 type Event {
   id: ID!
   title: String!
@@ -21,6 +27,7 @@ type Event {
   creator: User!
   participants: [User!]
   announces: [Announces!]
+  category: Category!
 }
 
 type User {
@@ -38,12 +45,21 @@ extend type Query {
   myEvents: [Event!]!
   event(eventId: ID!): Event
   me: User
+  categories: [Category!]!
 }
 
 extend type Mutation {
   login(email: String!): User!
   register(username: String!, password: String!, email: String!): User!
-  createEvent(title: String!, description: String!): Event!
+  createEvent(
+    title: String!
+    description: String!
+    image: String!
+    date: DateTime!
+    address: String!
+    categoryName: String!
+  ): Event!
   subscribe(eventId: ID!): Event!
   testUpload(file: Upload!): String!
+  createAnnounce(eventId: ID!, title: String!, description: String!): Announces!
 }
