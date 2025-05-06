@@ -12,7 +12,7 @@ const form = ref({
   organizer: '',
   image: {
     name: '',
-    url: 'https://i.simpalsmedia.com/afisha.md/media/original/8e25401f5216382b2267a43918a3b0fc.webp'
+    url: ''
   } 
 });
 
@@ -40,7 +40,6 @@ const addEvent = () => {
             ref="fileInput"
             type="file"
             accept="image/*"
-            multiple
             style="display: none"
           />
           <p>Apasă pentru a încărca imaginea evenimentului</p>
