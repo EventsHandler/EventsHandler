@@ -29,10 +29,18 @@ export type Announces = {
   title: Scalars['String']['output']
 }
 
+export type Category = {
+  __typename?: 'Category'
+  events?: Maybe<Array<Event>>
+  id: Scalars['ID']['output']
+  name: Scalars['String']['output']
+}
+
 export type Event = {
   __typename?: 'Event'
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
+  category: Category
   createdAt: Scalars['DateTime']['output']
   creator: User
   date: Scalars['DateTime']['output']
@@ -46,6 +54,7 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  createAnnounce: Announces
   createEvent: Event
   login: User
   register: User
@@ -53,8 +62,18 @@ export type Mutation = {
   testUpload: Scalars['String']['output']
 }
 
-export type MutationcreateEventArgs = {
+export type MutationcreateAnnounceArgs = {
   description: Scalars['String']['input']
+  eventId: Scalars['ID']['input']
+  title: Scalars['String']['input']
+}
+
+export type MutationcreateEventArgs = {
+  address: Scalars['String']['input']
+  categoryName: Scalars['String']['input']
+  date: Scalars['DateTime']['input']
+  description: Scalars['String']['input']
+  image: Scalars['String']['input']
   title: Scalars['String']['input']
 }
 
@@ -78,6 +97,7 @@ export type MutationtestUploadArgs = {
 
 export type Query = {
   __typename?: 'Query'
+  categories: Array<Category>
   event?: Maybe<Event>
   events: Array<Event>
   me?: Maybe<User>
@@ -172,9 +192,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Announces: ResolverTypeWrapper<Omit<Announces, 'event'> & { event?: Maybe<ResolversTypes['Event']> }>
   String: ResolverTypeWrapper<Scalars['String']['output']>
+  Category: ResolverTypeWrapper<Omit<Category, 'events'> & { events?: Maybe<Array<ResolversTypes['Event']>> }>
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
   Event: ResolverTypeWrapper<EventMapper>
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
@@ -191,9 +212,10 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Announces: Omit<Announces, 'event'> & { event?: Maybe<ResolversParentTypes['Event']> }
   String: Scalars['String']['output']
+  Category: Omit<Category, 'events'> & { events?: Maybe<Array<ResolversParentTypes['Event']>> }
+  ID: Scalars['ID']['output']
   DateTime: Scalars['DateTime']['output']
   Event: EventMapper
-  ID: Scalars['ID']['output']
   Mutation: {}
   Query: {}
   Upload: Scalars['Upload']['output']
@@ -215,6 +237,16 @@ export type AnnouncesResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
+export type CategoryResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category'],
+> = {
+  events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime'
 }
@@ -225,6 +257,7 @@ export type EventResolvers<
 > = {
   address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   announces?: Resolver<Maybe<Array<ResolversTypes['Announces']>>, ParentType, ContextType>
+  category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   creator?: Resolver<ResolversTypes['User'], ParentType, ContextType>
   date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
@@ -241,11 +274,17 @@ export type MutationResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
+  createAnnounce?: Resolver<
+    ResolversTypes['Announces'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationcreateAnnounceArgs, 'description' | 'eventId' | 'title'>
+  >
   createEvent?: Resolver<
     ResolversTypes['Event'],
     ParentType,
     ContextType,
-    RequireFields<MutationcreateEventArgs, 'description' | 'title'>
+    RequireFields<MutationcreateEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'image' | 'title'>
   >
   login?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationloginArgs, 'email'>>
   register?: Resolver<
@@ -272,6 +311,7 @@ export type QueryResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
+  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
@@ -297,6 +337,7 @@ export type UserResolvers<
 
 export type Resolvers<ContextType = UserContext> = {
   Announces?: AnnouncesResolvers<ContextType>
+  Category?: CategoryResolvers<ContextType>
   DateTime?: GraphQLScalarType
   Event?: EventResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>

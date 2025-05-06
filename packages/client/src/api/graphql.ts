@@ -26,10 +26,18 @@ export type Announces = {
   title: Scalars['String']['output']
 }
 
+export type Category = {
+  __typename?: 'Category'
+  events?: Maybe<Array<Event>>
+  id: Scalars['ID']['output']
+  name: Scalars['String']['output']
+}
+
 export type Event = {
   __typename?: 'Event'
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
+  category: Category
   createdAt: Scalars['DateTime']['output']
   creator: User
   date: Scalars['DateTime']['output']
@@ -43,6 +51,7 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  createAnnounce: Announces
   createEvent: Event
   login: User
   register: User
@@ -50,8 +59,18 @@ export type Mutation = {
   testUpload: Scalars['String']['output']
 }
 
-export type MutationCreateEventArgs = {
+export type MutationCreateAnnounceArgs = {
   description: Scalars['String']['input']
+  eventId: Scalars['ID']['input']
+  title: Scalars['String']['input']
+}
+
+export type MutationCreateEventArgs = {
+  address: Scalars['String']['input']
+  categoryName: Scalars['String']['input']
+  date: Scalars['DateTime']['input']
+  description: Scalars['String']['input']
+  image: Scalars['String']['input']
   title: Scalars['String']['input']
 }
 
@@ -75,6 +94,7 @@ export type MutationTestUploadArgs = {
 
 export type Query = {
   __typename?: 'Query'
+  categories: Array<Category>
   event?: Maybe<Event>
   events: Array<Event>
   me?: Maybe<User>
@@ -98,6 +118,10 @@ export type User = {
 export type CreateEventMutationVariables = Exact<{
   title: Scalars['String']['input']
   description: Scalars['String']['input']
+  image: Scalars['String']['input']
+  date: Scalars['DateTime']['input']
+  address: Scalars['String']['input']
+  categoryName: Scalars['String']['input']
 }>
 
 export type CreateEventMutation = { __typename?: 'Mutation'; createEvent: { __typename?: 'Event'; id: string } }
@@ -212,6 +236,26 @@ export const CreateEventDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'categoryName' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -229,6 +273,26 @@ export const CreateEventDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'description' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'image' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'date' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'address' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'categoryName' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'categoryName' } },
               },
             ],
             selectionSet: {
