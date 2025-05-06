@@ -6,13 +6,14 @@ import { ref } from 'vue'
 const file = ref<File | null>(null)
 function handleFileChange(event: any) {
   file.value = event.target.files[0]
+  console.log(file.value)
 }
 
 const { mutate } = useMutation(UploadFileDocument)
 
 async function uploadFile() {
   try {
-    let res = await mutate({ file: file.value })
+    let res = await mutate({ file: file.value, test: "idk" })
     console.log(res)
   } catch(error) {
     console.error(error)

@@ -75,6 +75,7 @@
   width: 100%;
   height: 100%; 
   opacity: 0;
+  cursor: pointer;
 }
 
 .form-container {
@@ -145,6 +146,7 @@
 
 @media (max-width: 768px) {
   .createEvent {
+    padding: 3rem;
     flex-direction: column;
   }
 

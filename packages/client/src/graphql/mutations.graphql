@@ -1,5 +1,5 @@
-mutation CreateEvent($title: String!, $description: String!, $image: String!, $date: DateTime!, $address: String!, $categoryName: String!) {
-  createEvent(title: $title, description: $description, image: $image, date: $date, address: $address, categoryName: $categoryName) {
+mutation CreateEvent($title: String!, $description: String!, $date: DateTime!, $image: Upload!, $address: String!, $categoryName: String!) {
+  createEvent(title: $title, description: $description, date: $date, image: $image, address: $address, categoryName: $categoryName) {
     id
   }
 }
@@ -28,6 +28,6 @@ mutation Register($username: String!, $password: String!, $email: String!) {
   }
 }
 
-mutation UploadFile($file: Upload!) {
-  testUpload(file: $file)
+mutation UploadFile($file: Upload!, $test: String!) {
+  testUpload(file: $file, test: $test)
 }

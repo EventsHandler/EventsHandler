@@ -70,7 +70,7 @@ export type MutationCreateEventArgs = {
   categoryName: Scalars['String']['input']
   date: Scalars['DateTime']['input']
   description: Scalars['String']['input']
-  image: Scalars['String']['input']
+  image: Scalars['Upload']['input']
   title: Scalars['String']['input']
 }
 
@@ -90,11 +90,12 @@ export type MutationSubscribeArgs = {
 
 export type MutationTestUploadArgs = {
   file: Scalars['Upload']['input']
+  test: Scalars['String']['input']
 }
 
 export type Query = {
   __typename?: 'Query'
-  categories: Array<Category>
+  categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
   events: Array<Event>
   me?: Maybe<User>
@@ -118,8 +119,8 @@ export type User = {
 export type CreateEventMutationVariables = Exact<{
   title: Scalars['String']['input']
   description: Scalars['String']['input']
-  image: Scalars['String']['input']
   date: Scalars['DateTime']['input']
+  image: Scalars['Upload']['input']
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
 }>
@@ -154,6 +155,7 @@ export type RegisterMutation = {
 
 export type UploadFileMutationVariables = Exact<{
   file: Scalars['Upload']['input']
+  test: Scalars['String']['input']
 }>
 
 export type UploadFileMutation = { __typename?: 'Mutation'; testUpload: string }
@@ -211,12 +213,20 @@ export type EventQuery = {
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
+    category: { __typename?: 'Category'; name: string }
   } | null
 }
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>
 
 export type MeQuery = { __typename?: 'Query'; me?: { __typename?: 'User'; id: string } | null }
+
+export type CategorysQueryVariables = Exact<{ [key: string]: never }>
+
+export type CategorysQuery = {
+  __typename?: 'Query'
+  categories?: Array<{ __typename?: 'Category'; name: string }> | null
+}
 
 export const CreateEventDocument = {
   kind: 'Document',
@@ -238,13 +248,13 @@ export const CreateEventDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
         },
         {
           kind: 'VariableDefinition',
@@ -276,13 +286,13 @@ export const CreateEventDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'image' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
+                name: { kind: 'Name', value: 'date' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'date' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+                name: { kind: 'Name', value: 'image' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
               },
               {
                 kind: 'Argument',
@@ -459,6 +469,11 @@ export const UploadFileDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'test' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -471,6 +486,11 @@ export const UploadFileDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'file' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'test' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'test' } },
               },
             ],
           },
@@ -665,6 +685,14 @@ export const EventDocument = {
                     selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
                   },
                 },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'category' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
+                  },
+                },
               ],
             },
           },
@@ -696,3 +724,26 @@ export const MeDocument = {
     },
   ],
 } as unknown as DocumentNode<MeQuery, MeQueryVariables>
+export const CategorysDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Categorys' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'categories' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CategorysQuery, CategorysQueryVariables>

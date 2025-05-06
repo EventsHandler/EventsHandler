@@ -35,17 +35,17 @@ type Mutation {
     categoryName: String!
     date: DateTime!
     description: String!
-    image: String!
+    image: Upload!
     title: String!
   ): Event!
   login(email: String!): User!
   register(email: String!, password: String!, username: String!): User!
   subscribe(eventId: ID!): Event!
-  testUpload(file: Upload!): String!
+  testUpload(file: Upload!, test: String!): String!
 }
 
 type Query {
-  categories: [Category!]!
+  categories: [Category!]
   event(eventId: ID!): Event
   events: [Event!]!
   me: User
