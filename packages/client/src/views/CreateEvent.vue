@@ -2,6 +2,25 @@
 import CreateEvent from '@/components/event/Create.vue';
 import { ref } from 'vue';
 
+import { CreateEventDocument, CategorysDocument, type Category } from '@/api/graphql';
+import { useMutation, useQuery } from '@vue/apollo-composable';
+
+import { useRoute } from 'vue-router';
+const route = useRoute()
+
+const { mutate } = useMutation(CreateEventDocument)
+const { onResult } = useQuery(CategorysDocument)
+
+const categories = ref<Category[] | null>(null)
+
+onResult(({data}) => {
+  if(data?.categories) {
+    categories.value = data?.categories as Category[]
+  }
+})
+
+const image = ref<File | null>(null)
+
 const form = ref<any>({
   title: '',
   description: '',
@@ -10,25 +29,31 @@ const form = ref<any>({
   location: '',
   category: '',
   creator: '',
-  image: null,
   imagePreview: null
 });
 
-const file = ref<File | any>(null)
-
 const removeImage = () => {
   console.log('Remove image clicked');
-  form.value.image = null
+  image.value = null
 };
 
-const uploadPhoto = () => {
+const uploadPhoto = (event: any) => {
   console.log('Upload photo clicked');
-  form.value.image = file.value.files[0]
-  if(form.value.image) form.value.imagePreview = URL.createObjectURL(form.value.image)
+  image.value = event.target.files[0]
+  if(image.value) form.value.imagePreview = URL.createObjectURL(image.value)
 }
 
-const addEvent = () => {
-  console.log('Event data:', form.value);
+const addEvent = async () => {
+  const sendDateToClient = `${form.value.date}T${form.value.time}:00.000Z`
+  await mutate({
+    title: form.value.title,
+    description: form.value.description,
+    image: image.value,
+    date: sendDateToClient,
+    address: form.value.location,
+    categoryName: form.value.category
+  })
+  // route.push('')
 };
 </script>
 
@@ -36,9 +61,8 @@ const addEvent = () => {
   <main>
     <CreateEvent>
       <template #upload-input>
-        <div v-if="!form.image" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
+        <div v-if="!image" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
           <input
-            ref="file"
             type="file"
             accept="image/*"
             @change="uploadPhoto"
@@ -76,15 +100,7 @@ const addEvent = () => {
       <template #event-category-input>
         <select v-model="form.category">
           <option value="">Selectează categoria</option>
-          <option value="music">Music</option>
-          <option value="art">Art</option>
-          <option value="sports">Sports</option>
-          <option value="technology">Technology</option>
-          <option value="food">Food</option>
-          <option value="education">Education</option>
-          <option value="health">Health</option>
-          <option value="travel">Travel</option>
-          <option value="business">Business</option>
+          <option v-for="c in categories" :value="c.name">{{ c.name }}</option>
         </select>
       </template>
 

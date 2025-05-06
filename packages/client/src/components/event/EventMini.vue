@@ -1,14 +1,25 @@
 <script setup lang="ts">
+import { type Event } from '@/api/graphql';
 defineProps<{
-  event: any
+  event: Event
 }>()
+function formatDate(date: string) {
+  return new Date(date).toLocaleString("ro-RO", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
 </script>
 
 <template>
   <div class="event">
-    <img :src="'http://localhost:3000/uploads' + event.image" :alt="event.title">
+    <img :src="'http://localhost:3000/uploads/' + event.image" :alt="event.title">
     <div>{{ event.title }}</div>
-    <div>Start: {{ event.date }}</div>
+    <div>Start: {{ formatDate(event.date) }}</div>
     <div class="details"><a :href="'/event/' + event.id">Mai multe detalii</a></div>
   </div>
 </template>

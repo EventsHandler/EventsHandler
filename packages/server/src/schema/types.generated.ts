@@ -73,7 +73,7 @@ export type MutationcreateEventArgs = {
   categoryName: Scalars['String']['input']
   date: Scalars['DateTime']['input']
   description: Scalars['String']['input']
-  image: Scalars['String']['input']
+  image: Scalars['Upload']['input']
   title: Scalars['String']['input']
 }
 
@@ -93,11 +93,12 @@ export type MutationsubscribeArgs = {
 
 export type MutationtestUploadArgs = {
   file: Scalars['Upload']['input']
+  test: Scalars['String']['input']
 }
 
 export type Query = {
   __typename?: 'Query'
-  categories: Array<Category>
+  categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
   events: Array<Event>
   me?: Maybe<User>
@@ -303,7 +304,7 @@ export type MutationResolvers<
     ResolversTypes['String'],
     ParentType,
     ContextType,
-    RequireFields<MutationtestUploadArgs, 'file'>
+    RequireFields<MutationtestUploadArgs, 'file' | 'test'>
   >
 }
 
@@ -311,7 +312,7 @@ export type QueryResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
-  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType>
+  categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
