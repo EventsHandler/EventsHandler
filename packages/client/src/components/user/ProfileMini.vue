@@ -5,10 +5,5 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="users.lenght != 0">
-    <p>Participanti: </p>
-      <ul>
-          <li v-for="user in users"><a href="">{{ user.username }}</a></li>
-      </ul>
-  </div>
+  <div v-for="user in users" class="m-4 text-2xl">{{ user.username }}</div>
 </template>

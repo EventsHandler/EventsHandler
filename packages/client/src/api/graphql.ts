@@ -22,7 +22,7 @@ export type Announces = {
   __typename?: 'Announces'
   createdAt: Scalars['DateTime']['output']
   description: Scalars['String']['output']
-  event: Event
+  event?: Maybe<Event>
   title: Scalars['String']['output']
 }
 
@@ -31,13 +31,14 @@ export type Event = {
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
   createdAt: Scalars['DateTime']['output']
-  creator?: Maybe<User>
+  creator: User
   date: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
   image: Scalars['String']['output']
   participants?: Maybe<Array<User>>
   title: Scalars['String']['output']
+  userId: Scalars['ID']['output']
 }
 
 export type Mutation = {
@@ -65,7 +66,7 @@ export type MutationRegisterArgs = {
 }
 
 export type MutationSubscribeArgs = {
-  postId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
 }
 
 export type MutationTestUploadArgs = {
@@ -74,7 +75,14 @@ export type MutationTestUploadArgs = {
 
 export type Query = {
   __typename?: 'Query'
+  event?: Maybe<Event>
   events: Array<Event>
+  me?: Maybe<User>
+  myEvents: Array<Event>
+}
+
+export type QueryEventArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type User = {
@@ -95,7 +103,7 @@ export type CreateEventMutationVariables = Exact<{
 export type CreateEventMutation = { __typename?: 'Mutation'; createEvent: { __typename?: 'Event'; id: string } }
 
 export type SubscribeEventMutationVariables = Exact<{
-  postId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
 }>
 
 export type SubscribeEventMutation = { __typename?: 'Mutation'; subscribe: { __typename?: 'Event'; id: string } }
@@ -130,8 +138,61 @@ export type EventsQueryVariables = Exact<{ [key: string]: never }>
 
 export type EventsQuery = {
   __typename?: 'Query'
-  events: Array<{ __typename?: 'Event'; id: string; title: string; description: string }>
+  events: Array<{
+    __typename?: 'Event'
+    id: string
+    title: string
+    description: string
+    date: any
+    image: string
+    address: string
+    creator: { __typename?: 'User'; username: string; id: string }
+    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
+    participants?: Array<{ __typename?: 'User'; username: string }> | null
+  }>
 }
+
+export type MyEventsQueryVariables = Exact<{ [key: string]: never }>
+
+export type MyEventsQuery = {
+  __typename?: 'Query'
+  myEvents: Array<{
+    __typename?: 'Event'
+    id: string
+    title: string
+    description: string
+    date: any
+    image: string
+    address: string
+    creator: { __typename?: 'User'; username: string; id: string }
+    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
+    participants?: Array<{ __typename?: 'User'; username: string }> | null
+  }>
+}
+
+export type EventQueryVariables = Exact<{
+  eventId: Scalars['ID']['input']
+}>
+
+export type EventQuery = {
+  __typename?: 'Query'
+  event?: {
+    __typename?: 'Event'
+    id: string
+    title: string
+    description: string
+    date: any
+    image: string
+    address: string
+    creator: { __typename?: 'User'; username: string; id: string }
+    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
+    participants?: Array<{ __typename?: 'User'; username: string }> | null
+  } | null
+}
+
+export type MeQueryVariables = Exact<{ [key: string]: never }>
+
+export type MeQuery = { __typename?: 'Query'; me?: { __typename?: 'User'; id: string } | null }
 
 export const CreateEventDocument = {
   kind: 'Document',
@@ -190,7 +251,7 @@ export const SubscribeEventDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'postId' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
         },
       ],
@@ -203,8 +264,8 @@ export const SubscribeEventDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'postId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'postId' } },
+                name: { kind: 'Name', value: 'eventId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
               },
             ],
             selectionSet: {
@@ -373,6 +434,39 @@ export const EventsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'creator' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'announces' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'participants' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                  },
+                },
               ],
             },
           },
@@ -381,3 +475,160 @@ export const EventsDocument = {
     },
   ],
 } as unknown as DocumentNode<EventsQuery, EventsQueryVariables>
+export const MyEventsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'MyEvents' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'myEvents' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'creator' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'announces' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'participants' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MyEventsQuery, MyEventsQueryVariables>
+export const EventDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Event' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'event' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'eventId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'creator' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'announces' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'participants' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<EventQuery, EventQueryVariables>
+export const MeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Me' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'me' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MeQuery, MeQueryVariables>

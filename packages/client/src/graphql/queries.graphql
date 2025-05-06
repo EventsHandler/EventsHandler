@@ -3,5 +3,69 @@ query Events {
     id
     title
     description
+    date
+    image
+    address
+    creator {
+      username
+      id
+    }
+    announces {
+      title
+      description
+    }
+    participants {
+      username
+    }
+  }
+}
+
+query MyEvents {
+  myEvents {
+    id
+    title
+    description
+    date
+    image
+    address
+    creator {
+      username
+      id
+    }
+    announces {
+      title
+      description
+    }
+    participants {
+      username
+    }
+  }
+}
+
+query Event($eventId: ID!) {
+  event(eventId: $eventId) {
+    id
+    title
+    description
+    date
+    image
+    address
+    creator {
+      username
+      id
+    }
+    announces {
+      title
+      description
+    }
+    participants {
+      username
+    }
+  }
+}
+
+query Me {
+  me {
+    id
   }
 }

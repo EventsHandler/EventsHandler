@@ -4,7 +4,7 @@ scalar Upload
 type Announces {
   title: String!
   description: String!
-  event: Event!
+  event: Event
   createdAt: DateTime!
 }
 
@@ -16,8 +16,9 @@ type Event {
   date: DateTime!
   address: String!
   createdAt: DateTime!
+  userId: ID!
 
-  creator: User
+  creator: User!
   participants: [User!]
   announces: [Announces!]
 }
@@ -34,12 +35,15 @@ type User {
 
 extend type Query {
   events: [Event!]!
+  myEvents: [Event!]!
+  event(eventId: ID!): Event
+  me: User
 }
 
 extend type Mutation {
   login(email: String!): User!
   register(username: String!, password: String!, email: String!): User!
   createEvent(title: String!, description: String!): Event!
-  subscribe(postId: ID!): Event!
+  subscribe(eventId: ID!): Event!
   testUpload(file: Upload!): String!
 }

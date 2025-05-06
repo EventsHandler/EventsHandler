@@ -7,9 +7,10 @@ export const createEvent: NonNullable<MutationResolvers['createEvent']> = async 
   return await prisma.event.create({
     data: {
       title, description,
-      creator: {
-        connect: { id: _ctx.user.id }
-      }
+      userId: _ctx.user.id
+    },
+    include: {
+      creator: true
     }
   })
 }

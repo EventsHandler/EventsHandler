@@ -25,7 +25,7 @@ export type Announces = {
   __typename?: 'Announces'
   createdAt: Scalars['DateTime']['output']
   description: Scalars['String']['output']
-  event: Event
+  event?: Maybe<Event>
   title: Scalars['String']['output']
 }
 
@@ -34,13 +34,14 @@ export type Event = {
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
   createdAt: Scalars['DateTime']['output']
-  creator?: Maybe<User>
+  creator: User
   date: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
   image: Scalars['String']['output']
   participants?: Maybe<Array<User>>
   title: Scalars['String']['output']
+  userId: Scalars['ID']['output']
 }
 
 export type Mutation = {
@@ -68,7 +69,7 @@ export type MutationregisterArgs = {
 }
 
 export type MutationsubscribeArgs = {
-  postId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
 }
 
 export type MutationtestUploadArgs = {
@@ -77,7 +78,14 @@ export type MutationtestUploadArgs = {
 
 export type Query = {
   __typename?: 'Query'
+  event?: Maybe<Event>
   events: Array<Event>
+  me?: Maybe<User>
+  myEvents: Array<Event>
+}
+
+export type QueryeventArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type User = {
@@ -162,7 +170,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Announces: ResolverTypeWrapper<Omit<Announces, 'event'> & { event: ResolversTypes['Event'] }>
+  Announces: ResolverTypeWrapper<Omit<Announces, 'event'> & { event?: Maybe<ResolversTypes['Event']> }>
   String: ResolverTypeWrapper<Scalars['String']['output']>
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
   Event: ResolverTypeWrapper<EventMapper>
@@ -181,7 +189,7 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Announces: Omit<Announces, 'event'> & { event: ResolversParentTypes['Event'] }
+  Announces: Omit<Announces, 'event'> & { event?: Maybe<ResolversParentTypes['Event']> }
   String: Scalars['String']['output']
   DateTime: Scalars['DateTime']['output']
   Event: EventMapper
@@ -202,7 +210,7 @@ export type AnnouncesResolvers<
 > = {
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  event?: Resolver<ResolversTypes['Event'], ParentType, ContextType>
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType>
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
@@ -218,13 +226,14 @@ export type EventResolvers<
   address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   announces?: Resolver<Maybe<Array<ResolversTypes['Announces']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-  creator?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  creator?: Resolver<ResolversTypes['User'], ParentType, ContextType>
   date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   participants?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
@@ -245,7 +254,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationregisterArgs, 'email' | 'password' | 'username'>
   >
-  subscribe?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<MutationsubscribeArgs, 'postId'>>
+  subscribe?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationsubscribeArgs, 'eventId'>
+  >
   testUpload?: Resolver<
     ResolversTypes['String'],
     ParentType,
@@ -258,7 +272,10 @@ export type QueryResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
+  event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  myEvents?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
 }
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {

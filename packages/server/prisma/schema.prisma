@@ -31,8 +31,8 @@ model Event {
   createdAt   DateTime @default(now())
 
   // m-1 for Event Creator
-  creator User   @relation("CreatedEvents", fields: [userId], references: [id])
   userId  String
+  creator User   @relation("CreatedEvents", fields: [userId], references: [id])
 
   // m-m: for Participants
   participants User[] @relation("EventParticipants")
@@ -47,8 +47,8 @@ model Announce {
   description String  @default("")
   createdAt DateTime @default(now())
 
-  event       Event?  @relation("EventAnnounces", fields: [eventId], references: [id])
   eventId     String?
+  event       Event?  @relation("EventAnnounces", fields: [eventId], references: [id])
 }
 
 model User {

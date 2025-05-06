@@ -1,26 +1,39 @@
 <script setup lang="ts">
 import Event from '@/components/event/Event.vue'
 
-const event = {
-  title: "Eveniment1",
-  image: "https://i.simpalsmedia.com/afisha.md/media/original/8e25401f5216382b2267a43918a3b0fc.webp",
-  description: "desc",
-  date: '12.09.2025',
-  address: 'Stefan Cel Mare',
-  creator: { username: "User" },
-  announces: [
-    { title: "new announce", description: "This is a new announce" },
-    { title: "new announce2", description: "This is a new announce2" },
-  ],
-  participants: [
-    { username: "Participant" },
-    { username: "Participant2" }
-  ]
-}
+import { EventDocument, type Event as IEvent } from '@/api/graphql'
+import { useQuery } from '@vue/apollo-composable'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const event = ref<IEvent | null>(null)
+
+const { result, refetch, loading, onResult } = useQuery(EventDocument, { eventId: (route.params.id as string) || "" })
+
+onResult(({data}) => {
+  if(data?.event) {
+    event.value = data.event as IEvent
+  }
+})
 </script>
 
 <template>
   <main>
-    <Event :event="event"></Event>
+    <Event v-if="event" :event="event"></Event>
   </main> 
 </template>
+
+<style scoped>
+main {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+}
+@media (max-width: 1125px) {
+  main {
+    flex-direction: column;
+  }
+}
+</style>
