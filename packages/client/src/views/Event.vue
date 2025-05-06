@@ -20,11 +20,6 @@ onResult(({data}) => {
 })
 
 const userStore = useUserStore()
-
-onMounted(() => {
-  refetch()
-  userStore.refreshUser()
-})
 </script>
 
 <template>

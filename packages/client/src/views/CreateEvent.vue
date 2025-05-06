@@ -78,11 +78,6 @@ const editEvent = async () => {
 }
 
 const userStore = useUserStore()
-
-onMounted(() => {
-  userStore.refreshUser()
-})
-
 </script>
 
 <template>

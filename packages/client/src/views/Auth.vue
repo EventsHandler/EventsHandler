@@ -4,20 +4,17 @@ import Login from '@/components/user/Login.vue';
 import Register from '@/components/user/Register.vue';
 import { useUserStore } from '@/store/user';
 
+const userStore = useUserStore()
+
 function logout() {
   localStorage.removeItem('token')
-  window.location.reload()
+  userStore.refreshUser()
 }
 
 const switchLog = ref(true); 
 const switching = () => {
   switchLog.value = !switchLog.value;
 };
-
-const userStore = useUserStore()
-onMounted(() => {
-  userStore.refreshUser()
-})
 </script>
 
 <template>

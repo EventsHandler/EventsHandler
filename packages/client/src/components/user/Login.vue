@@ -5,11 +5,14 @@ import { ref } from 'vue';
 import { useMutation } from '@vue/apollo-composable';
 import { LoginDocument } from '@/api/graphql';
 import router from '@/router';
+import { useUserStore } from '@/store/user';
 
 const { mutate } = useMutation(LoginDocument)
 
 const username = ref('');
 const password = ref('');
+
+const userStore = useUserStore()
 
 async function login() {
   try {
@@ -18,6 +21,7 @@ async function login() {
     })
     if(!res?.data?.login.email) return
     localStorage.setItem('token', res?.data?.login.email)
+    userStore.refreshUser()
     router.push("/events")
   } catch(error) {
     console.error(error)
