@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import Announces from './Announce.vue';
 import Participants from '../user/ProfileMini.vue';
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue';
 
-import { MeDocument, type User, type Event } from '@/api/graphql';
-import { useQuery } from '@vue/apollo-composable';
-
-const { onResult } = useQuery(MeDocument)
-
-const me = ref<User | null>(null)
+import { type Event } from '@/api/graphql';
+import { useUserStore } from '@/store/user';
 
 defineProps<{
   event: Event
@@ -28,13 +24,13 @@ function formatDate(date: string) {
   });
 }
 
-onResult(({data}) => {
-  if(data?.me) {
-    me.value = data.me as User
-  }
-})
+const showFullDescription = ref<boolean>(false)
 
-const showFullDescription = ref(false)
+const userStore = useUserStore()
+
+onMounted(() => {
+  userStore.refreshUser()
+})
 </script>
 
 <template>
@@ -55,9 +51,9 @@ const showFullDescription = ref(false)
         <Participants v-for="user in event.participants" :user="user" />
       </div>
       <div class="detaiils-container">
-        <button v-if="me?.id != event.creator.id" @click="() => join(event.id)">Alătură-te evenimentului</button>
+        <button v-if="userStore.user?.id != event.creator.id" @click="() => join(event.id)">Alătură-te evenimentului</button>
         <button v-else @click="() => edit(event.id)">Editează evenimentul</button>
-        <button v-if="me?.id == event.creator.id" @click="() => announce(event.id)">Posteaza un anunț</button>
+        <button v-if="userStore.user?.id == event.creator.id" @click="() => announce(event.id)">Posteaza un anunț</button>
         <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
         <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a></div>
@@ -73,8 +69,8 @@ const showFullDescription = ref(false)
   box-sizing: border-box;
 }
 .event-container {
-  width: 100%;
   padding: 5rem;
+  padding-top: 9rem;
   background-color: #f9fafb;
 }
 @media (max-width: 768px) {
@@ -145,7 +141,7 @@ const showFullDescription = ref(false)
   flex-direction: column;
   gap: 1rem;
     position: sticky;
-  top: 2rem;
+  top: 7rem;
 }
 .detaiils-container div {
   display: flex;

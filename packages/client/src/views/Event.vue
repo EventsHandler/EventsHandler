@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Event from '@/components/event/Event.vue'
 
-import { EventDocument, type Event as IEvent } from '@/api/graphql'
+import { EventDocument, type Event as IEvent, type User } from '@/api/graphql'
 import { useQuery } from '@vue/apollo-composable'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useUserStore } from '@/store/user'
 
 const route = useRoute()
 
@@ -17,19 +18,27 @@ onResult(({data}) => {
     event.value = data.event as IEvent
   }
 })
+
+const userStore = useUserStore()
+
+onMounted(() => {
+  refetch()
+  userStore.refreshUser()
+})
 </script>
 
 <template>
   <main>
-    <Event v-if="event" :event="event"></Event>
+    <Event v-if="event" :event="event" :user="userStore.user"></Event>
   </main> 
 </template>
 
 <style scoped>
 main {
   display: flex;
-  width: 100vw;
-  min-height: 100vh;
+  min-height: calc(100vh - 30px);
+  justify-content: center;
+  background-color: #f9fafb;
 }
 @media (max-width: 1125px) {
   main {

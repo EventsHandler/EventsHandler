@@ -69,6 +69,7 @@ query Event($eventId: ID!) {
 
 query Me {
   me {
+    username
     id
   }
 }

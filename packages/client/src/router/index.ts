@@ -20,7 +20,7 @@ const router = createRouter({
       component: () => import('../views/Auth.vue'),
     },
     {
-      path: '/create',
+      path: '/create/:id?',
       name: 'create post',
       component: () => import('../views/CreateEvent.vue'),
     },

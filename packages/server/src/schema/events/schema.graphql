@@ -42,7 +42,7 @@ type User {
 
 extend type Query {
   events: [Event!]!
-  myEvents: [Event!]!
+  myEvents: [Event!]
   event(eventId: ID!): Event
   me: User
   categories: [Category!]

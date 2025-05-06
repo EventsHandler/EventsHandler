@@ -99,7 +99,7 @@ export type Query = {
   event?: Maybe<Event>
   events: Array<Event>
   me?: Maybe<User>
-  myEvents: Array<Event>
+  myEvents?: Maybe<Array<Event>>
 }
 
 export type QueryEventArgs = {
@@ -182,7 +182,7 @@ export type MyEventsQueryVariables = Exact<{ [key: string]: never }>
 
 export type MyEventsQuery = {
   __typename?: 'Query'
-  myEvents: Array<{
+  myEvents?: Array<{
     __typename?: 'Event'
     id: string
     title: string
@@ -193,7 +193,7 @@ export type MyEventsQuery = {
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
-  }>
+  }> | null
 }
 
 export type EventQueryVariables = Exact<{
@@ -219,7 +219,7 @@ export type EventQuery = {
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>
 
-export type MeQuery = { __typename?: 'Query'; me?: { __typename?: 'User'; id: string } | null }
+export type MeQuery = { __typename?: 'Query'; me?: { __typename?: 'User'; username: string; id: string } | null }
 
 export type CategorysQueryVariables = Exact<{ [key: string]: never }>
 
@@ -716,7 +716,10 @@ export const MeDocument = {
             name: { kind: 'Name', value: 'me' },
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+              ],
             },
           },
         ],

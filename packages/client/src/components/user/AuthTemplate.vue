@@ -22,8 +22,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     background-color: #f7f7f7;
+    min-width: 500px;
   }
   
   .auth-container {

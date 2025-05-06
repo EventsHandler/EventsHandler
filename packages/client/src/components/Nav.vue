@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import Menu from './Menu.vue'
 import { ref } from 'vue'
 import logo from '../assets/logo.svg'
 
@@ -11,7 +12,7 @@ const toggleMenu = () => {
 </script>
 
 <template>
-  <nav class="bg-blue-600 text-white w-full text-2xl fixed">
+  <nav class="bg-blue-600 text-white w-full text-2xl">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex items-center justify-between">
         <RouterLink to="/">
@@ -30,24 +31,14 @@ const toggleMenu = () => {
         </button>
 
         <div class="hidden md:flex items-center space-x-12">
-          <RouterLink to="/about" class="hover:text-blue-200 transition">About</RouterLink>
-          <RouterLink to="/events" class="hover:text-blue-200 transition">Event list</RouterLink>
-          <RouterLink to="/auth" class="hover:text-blue-200 transition">Account</RouterLink>
+          <Menu />
         </div>
       </div>
 
       <div class="md:hidden" :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }">
         <hr class="border-t-2">
         <div class="pl-5 py-5 space-y-5">
-          <RouterLink to="/about" class="block hover:text-blue-200 transition" @click="isMenuOpen = false">
-            About
-          </RouterLink>
-          <RouterLink to="/events" class="block hover:text-blue-200 transition" @click="isMenuOpen = false">
-            Event list
-          </RouterLink>
-          <RouterLink to="/auth" class="block hover:text-blue-200 transition" @click="isMenuOpen = false">
-            Account
-          </RouterLink>
+          <Menu @close="isMenuOpen = false" />
         </div>
       </div>
     </div>

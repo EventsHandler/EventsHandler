@@ -102,7 +102,7 @@ export type Query = {
   event?: Maybe<Event>
   events: Array<Event>
   me?: Maybe<User>
-  myEvents: Array<Event>
+  myEvents?: Maybe<Array<Event>>
 }
 
 export type QueryeventArgs = {
@@ -316,7 +316,7 @@ export type QueryResolvers<
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
-  myEvents?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+  myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
 }
 
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {

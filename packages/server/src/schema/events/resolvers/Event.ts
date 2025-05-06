@@ -16,7 +16,7 @@ export const Event: EventResolvers = {
   creator: async (_parent, _arg, _ctx) => {
     let user = await prisma.user.findUnique({
       where: {
-        id: _ctx.user.id,
+        id: _parent.userId,
       },
     })
     if (!user) {

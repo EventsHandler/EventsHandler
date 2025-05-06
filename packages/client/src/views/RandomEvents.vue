@@ -5,7 +5,6 @@ import { ref } from 'vue'
 import { EventsDocument, type Event as IEvent } from '@/api/graphql';
 import { useQuery } from '@vue/apollo-composable';
 
-const load = ref<boolean>(false)
 const events = ref<IEvent[] | null>(null)
 
 const { result, refetch, onResult, loading } = useQuery(EventsDocument)

@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import CreateEvent from '@/components/event/Create.vue';
-import { ref } from 'vue';
+import NoLoggin from '@/components/assets/NoLoggin.vue';
+import { onMounted, ref, toRef } from 'vue';
 
-import { CreateEventDocument, CategorysDocument, type Category } from '@/api/graphql';
+import { CreateEventDocument, CategorysDocument, type Category, EventDocument } from '@/api/graphql';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 
+import router from '@/router'
 import { useRoute } from 'vue-router';
+import { useUserStore } from '@/store/user';
+
 const route = useRoute()
 
 const { mutate } = useMutation(CreateEventDocument)
@@ -32,9 +36,22 @@ const form = ref<any>({
   imagePreview: null
 });
 
+const { result, refetch, loading, onResult: onResultEvent } = useQuery(EventDocument, { eventId: (route.params.id as string) || "" })
+
+onResultEvent(({data}) => {
+  if(data?.event) {
+    form.value.title = data.event.title
+    form.value.description = data.event.description
+    form.value.location = data.event.address
+    form.value.category = data.event.category.name
+    form.value.imagePreview = `http://localhost:3000/uploads/${data.event.image}`
+  }
+})
+
 const removeImage = () => {
   console.log('Remove image clicked');
   image.value = null
+  form.value.imagePreview = null
 };
 
 const uploadPhoto = (event: any) => {
@@ -53,15 +70,26 @@ const addEvent = async () => {
     address: form.value.location,
     categoryName: form.value.category
   })
-  // route.push('')
+  router.push('/events')
 };
+
+const editEvent = async () => {
+  console.log("test")
+}
+
+const userStore = useUserStore()
+
+onMounted(() => {
+  userStore.refreshUser()
+})
+
 </script>
 
 <template>
   <main>
-    <CreateEvent>
+    <CreateEvent v-if="userStore.user">
       <template #upload-input>
-        <div v-if="!image" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
+        <div v-if="!image && !form.imagePreview" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
           <input
             type="file"
             accept="image/*"
@@ -105,9 +133,11 @@ const addEvent = async () => {
       </template>
 
       <template #create-button>
-        <button @click="addEvent">Create Event</button>
+        <button v-if="!result?.event" @click="addEvent">Create Event</button>
+        <button v-else @click="editEvent">Edit Event</button>
       </template>
     </CreateEvent>
+    <NoLoggin v-else-if="!userStore.loading" />
   </main>
 </template>
 
@@ -116,7 +146,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
 }
 .preview-item {
   position: relative;

@@ -17,7 +17,7 @@ main {
   flex-wrap: wrap;
   padding: 3rem;
   gap: 3rem;
-  min-height: 100vh;
+  min-height: calc(100vh - 80px);
   justify-content: center;
 }
 </style>

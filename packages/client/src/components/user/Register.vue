@@ -4,6 +4,7 @@ import { ref } from 'vue';
 
 import { useMutation } from '@vue/apollo-composable';
 import { RegisterDocument } from '@/api/graphql';
+import router from '@/router';
 
 const { mutate } = useMutation(RegisterDocument)
 
@@ -21,6 +22,7 @@ async function register() {
     })
     if(!res?.data?.register.email) return
     localStorage.setItem('token', res?.data?.register.email)
+    router.push("/events")
   } catch(error) {
     console.error(error)
   }

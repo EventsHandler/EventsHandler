@@ -26,7 +26,8 @@ function formatDate(date: string) {
 
 <style scoped>
 .event {
-  min-width: 300px;
+  width: 300px;
+  height: 100%;
 }
 img {
   max-width: 300px;
