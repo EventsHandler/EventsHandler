@@ -58,11 +58,8 @@ export const typeDefs = {
           name: { kind: 'Name', value: 'categories' },
           arguments: [],
           type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Category' } } },
-            },
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Category' } } },
           },
           directives: [],
         },
@@ -128,6 +125,18 @@ export const typeDefs = {
               kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'description' },
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'date' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'image' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
               directives: [],
             },
             {

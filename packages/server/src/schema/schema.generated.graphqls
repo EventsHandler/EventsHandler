@@ -30,7 +30,14 @@ type Event {
 
 type Mutation {
   createAnnounce(description: String!, eventId: ID!, title: String!): Announces!
-  createEvent(address: String!, categoryName: String!, description: String!, title: String!): Event!
+  createEvent(
+    address: String!
+    categoryName: String!
+    date: DateTime!
+    description: String!
+    image: Upload!
+    title: String!
+  ): Event!
   login(email: String!): User!
   register(email: String!, password: String!, username: String!): User!
   subscribe(eventId: ID!): Event!
@@ -38,7 +45,7 @@ type Mutation {
 }
 
 type Query {
-  categories: [Category!]!
+  categories: [Category!]
   event(eventId: ID!): Event
   events: [Event!]!
   me: User

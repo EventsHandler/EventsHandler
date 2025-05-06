@@ -1,5 +1,5 @@
-mutation CreateEvent($title: String!, $description: String!, $address: String!, $categoryName: String!) {
-  createEvent(title: $title, description: $description, address: $address, categoryName: $categoryName) {
+mutation CreateEvent($title: String!, $description: String!, $date: DateTime!, $image: Upload!, $address: String!, $categoryName: String!) {
+  createEvent(title: $title, description: $description, date: $date, image: $image, address: $address, categoryName: $categoryName) {
     id
   }
 }

@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { type User } from '@/api/graphql';
 defineProps<{
-  users: any
+  user: User
 }>()
 </script>
 
 <template>
-  <div v-for="user in users" class="m-4 text-2xl">{{ user.username }}</div>
+  <div class="m-4 text-2xl">{{ user.username }}</div>
 </template>

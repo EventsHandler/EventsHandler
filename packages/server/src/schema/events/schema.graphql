@@ -45,7 +45,7 @@ extend type Query {
   myEvents: [Event!]!
   event(eventId: ID!): Event
   me: User
-  categories: [Category!]!
+  categories: [Category!]
 }
 
 extend type Mutation {
@@ -54,6 +54,8 @@ extend type Mutation {
   createEvent(
     title: String!
     description: String!
+    date: DateTime!
+    image: Upload!
     address: String!
     categoryName: String!
   ): Event!

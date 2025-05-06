@@ -61,11 +61,20 @@ query Event($eventId: ID!) {
     participants {
       username
     }
+    category {
+      name
+    }
   }
 }
 
 query Me {
   me {
     id
+  }
+}
+
+query Categorys {
+  categories {
+    name
   }
 }
