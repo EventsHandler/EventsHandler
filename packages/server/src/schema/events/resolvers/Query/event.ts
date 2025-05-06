@@ -4,6 +4,11 @@ export const event: NonNullable<QueryResolvers['event']> = async (_parent, { eve
   return await prisma.event.findUnique({
     where: {
       id: eventId
+    },
+    include: {
+      creator: true,
+      announces: true,
+      participants: true
     }
   })
 }

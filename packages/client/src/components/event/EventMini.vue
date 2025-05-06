@@ -6,10 +6,10 @@ defineProps<{
 
 <template>
   <div class="event">
-    <img :src="event.image" :alt="event.title">
+    <img :src="'http://localhost:3000/uploads' + event.image" :alt="event.title">
     <div>{{ event.title }}</div>
     <div>Start: {{ event.date }}</div>
-    <div class="details"><a href="/event">Mai multe detalii</a></div>
+    <div class="details"><a :href="'/event/' + event.id">Mai multe detalii</a></div>
   </div>
 </template>
 
@@ -29,5 +29,9 @@ img {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+.details a {
+  width: 100%;
+  height: 100%;
 }
 </style>

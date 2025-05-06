@@ -1,13 +1,38 @@
+import { prisma } from '../../../prisma.js'
 import type { EventResolvers } from './../../types.generated.js'
 export const Event: EventResolvers = {
   /* Implement Event resolver logic here */
   announces: async (_parent, _arg, _ctx) => {
-    /* Event.announces resolver is required because Event.announces exists but EventMapper.announces does not */
+    let event = await prisma.event.findUnique({
+      where: {
+        id: _parent.id
+      },
+      include: {
+        announces: true
+      }
+    })
+    return event?.announces
   },
   creator: async (_parent, _arg, _ctx) => {
-    /* Event.creator resolver is required because Event.creator exists but EventMapper.creator does not */
+    let user = await prisma.user.findUnique({
+      where: {
+        id: _ctx.user.id
+      }
+    })
+    if(!user) {
+      throw new Error("Unauthorized")
+    }
+    return user
   },
   participants: async (_parent, _arg, _ctx) => {
-    /* Event.participants resolver is required because Event.participants exists but EventMapper.participants does not */
+    let event = await prisma.event.findUnique({
+      where: {
+        id: _parent.id
+      },
+      include: {
+        participants: true
+      }
+    })
+    return event?.participants
   },
 }

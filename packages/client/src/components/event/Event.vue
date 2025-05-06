@@ -3,36 +3,47 @@ import Announce from './Announce.vue';
 import ProfileMini from '../user/ProfileMini.vue';
 import { ref } from 'vue'
 
+import { MeDocument, type User } from '@/api/graphql';
+import { useQuery } from '@vue/apollo-composable';
+
+const { onResult } = useQuery(MeDocument)
+
+const me = ref<User | null>(null)
+
 defineProps<{
   event: any
 }>()
 
-const eventCreator = ref<boolean>(false)
-
 function edit(event: string) {}
 function join(event: string) {}
+
+onResult(({data}) => {
+  if(data?.me) {
+    me.value = data.me as User
+  }
+})
 
 </script>
 
 <template>
   <div class="event">
-    <img :src="event.image" :alt="event.title">
+    <img :src="'http://localhost:3000/uploads' + event.image" :alt="event.title">
   </div>
   <div class="event">
     <div class="text-center text-3xl bold m-8">{{ event.title }}</div>
     <div class="desc m-8">{{ event.description }}</div>
     <div>Eventul va avea loc pe: {{ event.date }}</div>
     <div>Locatie: {{ event.address }}</div>
-    <div>Creator: {{ event.creator.username }}</div>
-    <div class="m-8">
+    <div v-if="event.creator">Creator: {{ event.creator.username }}</div>
+    <div v-if="event.announces" class="m-8">
       <div class="text-2xl">Anunturi:</div>
       <Announce :announces="event.announces"></Announce>
     </div>
-    <div class="m-8">
+    <div v-if="event.participants" class="m-8">
       <div class="text-2xl">Participanti:</div>
       <ProfileMini :users="event.participants"></ProfileMini>
     </div>
-    <div v-if="!eventCreator" class="join-button">
+    <div v-if="me?.id != event.creator?.id" class="join-button">
       <button @click="() => join(event.id)">Alatura-te evenimentului</button>
     </div>
     <div v-else class="join-button">

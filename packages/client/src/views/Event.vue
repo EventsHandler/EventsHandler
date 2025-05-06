@@ -1,18 +1,27 @@
 <script setup lang="ts">
 import Event from '@/components/event/Event.vue'
 
-import { EventDocument } from '@/api/graphql'
+import { EventDocument, type Event as IEvent } from '@/api/graphql'
 import { useQuery } from '@vue/apollo-composable'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 
-const { result, refetch, loading } = useQuery(EventDocument, { eventId: "t9gr2275a3523vdfglcj7r20" })
-console.log(result)
+const route = useRoute()
 
+const event = ref<IEvent | null>(null)
+
+const { result, refetch, loading, onResult } = useQuery(EventDocument, { eventId: (route.params.id as string) || "" })
+
+onResult(({data}) => {
+  if(data?.event) {
+    event.value = data.event as IEvent
+  }
+})
 </script>
 
 <template>
   <main>
-    <Event :event="result"></Event>
+    <Event v-if="event" :event="event"></Event>
   </main> 
 </template>
 

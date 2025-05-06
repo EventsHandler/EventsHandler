@@ -4,9 +4,11 @@ query Events {
     title
     description
     date
+    image
     address
     creator {
       username
+      id
     }
     announces {
       title
@@ -24,9 +26,11 @@ query MyEvents {
     title
     description
     date
+    image
     address
     creator {
       username
+      id
     }
     announces {
       title
@@ -44,9 +48,11 @@ query Event($eventId: ID!) {
     title
     description
     date
+    image
     address
     creator {
       username
+      id
     }
     announces {
       title
@@ -55,5 +61,11 @@ query Event($eventId: ID!) {
     participants {
       username
     }
+  }
+}
+
+query Me {
+  me {
+    id
   }
 }

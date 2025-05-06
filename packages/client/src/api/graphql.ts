@@ -22,7 +22,7 @@ export type Announces = {
   __typename?: 'Announces'
   createdAt: Scalars['DateTime']['output']
   description: Scalars['String']['output']
-  event: Event
+  event?: Maybe<Event>
   title: Scalars['String']['output']
 }
 
@@ -31,13 +31,14 @@ export type Event = {
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
   createdAt: Scalars['DateTime']['output']
-  creator?: Maybe<User>
+  creator: User
   date: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
   image: Scalars['String']['output']
   participants?: Maybe<Array<User>>
   title: Scalars['String']['output']
+  userId: Scalars['ID']['output']
 }
 
 export type Mutation = {
@@ -76,6 +77,7 @@ export type Query = {
   __typename?: 'Query'
   event?: Maybe<Event>
   events: Array<Event>
+  me?: Maybe<User>
   myEvents: Array<Event>
 }
 
@@ -142,8 +144,9 @@ export type EventsQuery = {
     title: string
     description: string
     date: any
+    image: string
     address: string
-    creator?: { __typename?: 'User'; username: string } | null
+    creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
   }>
@@ -159,8 +162,9 @@ export type MyEventsQuery = {
     title: string
     description: string
     date: any
+    image: string
     address: string
-    creator?: { __typename?: 'User'; username: string } | null
+    creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
   }>
@@ -178,12 +182,17 @@ export type EventQuery = {
     title: string
     description: string
     date: any
+    image: string
     address: string
-    creator?: { __typename?: 'User'; username: string } | null
+    creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
   } | null
 }
+
+export type MeQueryVariables = Exact<{ [key: string]: never }>
+
+export type MeQuery = { __typename?: 'Query'; me?: { __typename?: 'User'; id: string } | null }
 
 export const CreateEventDocument = {
   kind: 'Document',
@@ -426,13 +435,17 @@ export const EventsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'creator' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
                   },
                 },
                 {
@@ -482,13 +495,17 @@ export const MyEventsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'creator' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
                   },
                 },
                 {
@@ -552,13 +569,17 @@ export const EventDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'creator' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
                   },
                 },
                 {
@@ -588,3 +609,26 @@ export const EventDocument = {
     },
   ],
 } as unknown as DocumentNode<EventQuery, EventQueryVariables>
+export const MeDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Me' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'me' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<MeQuery, MeQueryVariables>

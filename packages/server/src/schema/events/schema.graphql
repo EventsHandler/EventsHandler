@@ -4,7 +4,7 @@ scalar Upload
 type Announces {
   title: String!
   description: String!
-  event: Event!
+  event: Event
   createdAt: DateTime!
 }
 
@@ -16,8 +16,9 @@ type Event {
   date: DateTime!
   address: String!
   createdAt: DateTime!
+  userId: ID!
 
-  creator: User
+  creator: User!
   participants: [User!]
   announces: [Announces!]
 }
@@ -36,6 +37,7 @@ extend type Query {
   events: [Event!]!
   myEvents: [Event!]!
   event(eventId: ID!): Event
+  me: User
 }
 
 extend type Mutation {

@@ -46,6 +46,13 @@ export const typeDefs = {
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } },
           directives: [],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'me' },
+          arguments: [],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+          directives: [],
+        },
       ],
       directives: [],
       interfaces: [],
@@ -172,7 +179,7 @@ export const typeDefs = {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'event' },
           arguments: [],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } },
           directives: [],
         },
         {
@@ -241,9 +248,16 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'userId' },
+          arguments: [],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'creator' },
           arguments: [],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
           directives: [],
         },
         {
