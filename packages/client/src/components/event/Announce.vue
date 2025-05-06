@@ -3,16 +3,12 @@ defineProps<{
   announces: any
 }>()
 </script>
-
 <template>
-  <div v-for="anounce in announces" class="m-4">
-      <div class="text-2xl">{{ anounce.title }}</div> 
-      <div class="desc" v-if="anounce.description != ''">{{  anounce.description }}</div>
+  <div v-if="announces.length !== 0">
+      <h2>Anunțuri:</h2>
+      <div v-for="announce in announces">
+          <h3>{{ announce.title }}</h3> 
+          <p v-if="announce.desc != ''">{{  announce.description }}</p>
+      </div>
   </div>
 </template>
-
-<style scoped>
-.desc {
-  color: #666
-}
-</style>
