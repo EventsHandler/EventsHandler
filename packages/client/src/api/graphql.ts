@@ -68,9 +68,7 @@ export type MutationCreateAnnounceArgs = {
 export type MutationCreateEventArgs = {
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
   description: Scalars['String']['input']
-  image: Scalars['String']['input']
   title: Scalars['String']['input']
 }
 
@@ -90,6 +88,7 @@ export type MutationSubscribeArgs = {
 
 export type MutationTestUploadArgs = {
   file: Scalars['Upload']['input']
+  test: Scalars['String']['input']
 }
 
 export type Query = {
@@ -118,8 +117,6 @@ export type User = {
 export type CreateEventMutationVariables = Exact<{
   title: Scalars['String']['input']
   description: Scalars['String']['input']
-  image: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
 }>
@@ -154,6 +151,7 @@ export type RegisterMutation = {
 
 export type UploadFileMutationVariables = Exact<{
   file: Scalars['Upload']['input']
+  test: Scalars['String']['input']
 }>
 
 export type UploadFileMutation = { __typename?: 'Mutation'; testUpload: string }
@@ -238,16 +236,6 @@ export const CreateEventDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
-        },
-        {
-          kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
         },
@@ -273,16 +261,6 @@ export const CreateEventDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'description' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'image' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'date' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
               },
               {
                 kind: 'Argument',
@@ -459,6 +437,11 @@ export const UploadFileDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'test' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
@@ -471,6 +454,11 @@ export const UploadFileDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'file' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'file' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'test' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'test' } },
               },
             ],
           },

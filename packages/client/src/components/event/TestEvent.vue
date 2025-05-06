@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Announces from './Announce.vue'
-import Participants from './Participapnts.vue'
+import Participants from '../user/ProfileMini.vue'
 defineProps<{
   event: any
 }>()

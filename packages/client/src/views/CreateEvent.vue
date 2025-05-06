@@ -2,6 +2,13 @@
 import CreateEvent from '@/components/event/Create.vue';
 import { ref } from 'vue';
 
+import { CreateEventDocument } from '@/api/graphql';
+import { useMutation } from '@vue/apollo-composable';
+
+const { mutate } = useMutation(CreateEventDocument)
+
+const image = ref<File | null>(null)
+
 const form = ref<any>({
   title: '',
   description: '',
@@ -10,25 +17,30 @@ const form = ref<any>({
   location: '',
   category: '',
   creator: '',
-  image: null,
   imagePreview: null
 });
 
-const file = ref<File | any>(null)
-
 const removeImage = () => {
   console.log('Remove image clicked');
-  form.value.image = null
+  image.value = null
 };
 
-const uploadPhoto = () => {
+const uploadPhoto = (event: any) => {
   console.log('Upload photo clicked');
-  form.value.image = file.value.files[0]
-  if(form.value.image) form.value.imagePreview = URL.createObjectURL(form.value.image)
+  image.value = event.target.files[0]
+  if(image.value) form.value.imagePreview = URL.createObjectURL(image.value)
 }
 
-const addEvent = () => {
+const addEvent = async () => {
   console.log('Event data:', form.value);
+  const sendDateToClient = `${form.value.date}T${form.value.time}:00.000Z`
+  console.log(image.value)
+  await mutate({
+    title: form.value.title,
+    description: form.value.description,
+    address: form.value.address,
+    categoryName: form.value.category
+  })
 };
 </script>
 
@@ -36,9 +48,8 @@ const addEvent = () => {
   <main>
     <CreateEvent>
       <template #upload-input>
-        <div v-if="!form.image" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
+        <div v-if="!image" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
           <input
-            ref="file"
             type="file"
             accept="image/*"
             @change="uploadPhoto"
