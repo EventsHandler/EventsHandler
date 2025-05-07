@@ -1,4 +1,4 @@
-import { client } from '../../../../openai.js'
+import { chatCompletition } from '../../../../ai.js'
 import { prisma } from '../../../../prisma.js'
 import type { MutationResolvers } from './../../../types.generated.js'
 export const askForCategory: NonNullable<MutationResolvers['askForCategory']> = async (_parent, { input }, _ctx) => {
@@ -17,9 +17,6 @@ Available Categories: ${JSON.stringify(categories)}
 Output:
 Return only the single word corresponding to the name of the best matching category. Do not include any other words, explanations, or punctuation.
   `
-  const completion: any = await client.chat.completions.create({
-    messages: [{ role: "system", content: prompt}],
-    model: "o3-mini",
-  });
-  return completion.choices[0].message.content
+  const res = await chatCompletition(prompt)
+  return res
 }
