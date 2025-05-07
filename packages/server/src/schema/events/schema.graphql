@@ -74,4 +74,5 @@ extend type Mutation {
   createAnnounce(eventId: ID!, title: String!, description: String!): Announces!
   apiTest(input: String!): String
   deleteEvent(eventId: ID!): Event
+  askForCategory(input: String!): String!
 }
