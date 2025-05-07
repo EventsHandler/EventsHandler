@@ -96,5 +96,10 @@
   .auth-input {
     margin-bottom: 10px;
   }
+  @media (max-width: 500px) {
+    .auth-wrapper {
+      min-width: 100vw;
+    }
+  }
   </style>
   

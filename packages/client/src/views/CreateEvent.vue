@@ -58,7 +58,7 @@ onResultEvent(({data}) => {
     form.value.category = data.event.category.name
     form.value.date = date
     form.value.time = time
-    form.value.imagePreview = `http://localhost:3000/uploads/${data.event.image}`
+    form.value.imagePreview = `/uploads/${data.event.image}`
   }
 })
 

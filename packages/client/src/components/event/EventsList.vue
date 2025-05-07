@@ -13,11 +13,10 @@ defineProps<{
 
 <style scoped>
 main {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  grid-template-rows: auto;
+  gap: 1.5rem;
   padding: 3rem;
-  gap: 3rem;
-  min-height: calc(100vh - 80px);
-  justify-content: center;
 }
 </style>
