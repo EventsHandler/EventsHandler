@@ -39,6 +39,7 @@ type Mutation {
     image: Upload!
     title: String!
   ): Event!
+  deleteEvent(eventId: ID!): Event
   editEvent(
     address: String!
     categoryName: String!

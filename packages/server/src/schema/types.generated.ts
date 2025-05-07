@@ -57,6 +57,7 @@ export type Mutation = {
   apiTest?: Maybe<Scalars['String']['output']>
   createAnnounce: Announces
   createEvent: Event
+  deleteEvent?: Maybe<Event>
   editEvent: Event
   login: User
   register: User
@@ -82,6 +83,10 @@ export type MutationcreateEventArgs = {
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
   title: Scalars['String']['input']
+}
+
+export type MutationdeleteEventArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type MutationeditEventArgs = {
@@ -313,6 +318,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationcreateEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'image' | 'title'>
+  >
+  deleteEvent?: Resolver<
+    Maybe<ResolversTypes['Event']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationdeleteEventArgs, 'eventId'>
   >
   editEvent?: Resolver<
     ResolversTypes['Event'],

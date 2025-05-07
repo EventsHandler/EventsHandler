@@ -8,6 +8,7 @@ import { myEvents as Query_myEvents } from './events/resolvers/Query/myEvents.js
 import { apiTest as Mutation_apiTest } from './events/resolvers/Mutation/apiTest.js'
 import { createAnnounce as Mutation_createAnnounce } from './events/resolvers/Mutation/createAnnounce.js'
 import { createEvent as Mutation_createEvent } from './events/resolvers/Mutation/createEvent.js'
+import { deleteEvent as Mutation_deleteEvent } from './events/resolvers/Mutation/deleteEvent.js'
 import { editEvent as Mutation_editEvent } from './events/resolvers/Mutation/editEvent.js'
 import { login as Mutation_login } from './events/resolvers/Mutation/login.js'
 import { register as Mutation_register } from './events/resolvers/Mutation/register.js'
@@ -32,6 +33,7 @@ export const resolvers: Resolvers = {
     apiTest: Mutation_apiTest,
     createAnnounce: Mutation_createAnnounce,
     createEvent: Mutation_createEvent,
+    deleteEvent: Mutation_deleteEvent,
     editEvent: Mutation_editEvent,
     login: Mutation_login,
     register: Mutation_register,

@@ -54,6 +54,7 @@ export type Mutation = {
   apiTest?: Maybe<Scalars['String']['output']>
   createAnnounce: Announces
   createEvent: Event
+  deleteEvent?: Maybe<Event>
   editEvent: Event
   login: User
   register: User
@@ -79,6 +80,10 @@ export type MutationCreateEventArgs = {
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
   title: Scalars['String']['input']
+}
+
+export type MutationDeleteEventArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type MutationEditEventArgs = {
@@ -209,6 +214,12 @@ export type CreateAnnounceMutation = {
   __typename?: 'Mutation'
   createAnnounce: { __typename?: 'Announces'; title: string }
 }
+
+export type DeleteEventMutationVariables = Exact<{
+  eventId: Scalars['ID']['input']
+}>
+
+export type DeleteEventMutation = { __typename?: 'Mutation'; deleteEvent?: { __typename?: 'Event'; id: string } | null }
 
 export type EventsQueryVariables = Exact<{ [key: string]: never }>
 
@@ -740,6 +751,43 @@ export const CreateAnnounceDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateAnnounceMutation, CreateAnnounceMutationVariables>
+export const DeleteEventDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeleteEvent' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deleteEvent' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'eventId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteEventMutation, DeleteEventMutationVariables>
 export const EventsDocument = {
   kind: 'Document',
   definitions: [

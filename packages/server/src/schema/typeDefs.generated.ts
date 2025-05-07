@@ -290,6 +290,20 @@ export const typeDefs = {
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
           directives: [],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'deleteEvent' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } },
+          directives: [],
+        },
       ],
       directives: [],
       interfaces: [],
