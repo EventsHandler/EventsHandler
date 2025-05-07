@@ -54,6 +54,7 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  apiTest?: Maybe<Scalars['String']['output']>
   createAnnounce: Announces
   createEvent: Event
   editEvent: Event
@@ -62,6 +63,10 @@ export type Mutation = {
   subscribe: Event
   testUpload: Scalars['String']['output']
   unsubscribe: Event
+}
+
+export type MutationapiTestArgs = {
+  input: Scalars['String']['input']
 }
 
 export type MutationcreateAnnounceArgs = {
@@ -291,6 +296,12 @@ export type MutationResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
+  apiTest?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationapiTestArgs, 'input'>
+  >
   createAnnounce?: Resolver<
     ResolversTypes['Announces'],
     ParentType,

@@ -100,6 +100,10 @@ const editEvent = async () => {
   router.push('/event/' + route.params.id)
 }
 
+const deleteEvent = async () => {
+  console.log("test")
+}
+
 const userStore = useUserStore()
 </script>
 
@@ -152,7 +156,10 @@ const userStore = useUserStore()
 
       <template #create-button>
         <button v-if="!result?.event" @click="addEvent">Create Event</button>
-        <button v-else @click="editEvent">Edit Event</button>
+        <div v-else class="flex flex-col">
+          <button @click="editEvent">Edit Event</button>
+          <button @click="deleteEvent">Delete Event</button>
+        </div>
       </template>
     </CreateEvent>
     <NoLoggin v-else-if="!userStore.loading" />

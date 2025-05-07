@@ -51,6 +51,7 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  apiTest?: Maybe<Scalars['String']['output']>
   createAnnounce: Announces
   createEvent: Event
   editEvent: Event
@@ -59,6 +60,10 @@ export type Mutation = {
   subscribe: Event
   testUpload: Scalars['String']['output']
   unsubscribe: Event
+}
+
+export type MutationApiTestArgs = {
+  input: Scalars['String']['input']
 }
 
 export type MutationCreateAnnounceArgs = {

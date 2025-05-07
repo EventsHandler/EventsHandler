@@ -72,4 +72,5 @@ extend type Mutation {
   unsubscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!
   createAnnounce(eventId: ID!, title: String!, description: String!): Announces!
+  apiTest(input: String!): String
 }
