@@ -63,6 +63,7 @@ const toggleVisibility = () =>{
           v-model="userInput"
           placeholder="Introduceți întrebarea..."
           required
+          @keydown.enter.exact.prevent="chatHandle"
         ></textarea>
         <span
           id="send-btn"
