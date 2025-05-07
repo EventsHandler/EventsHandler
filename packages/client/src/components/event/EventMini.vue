@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { type Event } from '@/api/graphql';
+
 defineProps<{
   event: Event
-}>()
+}>();
+
 function formatDate(date: string) {
-  return new Date(date).toLocaleString("ro-RO", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  return new Date(date).toLocaleString('ro-RO', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
     hour12: false,
   });
 }
