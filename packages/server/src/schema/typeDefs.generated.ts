@@ -9,7 +9,14 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'events' },
-          arguments: [],
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'category' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
           type: {
             kind: 'NonNullType',
             type: {

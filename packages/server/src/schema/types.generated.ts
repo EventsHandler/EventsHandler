@@ -140,6 +140,10 @@ export type QueryeventArgs = {
   eventId: Scalars['ID']['input']
 }
 
+export type QueryeventsArgs = {
+  category?: InputMaybe<Scalars['String']['input']>
+}
+
 export type User = {
   __typename?: 'User'
   createdAt: Scalars['DateTime']['output']
@@ -375,7 +379,7 @@ export type QueryResolvers<
 > = {
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
-  events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+  events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType, Partial<QueryeventsArgs>>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
 }

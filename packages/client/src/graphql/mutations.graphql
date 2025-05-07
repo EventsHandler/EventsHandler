@@ -55,3 +55,7 @@ mutation DeleteEvent($eventId: ID!) {
     id
   }
 }
+
+mutation AskForCategory($input: String!) {
+  askForCategory(input: $input)
+}

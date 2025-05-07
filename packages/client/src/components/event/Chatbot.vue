@@ -1,29 +1,40 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { AskForCategoryDocument } from '@/api/graphql';
+import { useMutation } from '@vue/apollo-composable';
+
+const { mutate, loading } = useMutation(AskForCategoryDocument)
+
 const userInput = ref('')
 const messages = ref<{ text: string; type: 'incoming' | 'outgoing' }[]>([
   { text: 'Salut! Cu ce te pot ajuta?', type: 'incoming' }
 ])
 
-const chatHandle = () => {
+const emit = defineEmits<{
+  (e: 'refetchCategory', c: string): void
+}>()
+
+const chatHandle = async () => {
   const input = userInput.value.trim()
   if (!input) return
   messages.value.push({ text: input, type: 'outgoing' })
   userInput.value = ''
-  setTimeout(() => {
-    messages.value.push({ text: 'Se gândește...', type: 'incoming' })
-  }, 600)
+  const res = await mutate({ input })
+  const category = res?.data?.askForCategory
+  if(!category) return
+  messages.value.push({ text: "Cauta: " + category, type: 'incoming' })
+  emit('refetchCategory', category)
 }
 
- const container = ref<HTMLElement | null>(null)
+const container = ref<HTMLElement | null>(null)
 const toggleVisibility = () =>{
     container.value?.classList.toggle("show-chatbot")
 }
 </script>
 
 <template>
-  <div class="show-chatbot" ref="container">
+  <div class="" ref="container">
     <button class="chatbot-toggle"  @click="toggleVisibility">
       <span><i class="fa-solid fa-message"></i></span>
       <span><i class="fa-regular fa-circle-xmark"></i></span>
@@ -40,7 +51,12 @@ const toggleVisibility = () =>{
           <span v-if="msg.type === 'incoming'"><i class="fa-solid fa-robot"></i></span>
           <p>{{ msg.text }}</p>
         </li>
+        <li v-if="loading">
+          <span><i class="fa-solid fa-robot"></i></span>
+          <p>Loading...</p>
+        </li>
       </ul>
+        
 
       <div class="chat-input">
         <textarea
