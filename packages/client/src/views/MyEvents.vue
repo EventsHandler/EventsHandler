@@ -7,6 +7,7 @@ import { MyEventsDocument, type Event as IEvent } from '@/api/graphql';
 import { useQuery } from '@vue/apollo-composable';
 import router from '@/router';
 import { useUserStore } from '@/store/user';
+import { storeToRefs } from 'pinia';
 
 const events = ref<IEvent[] | null>(null)
 
@@ -19,14 +20,15 @@ onResult(({ data }) => {
 })
 
 const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
 
-watch(() => userStore.user, () => {
+watch(user, () => {
   refetch()
-})
+}, { immediate: true })
 
 </script>
 
 <template>
-  <EventsList v-if="events && userStore.user" :events="events"></EventsList>
+  <EventsList v-if="events && userStore.user && !loading" :events="events"></EventsList>
   <NoLoggin v-else-if="!userStore.loading && !loading" />
 </template>
