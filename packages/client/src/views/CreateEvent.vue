@@ -3,7 +3,7 @@ import CreateEvent from '@/components/event/Create.vue';
 import NoLoggin from '@/components/assets/NoLoggin.vue';
 import { onMounted, ref, toRef } from 'vue';
 
-import { CreateEventDocument, CategorysDocument, type Category, EventDocument, EditEventDocument } from '@/api/graphql';
+import { CreateEventDocument, CategorysDocument, type Category, EventDocument, EditEventDocument, DeleteEventDocument } from '@/api/graphql';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 
 import router from '@/router'
@@ -14,6 +14,7 @@ const route = useRoute()
 
 const { mutate } = useMutation(CreateEventDocument)
 const { mutate: mutateEdit } = useMutation(EditEventDocument)
+const { mutate: mutateDelete } = useMutation(DeleteEventDocument)
 const { onResult } = useQuery(CategorysDocument)
 
 const categories = ref<Category[] | null>(null)
@@ -57,7 +58,7 @@ onResultEvent(({data}) => {
     form.value.category = data.event.category.name
     form.value.date = date
     form.value.time = time
-    form.value.imagePreview = `http://localhost:3000/uploads/${data.event.image}`
+    form.value.imagePreview = `/uploads/${data.event.image}`
   }
 })
 
@@ -98,6 +99,13 @@ const editEvent = async () => {
     eventId: route.params.id as string
   })
   router.push('/event/' + route.params.id)
+}
+
+const deleteEvent = async () => {
+  await mutateDelete({
+    eventId: route.params.id as string
+  })
+  router.push('/events')
 }
 
 const userStore = useUserStore()
@@ -152,7 +160,10 @@ const userStore = useUserStore()
 
       <template #create-button>
         <button v-if="!result?.event" @click="addEvent">Create Event</button>
-        <button v-else @click="editEvent">Edit Event</button>
+        <div v-else class="flex flex-col">
+          <button @click="editEvent">Edit Event</button>
+          <button @click="deleteEvent">Delete Event</button>
+        </div>
       </template>
     </CreateEvent>
     <NoLoggin v-else-if="!userStore.loading" />

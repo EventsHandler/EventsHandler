@@ -24,7 +24,7 @@ const { user } = storeToRefs(userStore)
 
 watch(user, () => {
   refetch()
-}, { immediate: true })
+})
 
 </script>
 

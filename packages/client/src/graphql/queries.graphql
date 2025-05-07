@@ -1,5 +1,5 @@
-query Events {
-  events {
+query Events($category: String) {
+  events(category: $category) {
     id
     title
     description

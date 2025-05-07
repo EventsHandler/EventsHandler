@@ -51,14 +51,25 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  apiTest?: Maybe<Scalars['String']['output']>
+  askForCategory: Scalars['String']['output']
   createAnnounce: Announces
   createEvent: Event
+  deleteEvent?: Maybe<Event>
   editEvent: Event
   login: User
   register: User
   subscribe: Event
   testUpload: Scalars['String']['output']
   unsubscribe: Event
+}
+
+export type MutationApiTestArgs = {
+  input: Scalars['String']['input']
+}
+
+export type MutationAskForCategoryArgs = {
+  input: Scalars['String']['input']
 }
 
 export type MutationCreateAnnounceArgs = {
@@ -74,6 +85,10 @@ export type MutationCreateEventArgs = {
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
   title: Scalars['String']['input']
+}
+
+export type MutationDeleteEventArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type MutationEditEventArgs = {
@@ -120,6 +135,10 @@ export type Query = {
 
 export type QueryEventArgs = {
   eventId: Scalars['ID']['input']
+}
+
+export type QueryEventsArgs = {
+  category?: InputMaybe<Scalars['String']['input']>
 }
 
 export type User = {
@@ -205,7 +224,21 @@ export type CreateAnnounceMutation = {
   createAnnounce: { __typename?: 'Announces'; title: string }
 }
 
-export type EventsQueryVariables = Exact<{ [key: string]: never }>
+export type DeleteEventMutationVariables = Exact<{
+  eventId: Scalars['ID']['input']
+}>
+
+export type DeleteEventMutation = { __typename?: 'Mutation'; deleteEvent?: { __typename?: 'Event'; id: string } | null }
+
+export type AskForCategoryMutationVariables = Exact<{
+  input: Scalars['String']['input']
+}>
+
+export type AskForCategoryMutation = { __typename?: 'Mutation'; askForCategory: string }
+
+export type EventsQueryVariables = Exact<{
+  category?: InputMaybe<Scalars['String']['input']>
+}>
 
 export type EventsQuery = {
   __typename?: 'Query'
@@ -735,6 +768,76 @@ export const CreateAnnounceDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateAnnounceMutation, CreateAnnounceMutationVariables>
+export const DeleteEventDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'DeleteEvent' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'deleteEvent' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'eventId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteEventMutation, DeleteEventMutationVariables>
+export const AskForCategoryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AskForCategory' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'askForCategory' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AskForCategoryMutation, AskForCategoryMutationVariables>
 export const EventsDocument = {
   kind: 'Document',
   definitions: [
@@ -742,12 +845,26 @@ export const EventsDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'Events' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'category' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'events' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'category' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'category' } },
+              },
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [

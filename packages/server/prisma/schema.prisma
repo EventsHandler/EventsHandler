@@ -74,6 +74,8 @@ model User {
 
   // m-m: for Participants
   events Event[] @relation("EventParticipants")
+  rates Rateing[] @relation("fromRates")
+  myRates Rateing[] @relation("toRates")
 }
 
 model Category {
@@ -82,4 +84,13 @@ model Category {
 
   // 1-m: for Participants
   events Event[]
+}
+
+model Rateing {
+  id String @id @default(cuid(2))
+  fromId String
+  fromUser User? @relation("fromRates", fields: [fromId], references: [id])
+  toId String
+  toUser User? @relation("toRates", fields: [toId], references: [id])
+  rate Int @default(0)
 }

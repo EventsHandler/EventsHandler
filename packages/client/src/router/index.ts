@@ -9,6 +9,11 @@ const router = createRouter({
       component: () => import('../views/RandomEvents.vue'),
     },
     {
+      path: '/',
+      name: 'home',
+      component: () => import('../views/RandomEvents.vue'),
+    },
+    {
 
       path: '/myEvents',
       name: 'my events',
@@ -38,11 +43,6 @@ const router = createRouter({
       path: '/announce/:id',
       name: 'announce',
       component: () => import('../views/AddAnnounce.vue'),
-    },
-    {
-      path: '/chatbot',
-      name: 'chatbot',
-      component: () => import('../views/TestChatbot.vue'),
     },
   ],
 })

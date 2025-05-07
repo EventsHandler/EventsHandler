@@ -18,7 +18,7 @@ function formatDate(date: string) {
 <template>
   <div class="event">
     <div class="image-wrapper">
-      <img :src="'http://localhost:3000/uploads/' + event.image" :alt="event.title">
+      <img :src="'/uploads/' + event.image" :alt="event.title">
     </div>
         <div class="event-mini-info">
         <div class="event-title">{{ event.title }}</div>
@@ -39,6 +39,7 @@ function formatDate(date: string) {
       <path d="M21.75 7.5H2.25"></path>
     </svg> {{ formatDate(event.date) }}</div>
     </div>
+
     <div class="details"><a :href="'/event/' + event.id">Mai multe detalii</a></div>
   </div>
 </template>

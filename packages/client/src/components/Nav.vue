@@ -31,14 +31,14 @@ const toggleMenu = () => {
         </button>
 
         <div class="hidden md:flex items-center space-x-12">
-          <Menu />
+          <Menu @close-menu="isMenuOpen = false" />
         </div>
       </div>
 
       <div class="md:hidden" :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }">
         <hr class="border-t-2">
         <div class="pl-5 py-5 space-y-5">
-          <Menu @close="isMenuOpen = false" />
+          <Menu @close-menu="isMenuOpen = false" />
         </div>
       </div>
     </div>

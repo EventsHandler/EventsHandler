@@ -49,3 +49,13 @@ mutation CreateAnnounce($eventId: ID!, $title: String!, $description: String!) {
     title
   }
 }
+
+mutation DeleteEvent($eventId: ID!) {
+  deleteEvent(eventId: $eventId) {
+    id
+  }
+}
+
+mutation AskForCategory($input: String!) {
+  askForCategory(input: $input)
+}

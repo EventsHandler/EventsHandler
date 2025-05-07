@@ -29,6 +29,8 @@ type Event {
 }
 
 type Mutation {
+  apiTest(input: String!): String
+  askForCategory(input: String!): String!
   createAnnounce(description: String!, eventId: ID!, title: String!): Announces!
   createEvent(
     address: String!
@@ -38,6 +40,7 @@ type Mutation {
     image: Upload!
     title: String!
   ): Event!
+  deleteEvent(eventId: ID!): Event
   editEvent(
     address: String!
     categoryName: String!
@@ -57,7 +60,7 @@ type Mutation {
 type Query {
   categories: [Category!]
   event(eventId: ID!): Event
-  events: [Event!]!
+  events(category: String): [Event!]!
   me: User
   myEvents: [Event!]
 }
