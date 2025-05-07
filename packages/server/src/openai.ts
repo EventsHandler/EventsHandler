@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-export const client = new OpenAI({ baseURL: "https://api.aimlapi.com/v1", apiKey: "2cd4c82ff2d841ca9b0da68b6864df53" })
+export const client = new OpenAI({ baseURL: "https://api.aimlapi.com/v1", apiKey: process.env.API })
 
 // example
 async function test() {
