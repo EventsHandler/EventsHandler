@@ -57,6 +57,7 @@ export type Mutation = {
   register: User
   subscribe: Event
   testUpload: Scalars['String']['output']
+  unsubscribe: Event
 }
 
 export type MutationCreateAnnounceArgs = {
@@ -93,6 +94,10 @@ export type MutationTestUploadArgs = {
   test: Scalars['String']['input']
 }
 
+export type MutationUnsubscribeArgs = {
+  eventId: Scalars['ID']['input']
+}
+
 export type Query = {
   __typename?: 'Query'
   categories?: Maybe<Array<Category>>
@@ -127,11 +132,28 @@ export type CreateEventMutationVariables = Exact<{
 
 export type CreateEventMutation = { __typename?: 'Mutation'; createEvent: { __typename?: 'Event'; id: string } }
 
+export type EditEventMutationVariables = Exact<{
+  title: Scalars['String']['input']
+  description: Scalars['String']['input']
+  date: Scalars['DateTime']['input']
+  image: Scalars['Upload']['input']
+  address: Scalars['String']['input']
+  categoryName: Scalars['String']['input']
+}>
+
+export type EditEventMutation = { __typename?: 'Mutation'; createEvent: { __typename?: 'Event'; id: string } }
+
 export type SubscribeEventMutationVariables = Exact<{
   eventId: Scalars['ID']['input']
 }>
 
 export type SubscribeEventMutation = { __typename?: 'Mutation'; subscribe: { __typename?: 'Event'; id: string } }
+
+export type UnsubscribeEventMutationVariables = Exact<{
+  eventId: Scalars['ID']['input']
+}>
+
+export type UnsubscribeEventMutation = { __typename?: 'Mutation'; unsubscribe: { __typename?: 'Event'; id: string } }
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String']['input']
@@ -212,7 +234,7 @@ export type EventQuery = {
     address: string
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
-    participants?: Array<{ __typename?: 'User'; username: string }> | null
+    participants?: Array<{ __typename?: 'User'; id: string; username: string }> | null
     category: { __typename?: 'Category'; name: string }
   } | null
 }
@@ -315,6 +337,93 @@ export const CreateEventDocument = {
     },
   ],
 } as unknown as DocumentNode<CreateEventMutation, CreateEventMutationVariables>
+export const EditEventDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'EditEvent' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'categoryName' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createEvent' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'title' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'title' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'description' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'description' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'date' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'image' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'address' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'address' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'categoryName' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'categoryName' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<EditEventMutation, EditEventMutationVariables>
 export const SubscribeEventDocument = {
   kind: 'Document',
   definitions: [
@@ -352,6 +461,43 @@ export const SubscribeEventDocument = {
     },
   ],
 } as unknown as DocumentNode<SubscribeEventMutation, SubscribeEventMutationVariables>
+export const UnsubscribeEventDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'UnsubscribeEvent' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'unsubscribe' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'eventId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UnsubscribeEventMutation, UnsubscribeEventMutationVariables>
 export const LoginDocument = {
   kind: 'Document',
   definitions: [
@@ -682,7 +828,10 @@ export const EventDocument = {
                   name: { kind: 'Name', value: 'participants' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                    ],
                   },
                 },
                 {

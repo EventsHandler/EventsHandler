@@ -4,8 +4,20 @@ mutation CreateEvent($title: String!, $description: String!, $date: DateTime!, $
   }
 }
 
+mutation EditEvent($title: String!, $description: String!, $date: DateTime!, $image: Upload!, $address: String!, $categoryName: String!) {
+  createEvent(title: $title, description: $description, date: $date, image: $image, address: $address, categoryName: $categoryName) {
+    id
+  }
+}
+
 mutation SubscribeEvent($eventId: ID!) {
   subscribe(eventId: $eventId) {
+    id
+  }
+}
+
+mutation UnsubscribeEvent($eventId: ID!) {
+  unsubscribe(eventId: $eventId) {
     id
   }
 }

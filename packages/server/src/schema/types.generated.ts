@@ -60,6 +60,7 @@ export type Mutation = {
   register: User
   subscribe: Event
   testUpload: Scalars['String']['output']
+  unsubscribe: Event
 }
 
 export type MutationcreateAnnounceArgs = {
@@ -94,6 +95,10 @@ export type MutationsubscribeArgs = {
 export type MutationtestUploadArgs = {
   file: Scalars['Upload']['input']
   test: Scalars['String']['input']
+}
+
+export type MutationunsubscribeArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type Query = {
@@ -305,6 +310,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationtestUploadArgs, 'file' | 'test'>
+  >
+  unsubscribe?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationunsubscribeArgs, 'eventId'>
   >
 }
 

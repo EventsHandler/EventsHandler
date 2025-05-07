@@ -60,6 +60,7 @@ extend type Mutation {
     categoryName: String!
   ): Event!
   subscribe(eventId: ID!): Event!
+  unsubscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!
   createAnnounce(eventId: ID!, title: String!, description: String!): Announces!
 }

@@ -11,6 +11,7 @@ import { login as Mutation_login } from './events/resolvers/Mutation/login.js'
 import { register as Mutation_register } from './events/resolvers/Mutation/register.js'
 import { subscribe as Mutation_subscribe } from './events/resolvers/Mutation/subscribe.js'
 import { testUpload as Mutation_testUpload } from './events/resolvers/Mutation/testUpload.js'
+import { unsubscribe as Mutation_unsubscribe } from './events/resolvers/Mutation/unsubscribe.js'
 import { Announces } from './events/resolvers/Announces.js'
 import { Category } from './events/resolvers/Category.js'
 import { Event } from './events/resolvers/Event.js'
@@ -32,6 +33,7 @@ export const resolvers: Resolvers = {
     register: Mutation_register,
     subscribe: Mutation_subscribe,
     testUpload: Mutation_testUpload,
+    unsubscribe: Mutation_unsubscribe,
   },
 
   Announces: Announces,

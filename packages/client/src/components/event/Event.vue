@@ -1,18 +1,35 @@
 <script setup lang="ts">
 import Announces from './Announce.vue';
 import Participants from '../user/ProfileMini.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
-import { type Event } from '@/api/graphql';
+import { type Event, SubscribeEventDocument, UnsubscribeEventDocument } from '@/api/graphql';
 import { useUserStore } from '@/store/user';
 
-defineProps<{
+import { useMutation } from '@vue/apollo-composable';
+
+const { mutate: mutateSub } = useMutation(SubscribeEventDocument)
+const { mutate: mutateUnSub } = useMutation(UnsubscribeEventDocument)
+
+const props = defineProps<{
   event: Event
+  loading: Boolean
 }>()
 
-function edit(event: string) {}
-function join(event: string) {}
-function announce(event: string) {}
+const emit = defineEmits<{
+  (e: 'refetch'): void
+}>()
+
+function edit() {}
+async function join() {
+  await mutateSub({ eventId: props.event.id })
+  emit('refetch')
+}
+async function leave() {
+  await mutateUnSub({ eventId: props.event.id })
+  emit('refetch')
+}
+function announce() {}
 function formatDate(date: string) {
   return new Date(date).toLocaleString("ro-RO", {
     day: "2-digit",
@@ -29,7 +46,7 @@ const showFullDescription = ref<boolean>(false)
 const userStore = useUserStore()
 
 onMounted(() => {
-  userStore.refreshUser()
+  emit('refetch')  
 })
 </script>
 
@@ -51,9 +68,17 @@ onMounted(() => {
         <Participants v-for="user in event.participants" :user="user" />
       </div>
       <div class="detaiils-container">
-        <button v-if="userStore.user?.id != event.creator.id" @click="() => join(event.id)">Alătură-te evenimentului</button>
-        <button v-else @click="() => edit(event.id)">Editează evenimentul</button>
-        <button v-if="userStore.user?.id == event.creator.id" @click="() => announce(event.id)">Posteaza un anunț</button>
+        <div v-if="!loading">
+          <div v-if="userStore.user?.id != event.creator.id" class="w-full">
+            <button class="w-full" v-if="!event.participants?.find(a => a.id == userStore.user?.id)" @click="join">Alătură-te evenimentului</button>
+            <button class="w-full" v-else @click="leave">Ieși din eveniment</button>
+          </div>
+          <div v-else class="flex-col flex w-full">
+            <button class="w-full" @click="edit">Editează evenimentul</button>
+            <button class="w-full" @click="announce">Posteaza un anunț</button>
+          </div>
+        </div>
+        <button v-else>Loading...</button>
         <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
         <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a></div>

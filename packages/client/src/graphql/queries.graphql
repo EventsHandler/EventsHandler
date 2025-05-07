@@ -59,6 +59,7 @@ query Event($eventId: ID!) {
       description
     }
     participants {
+      id
       username
     }
     category {
