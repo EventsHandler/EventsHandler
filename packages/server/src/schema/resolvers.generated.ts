@@ -7,6 +7,7 @@ import { me as Query_me } from './events/resolvers/Query/me.js'
 import { myEvents as Query_myEvents } from './events/resolvers/Query/myEvents.js'
 import { createAnnounce as Mutation_createAnnounce } from './events/resolvers/Mutation/createAnnounce.js'
 import { createEvent as Mutation_createEvent } from './events/resolvers/Mutation/createEvent.js'
+import { editEvent as Mutation_editEvent } from './events/resolvers/Mutation/editEvent.js'
 import { login as Mutation_login } from './events/resolvers/Mutation/login.js'
 import { register as Mutation_register } from './events/resolvers/Mutation/register.js'
 import { subscribe as Mutation_subscribe } from './events/resolvers/Mutation/subscribe.js'
@@ -29,6 +30,7 @@ export const resolvers: Resolvers = {
   Mutation: {
     createAnnounce: Mutation_createAnnounce,
     createEvent: Mutation_createEvent,
+    editEvent: Mutation_editEvent,
     login: Mutation_login,
     register: Mutation_register,
     subscribe: Mutation_subscribe,

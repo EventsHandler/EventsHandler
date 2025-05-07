@@ -53,6 +53,7 @@ export type Mutation = {
   __typename?: 'Mutation'
   createAnnounce: Announces
   createEvent: Event
+  editEvent: Event
   login: User
   register: User
   subscribe: Event
@@ -72,6 +73,16 @@ export type MutationCreateEventArgs = {
   date: Scalars['DateTime']['input']
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
+  title: Scalars['String']['input']
+}
+
+export type MutationEditEventArgs = {
+  address: Scalars['String']['input']
+  categoryName: Scalars['String']['input']
+  date: Scalars['DateTime']['input']
+  description: Scalars['String']['input']
+  eventId: Scalars['ID']['input']
+  image?: InputMaybe<Scalars['Upload']['input']>
   title: Scalars['String']['input']
 }
 
@@ -136,12 +147,13 @@ export type EditEventMutationVariables = Exact<{
   title: Scalars['String']['input']
   description: Scalars['String']['input']
   date: Scalars['DateTime']['input']
-  image: Scalars['Upload']['input']
+  image?: InputMaybe<Scalars['Upload']['input']>
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
+  eventId: Scalars['ID']['input']
 }>
 
-export type EditEventMutation = { __typename?: 'Mutation'; createEvent: { __typename?: 'Event'; id: string } }
+export type EditEventMutation = { __typename?: 'Mutation'; editEvent: { __typename?: 'Event'; id: string } }
 
 export type SubscribeEventMutationVariables = Exact<{
   eventId: Scalars['ID']['input']
@@ -363,7 +375,7 @@ export const EditEventDocument = {
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'image' } },
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } },
         },
         {
           kind: 'VariableDefinition',
@@ -375,13 +387,18 @@ export const EditEventDocument = {
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'categoryName' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
         },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+        },
       ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'createEvent' },
+            name: { kind: 'Name', value: 'editEvent' },
             arguments: [
               {
                 kind: 'Argument',
@@ -412,6 +429,11 @@ export const EditEventDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'categoryName' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'categoryName' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'eventId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
               },
             ],
             selectionSet: {
