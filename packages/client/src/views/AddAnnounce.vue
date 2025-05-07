@@ -1,14 +1,26 @@
 <script setup lang="ts">
 import Announce from '@/components/event/AddAnnounceTemplate.vue'
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+import { CreateAnnounceDocument } from '@/api/graphql';
+import { useMutation } from '@vue/apollo-composable';
+import router from '@/router';
+
+const { mutate } = useMutation(CreateAnnounceDocument)
 
 const title = ref('')
 const description = ref('')
 
-const addAnnounce = () => {
-    console.log('Title:', title.value);
-    console.log('Description:', description.value);
-    // logica de adaugare a anuntului
+const route = useRoute()
+
+const addAnnounce = async () => {
+    await mutate({
+        description: description.value,
+        title: title.value,
+        eventId: route.params.id as string
+    })
+    router.push("/event/" + route.params.id)
 };
 
 </script>

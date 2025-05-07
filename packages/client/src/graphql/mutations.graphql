@@ -43,3 +43,9 @@ mutation Register($username: String!, $password: String!, $email: String!) {
 mutation UploadFile($file: Upload!, $test: String!) {
   testUpload(file: $file, test: $test)
 }
+
+mutation CreateAnnounce($eventId: ID!, $title: String!, $description: String!) {
+  createAnnounce(eventId: $eventId, title: $title, description: $description) {
+    title
+  }
+}

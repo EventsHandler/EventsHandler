@@ -3,7 +3,7 @@ import CreateEvent from '@/components/event/Create.vue';
 import NoLoggin from '@/components/assets/NoLoggin.vue';
 import { onMounted, ref, toRef } from 'vue';
 
-import { CreateEventDocument, CategorysDocument, type Category, EventDocument } from '@/api/graphql';
+import { CreateEventDocument, CategorysDocument, type Category, EventDocument, EditEventDocument } from '@/api/graphql';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 
 import router from '@/router'
@@ -13,6 +13,7 @@ import { useUserStore } from '@/store/user';
 const route = useRoute()
 
 const { mutate } = useMutation(CreateEventDocument)
+const { mutate: mutateEdit } = useMutation(EditEventDocument)
 const { onResult } = useQuery(CategorysDocument)
 
 const categories = ref<Category[] | null>(null)
@@ -22,6 +23,15 @@ onResult(({data}) => {
     categories.value = data?.categories as Category[]
   }
 })
+
+const parseDateTime = (datetimeStr: string) => {
+  const dateObj = new Date(datetimeStr)
+
+  const date = dateObj.toISOString().slice(0, 10)
+  const time = dateObj.toTimeString().slice(0, 5)
+
+  return { date, time }
+}
 
 const image = ref<File | null>(null)
 
@@ -40,10 +50,13 @@ const { result, refetch, loading, onResult: onResultEvent } = useQuery(EventDocu
 
 onResultEvent(({data}) => {
   if(data?.event) {
+    const { date, time } = parseDateTime(data.event.date)
     form.value.title = data.event.title
     form.value.description = data.event.description
     form.value.location = data.event.address
     form.value.category = data.event.category.name
+    form.value.date = date
+    form.value.time = time
     form.value.imagePreview = `http://localhost:3000/uploads/${data.event.image}`
   }
 })
@@ -74,7 +87,17 @@ const addEvent = async () => {
 };
 
 const editEvent = async () => {
-  console.log("test")
+  const sendDateToClient = `${form.value.date}T${form.value.time}:00.000Z`
+  await mutateEdit({
+    title: form.value.title,
+    description: form.value.description,
+    image: image.value,
+    date: sendDateToClient,
+    address: form.value.location,
+    categoryName: form.value.category,
+    eventId: route.params.id as string
+  })
+  router.push('/event/' + route.params.id)
 }
 
 const userStore = useUserStore()

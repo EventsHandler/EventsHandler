@@ -7,6 +7,7 @@ import { type Event, SubscribeEventDocument, UnsubscribeEventDocument } from '@/
 import { useUserStore } from '@/store/user';
 
 import { useMutation } from '@vue/apollo-composable';
+import router from '@/router';
 
 const { mutate: mutateSub } = useMutation(SubscribeEventDocument)
 const { mutate: mutateUnSub } = useMutation(UnsubscribeEventDocument)
@@ -20,7 +21,9 @@ const emit = defineEmits<{
   (e: 'refetch'): void
 }>()
 
-function edit() {}
+function edit() {
+  router.push("/create/" + props.event.id)
+}
 async function join() {
   await mutateSub({ eventId: props.event.id })
   emit('refetch')
@@ -29,7 +32,9 @@ async function leave() {
   await mutateUnSub({ eventId: props.event.id })
   emit('refetch')
 }
-function announce() {}
+function announce() {
+  router.push("/announce/" + props.event.id)
+}
 function formatDate(date: string) {
   return new Date(date).toLocaleString("ro-RO", {
     day: "2-digit",
@@ -95,7 +100,6 @@ onMounted(() => {
 }
 .event-container {
   padding: 5rem;
-  padding-top: 9rem;
   background-color: #f9fafb;
 }
 @media (max-width: 768px) {
@@ -166,7 +170,7 @@ onMounted(() => {
   flex-direction: column;
   gap: 1rem;
     position: sticky;
-  top: 7rem;
+  top: 2rem;
 }
 .detaiils-container div {
   display: flex;
