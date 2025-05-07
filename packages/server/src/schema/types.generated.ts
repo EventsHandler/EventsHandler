@@ -54,14 +54,25 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  apiTest?: Maybe<Scalars['String']['output']>
+  askForCategory: Scalars['String']['output']
   createAnnounce: Announces
   createEvent: Event
+  deleteEvent?: Maybe<Event>
   editEvent: Event
   login: User
   register: User
   subscribe: Event
   testUpload: Scalars['String']['output']
   unsubscribe: Event
+}
+
+export type MutationapiTestArgs = {
+  input: Scalars['String']['input']
+}
+
+export type MutationaskForCategoryArgs = {
+  input: Scalars['String']['input']
 }
 
 export type MutationcreateAnnounceArgs = {
@@ -77,6 +88,10 @@ export type MutationcreateEventArgs = {
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
   title: Scalars['String']['input']
+}
+
+export type MutationdeleteEventArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type MutationeditEventArgs = {
@@ -123,6 +138,10 @@ export type Query = {
 
 export type QueryeventArgs = {
   eventId: Scalars['ID']['input']
+}
+
+export type QueryeventsArgs = {
+  category?: InputMaybe<Scalars['String']['input']>
 }
 
 export type User = {
@@ -291,6 +310,18 @@ export type MutationResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
+  apiTest?: Resolver<
+    Maybe<ResolversTypes['String']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationapiTestArgs, 'input'>
+  >
+  askForCategory?: Resolver<
+    ResolversTypes['String'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationaskForCategoryArgs, 'input'>
+  >
   createAnnounce?: Resolver<
     ResolversTypes['Announces'],
     ParentType,
@@ -302,6 +333,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationcreateEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'image' | 'title'>
+  >
+  deleteEvent?: Resolver<
+    Maybe<ResolversTypes['Event']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationdeleteEventArgs, 'eventId'>
   >
   editEvent?: Resolver<
     ResolversTypes['Event'],
@@ -342,7 +379,7 @@ export type QueryResolvers<
 > = {
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
-  events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType>
+  events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType, Partial<QueryeventsArgs>>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
 }

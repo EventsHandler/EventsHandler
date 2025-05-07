@@ -41,7 +41,7 @@ type User {
 }
 
 extend type Query {
-  events: [Event!]!
+  events(category: String): [Event!]!
   myEvents: [Event!]
   event(eventId: ID!): Event
   me: User
@@ -72,4 +72,7 @@ extend type Mutation {
   unsubscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!
   createAnnounce(eventId: ID!, title: String!, description: String!): Announces!
+  apiTest(input: String!): String
+  deleteEvent(eventId: ID!): Event
+  askForCategory(input: String!): String!
 }

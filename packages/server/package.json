@@ -27,6 +27,7 @@
     "graphql": "^16.11.0",
     "graphql-scalars": "^1.24.2",
     "graphql-upload-ts": "^2.1.2",
-    "graphql-yoga": "^5.13.4"
+    "graphql-yoga": "^5.13.4",
+    "openai": "^4.97.0"
   }
 }
