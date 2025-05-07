@@ -56,10 +56,12 @@ export type Mutation = {
   __typename?: 'Mutation'
   createAnnounce: Announces
   createEvent: Event
+  editEvent: Event
   login: User
   register: User
   subscribe: Event
   testUpload: Scalars['String']['output']
+  unsubscribe: Event
 }
 
 export type MutationcreateAnnounceArgs = {
@@ -74,6 +76,16 @@ export type MutationcreateEventArgs = {
   date: Scalars['DateTime']['input']
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
+  title: Scalars['String']['input']
+}
+
+export type MutationeditEventArgs = {
+  address: Scalars['String']['input']
+  categoryName: Scalars['String']['input']
+  date: Scalars['DateTime']['input']
+  description: Scalars['String']['input']
+  eventId: Scalars['ID']['input']
+  image?: InputMaybe<Scalars['Upload']['input']>
   title: Scalars['String']['input']
 }
 
@@ -94,6 +106,10 @@ export type MutationsubscribeArgs = {
 export type MutationtestUploadArgs = {
   file: Scalars['Upload']['input']
   test: Scalars['String']['input']
+}
+
+export type MutationunsubscribeArgs = {
+  eventId: Scalars['ID']['input']
 }
 
 export type Query = {
@@ -287,6 +303,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationcreateEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'image' | 'title'>
   >
+  editEvent?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationeditEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'eventId' | 'title'>
+  >
   login?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationloginArgs, 'email'>>
   register?: Resolver<
     ResolversTypes['User'],
@@ -305,6 +327,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationtestUploadArgs, 'file' | 'test'>
+  >
+  unsubscribe?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationunsubscribeArgs, 'eventId'>
   >
 }
 

@@ -38,10 +38,20 @@ type Mutation {
     image: Upload!
     title: String!
   ): Event!
+  editEvent(
+    address: String!
+    categoryName: String!
+    date: DateTime!
+    description: String!
+    eventId: ID!
+    image: Upload
+    title: String!
+  ): Event!
   login(email: String!): User!
   register(email: String!, password: String!, username: String!): User!
   subscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!
+  unsubscribe(eventId: ID!): Event!
 }
 
 type Query {

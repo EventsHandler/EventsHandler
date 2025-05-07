@@ -154,7 +154,71 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'editEvent' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'title' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'description' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'date' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'image' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'address' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'categoryName' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'subscribe' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'unsubscribe' },
           arguments: [
             {
               kind: 'InputValueDefinition',

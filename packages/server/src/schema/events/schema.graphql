@@ -59,7 +59,17 @@ extend type Mutation {
     address: String!
     categoryName: String!
   ): Event!
+  editEvent(
+    title: String!
+    description: String!
+    date: DateTime!
+    image: Upload
+    address: String!
+    categoryName: String!
+    eventId: ID!
+  ): Event!
   subscribe(eventId: ID!): Event!
+  unsubscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!
   createAnnounce(eventId: ID!, title: String!, description: String!): Announces!
 }

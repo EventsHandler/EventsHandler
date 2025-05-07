@@ -4,8 +4,20 @@ mutation CreateEvent($title: String!, $description: String!, $date: DateTime!, $
   }
 }
 
+mutation EditEvent($title: String!, $description: String!, $date: DateTime!, $image: Upload, $address: String!, $categoryName: String!, $eventId: ID!) {
+  editEvent(title: $title, description: $description, date: $date, image: $image, address: $address, categoryName: $categoryName, eventId: $eventId) {
+    id
+  }
+}
+
 mutation SubscribeEvent($eventId: ID!) {
   subscribe(eventId: $eventId) {
+    id
+  }
+}
+
+mutation UnsubscribeEvent($eventId: ID!) {
+  unsubscribe(eventId: $eventId) {
     id
   }
 }
@@ -30,4 +42,10 @@ mutation Register($username: String!, $password: String!, $email: String!) {
 
 mutation UploadFile($file: Upload!, $test: String!) {
   testUpload(file: $file, test: $test)
+}
+
+mutation CreateAnnounce($eventId: ID!, $title: String!, $description: String!) {
+  createAnnounce(eventId: $eventId, title: $title, description: $description) {
+    title
+  }
 }
