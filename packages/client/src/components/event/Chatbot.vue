@@ -12,7 +12,7 @@ const messages = ref<{ text: string; type: 'incoming' | 'outgoing' }[]>([
 ])
 
 const emit = defineEmits<{
-  (e: 'refetchCategory', c: string): void
+  (e: 'refetchCategory', c: string | null): void
 }>()
 
 const chatHandle = async () => {
@@ -54,6 +54,10 @@ const toggleVisibility = () =>{
         <li v-if="loading">
           <span><i class="fa-solid fa-robot"></i></span>
           <p>Loading...</p>
+        </li>
+        <li @click="$emit('refetchCategory', null)" class="cursor-pointer">
+          <i class="fa-solid fa-arrows-rotate"></i>
+          <p>Reset</p>
         </li>
       </ul>
         
