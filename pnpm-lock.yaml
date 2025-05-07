@@ -75,9 +75,6 @@ importers:
       '@types/apollo-upload-client':
         specifier: ^18.0.0
         version: 18.0.0(graphql-ws@6.0.4(graphql@16.11.0)(ws@8.18.2))
-      '@types/node':
-        specifier: ^22.14.0
-        version: 22.15.3
       '@vitejs/plugin-vue':
         specifier: ^5.2.3
         version: 5.2.3(vite@6.3.4(@types/node@22.15.3)(jiti@2.4.2)(lightningcss@1.29.2)(tsx@4.19.4)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))

@@ -17,7 +17,7 @@ function formatDate(date: string) {
 
 <template>
   <div class="event">
-    <img :src="'http://localhost:3000/uploads/' + event.image" :alt="event.title">
+    <img :src="'/uploads/' + event.image" :alt="event.title">
     <div>{{ event.title }}</div>
     <div>Start: {{ formatDate(event.date) }}</div>
     <div class="details"><a :href="'/event/' + event.id">Mai multe detalii</a></div>

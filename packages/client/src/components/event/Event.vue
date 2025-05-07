@@ -57,7 +57,7 @@ onMounted(() => {
 
 <template>
   <div class="event-container">
-    <img :src="'http://localhost:3000/uploads/' + event.image" class="event-image" />
+    <img :src="'/uploads/' + event.image" class="event-image" />
 
     <div class="event-content-grid">
       <div class="event-info">

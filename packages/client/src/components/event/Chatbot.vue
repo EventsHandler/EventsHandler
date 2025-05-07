@@ -223,6 +223,7 @@ const toggleVisibility = () =>{
     }
     .chatbot .chatbox{
         height: 90%;
+        max-height: none;
     }
     .chatbot header span{
         display: block;
