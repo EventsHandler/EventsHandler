@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile.server
     restart: on-failure
     depends_on:
-      - db
+      - events-db
     environment:
       DATABASE_URL: "postgresql://events:eventspwd@events-db:5432/events?schema=public"
       APP_PORT: 4000 # Port the server application listens on internally
@@ -41,7 +41,7 @@ services:
       dockerfile: Dockerfile.client
     restart: on-failure
     depends_on:
-      - server
+      - events-server
     networks:
       - events-handler-net # To connect to server for /graphql proxy
       - proxy # For Nginx Proxy Manager to connect to this client's Nginx
