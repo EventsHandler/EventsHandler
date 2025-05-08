@@ -92,6 +92,12 @@ query Event($eventId: ID!) {
     category {
       name
     }
+    comments {
+      comment
+      from {
+        username
+      }
+    }
   }
 }
 
