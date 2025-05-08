@@ -11,12 +11,19 @@ type Category {
   name: String!
 }
 
+type Comment {
+  comment: String
+  event: Event!
+  from: User!
+}
+
 scalar DateTime
 
 type Event {
   address: String!
   announces: [Announces!]
   category: Category!
+  comments: [Comment!]
   createdAt: DateTime!
   creator: User!
   date: DateTime!
@@ -78,6 +85,7 @@ type Rateing {
 scalar Upload
 
 type User {
+  comments: [Comment!]
   createdAt: DateTime!
   createdEvents: [Event!]
   email: String!

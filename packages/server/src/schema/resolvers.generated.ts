@@ -22,6 +22,7 @@ import { testUpload as Mutation_testUpload } from './events/resolvers/Mutation/t
 import { unsubscribe as Mutation_unsubscribe } from './events/resolvers/Mutation/unsubscribe.js'
 import { Announces } from './events/resolvers/Announces.js'
 import { Category } from './events/resolvers/Category.js'
+import { Comment } from './events/resolvers/Comment.js'
 import { Event } from './events/resolvers/Event.js'
 import { Rateing } from './events/resolvers/Rateing.js'
 import { User } from './events/resolvers/User.js'
@@ -55,6 +56,7 @@ export const resolvers: Resolvers = {
 
   Announces: Announces,
   Category: Category,
+  Comment: Comment,
   Event: Event,
   Rateing: Rateing,
   User: User,

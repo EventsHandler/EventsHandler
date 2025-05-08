@@ -51,4 +51,7 @@ export const Event: EventResolvers = {
 
     return event.category
   },
+  comments: async (_parent, _arg, _ctx) => {
+    /* Event.comments resolver is required because Event.comments exists but EventMapper.comments does not */
+  },
 }

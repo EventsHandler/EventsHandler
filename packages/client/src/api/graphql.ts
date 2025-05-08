@@ -33,11 +33,19 @@ export type Category = {
   name: Scalars['String']['output']
 }
 
+export type Comment = {
+  __typename?: 'Comment'
+  comment?: Maybe<Scalars['String']['output']>
+  event: Event
+  from: User
+}
+
 export type Event = {
   __typename?: 'Event'
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
   category: Category
+  comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
   creator: User
   date: Scalars['DateTime']['output']
@@ -165,6 +173,7 @@ export type Rateing = {
 
 export type User = {
   __typename?: 'User'
+  comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
   createdEvents?: Maybe<Array<Event>>
   email: Scalars['String']['output']
