@@ -141,7 +141,8 @@ export type Query = {
   __typename?: 'Query'
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
-  events: Array<Event>
+  events?: Maybe<Array<Event>>
+  joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
   users?: Maybe<Array<User>>
@@ -281,7 +282,7 @@ export type EventsQueryVariables = Exact<{
 
 export type EventsQuery = {
   __typename?: 'Query'
-  events: Array<{
+  events?: Array<{
     __typename?: 'Event'
     id: string
     title: string
@@ -292,7 +293,25 @@ export type EventsQuery = {
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
-  }>
+  }> | null
+}
+
+export type JoinedEventsQueryVariables = Exact<{ [key: string]: never }>
+
+export type JoinedEventsQuery = {
+  __typename?: 'Query'
+  joinedEvents?: Array<{
+    __typename?: 'Event'
+    id: string
+    title: string
+    description: string
+    date: any
+    image: string
+    address: string
+    creator: { __typename?: 'User'; username: string; id: string }
+    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
+    participants?: Array<{ __typename?: 'User'; username: string }> | null
+  }> | null
 }
 
 export type MyEventsQueryVariables = Exact<{ [key: string]: never }>
@@ -1052,6 +1071,66 @@ export const EventsDocument = {
     },
   ],
 } as unknown as DocumentNode<EventsQuery, EventsQueryVariables>
+export const JoinedEventsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'JoinedEvents' },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'joinedEvents' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'creator' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'announces' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'participants' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<JoinedEventsQuery, JoinedEventsQueryVariables>
 export const MyEventsDocument = {
   kind: 'Document',
   definitions: [

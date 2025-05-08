@@ -144,7 +144,8 @@ export type Query = {
   __typename?: 'Query'
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
-  events: Array<Event>
+  events?: Maybe<Array<Event>>
+  joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
   users?: Maybe<Array<User>>
@@ -424,7 +425,8 @@ export type QueryResolvers<
 > = {
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
-  events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType, Partial<QueryeventsArgs>>
+  events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType, Partial<QueryeventsArgs>>
+  joinedEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
