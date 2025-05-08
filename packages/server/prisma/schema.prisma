@@ -78,7 +78,7 @@ model User {
   events  Event[]   @relation("EventParticipants")
   rates   Rateing[] @relation("fromRates")
   myRates Rateing[] @relation("toRates")
-  comments Comment[] @relation("commentsUser")
+  comments Comment[] @relation("commentsUser") 
 }
 
 model Category {
@@ -101,8 +101,8 @@ model Rateing {
 model Comment {
   id String @id @default(cuid(2))
   fromId String
-  from User @relation("commentsUser", fields: [fromId], references: [id])
+  from User @relation("commentsUser", fields: [fromId], references: [id], onDelete: Cascade)
   eventId String
-  event Event @relation("commentsEvent", fields: [eventId], references: [id])
+  event Event @relation("commentsEvent", fields: [eventId], references: [id], onDelete: Cascade)
   comment String
 }
