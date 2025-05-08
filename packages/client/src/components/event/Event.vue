@@ -86,7 +86,7 @@ onMounted(() => {
         <button v-else>Loading...</button>
         <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
-        <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a></div>
+        <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a> 5 <i class="fa-solid fa-star"></i></div>
       </div>
     </div>
   </div>

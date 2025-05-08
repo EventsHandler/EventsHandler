@@ -150,6 +150,13 @@ export type QueryeventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+export type Rateing = {
+  __typename?: 'Rateing'
+  fromId: Scalars['ID']['output']
+  rate: Scalars['Int']['output']
+  toId: Scalars['ID']['output']
+}
+
 export type User = {
   __typename?: 'User'
   createdAt: Scalars['DateTime']['output']
@@ -157,6 +164,8 @@ export type User = {
   email: Scalars['String']['output']
   events?: Maybe<Array<Event>>
   id: Scalars['ID']['output']
+  myRates?: Maybe<Array<Rateing>>
+  rates?: Maybe<Array<Rateing>>
   username: Scalars['String']['output']
 }
 
@@ -240,6 +249,8 @@ export type ResolversTypes = {
   Event: ResolverTypeWrapper<EventMapper>
   Mutation: ResolverTypeWrapper<{}>
   Query: ResolverTypeWrapper<{}>
+  Rateing: ResolverTypeWrapper<Rateing>
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
   User: ResolverTypeWrapper<
     Omit<User, 'createdEvents' | 'events'> & {
@@ -260,6 +271,8 @@ export type ResolversParentTypes = {
   Event: EventMapper
   Mutation: {}
   Query: {}
+  Rateing: Rateing
+  Int: Scalars['Int']['output']
   Upload: Scalars['Upload']['output']
   User: Omit<User, 'createdEvents' | 'events'> & {
     createdEvents?: Maybe<Array<ResolversParentTypes['Event']>>
@@ -401,6 +414,16 @@ export type QueryResolvers<
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
 }
 
+export type RateingResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Rateing'] = ResolversParentTypes['Rateing'],
+> = {
+  fromId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  rate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  toId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload'
 }
@@ -414,6 +437,8 @@ export type UserResolvers<
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  myRates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
+  rates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
@@ -425,6 +450,7 @@ export type Resolvers<ContextType = UserContext> = {
   Event?: EventResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
+  Rateing?: RateingResolvers<ContextType>
   Upload?: GraphQLScalarType
   User?: UserResolvers<ContextType>
 }

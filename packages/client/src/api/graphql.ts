@@ -147,6 +147,13 @@ export type QueryEventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+export type Rateing = {
+  __typename?: 'Rateing'
+  fromId: Scalars['ID']['output']
+  rate: Scalars['Int']['output']
+  toId: Scalars['ID']['output']
+}
+
 export type User = {
   __typename?: 'User'
   createdAt: Scalars['DateTime']['output']
@@ -154,6 +161,8 @@ export type User = {
   email: Scalars['String']['output']
   events?: Maybe<Array<Event>>
   id: Scalars['ID']['output']
+  myRates?: Maybe<Array<Rateing>>
+  rates?: Maybe<Array<Rateing>>
   username: Scalars['String']['output']
 }
 

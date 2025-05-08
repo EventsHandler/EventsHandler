@@ -38,6 +38,15 @@ type User {
 
   createdEvents: [Event!]
   events: [Event!]
+
+  rates: [Rateing!]
+  myRates: [Rateing!]
+}
+
+type Rateing {
+  fromId: ID!
+  toId: ID!
+  rate: Int!
 }
 
 extend type Query {

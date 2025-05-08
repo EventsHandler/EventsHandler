@@ -66,6 +66,12 @@ type Query {
   myEvents: [Event!]
 }
 
+type Rateing {
+  fromId: ID!
+  rate: Int!
+  toId: ID!
+}
+
 scalar Upload
 
 type User {
@@ -74,5 +80,7 @@ type User {
   email: String!
   events: [Event!]
   id: ID!
+  myRates: [Rateing!]
+  rates: [Rateing!]
   username: String!
 }
