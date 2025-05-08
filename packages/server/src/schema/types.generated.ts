@@ -62,6 +62,7 @@ export type Mutation = {
   deleteEvent?: Maybe<Event>
   editEvent: Event
   login: User
+  rateUser?: Maybe<Scalars['Boolean']['output']>
   register: User
   subscribe: Event
   testUpload: Scalars['String']['output']
@@ -114,6 +115,12 @@ export type MutationloginArgs = {
   username: Scalars['String']['input']
 }
 
+export type MutationrateUserArgs = {
+  fromId: Scalars['String']['input']
+  rate: Scalars['Int']['input']
+  toId: Scalars['String']['input']
+}
+
 export type MutationregisterArgs = {
   email: Scalars['String']['input']
   password: Scalars['String']['input']
@@ -150,6 +157,13 @@ export type QueryeventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+export type Rateing = {
+  __typename?: 'Rateing'
+  fromId: Scalars['ID']['output']
+  rate: Scalars['Int']['output']
+  toId: Scalars['ID']['output']
+}
+
 export type User = {
   __typename?: 'User'
   createdAt: Scalars['DateTime']['output']
@@ -157,6 +171,8 @@ export type User = {
   email: Scalars['String']['output']
   events?: Maybe<Array<Event>>
   id: Scalars['ID']['output']
+  myRates?: Maybe<Array<Rateing>>
+  rates?: Maybe<Array<Rateing>>
   username: Scalars['String']['output']
 }
 
@@ -239,7 +255,10 @@ export type ResolversTypes = {
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
   Event: ResolverTypeWrapper<EventMapper>
   Mutation: ResolverTypeWrapper<{}>
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>
   Query: ResolverTypeWrapper<{}>
+  Rateing: ResolverTypeWrapper<Rateing>
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
   User: ResolverTypeWrapper<
     Omit<User, 'createdEvents' | 'events'> & {
@@ -247,7 +266,6 @@ export type ResolversTypes = {
       events?: Maybe<Array<ResolversTypes['Event']>>
     }
   >
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
 }
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -259,13 +277,15 @@ export type ResolversParentTypes = {
   DateTime: Scalars['DateTime']['output']
   Event: EventMapper
   Mutation: {}
+  Boolean: Scalars['Boolean']['output']
+  Int: Scalars['Int']['output']
   Query: {}
+  Rateing: Rateing
   Upload: Scalars['Upload']['output']
   User: Omit<User, 'createdEvents' | 'events'> & {
     createdEvents?: Maybe<Array<ResolversParentTypes['Event']>>
     events?: Maybe<Array<ResolversParentTypes['Event']>>
   }
-  Boolean: Scalars['Boolean']['output']
 }
 
 export type AnnouncesResolvers<
@@ -364,6 +384,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationloginArgs, 'password' | 'username'>
   >
+  rateUser?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationrateUserArgs, 'fromId' | 'rate' | 'toId'>
+  >
   register?: Resolver<
     ResolversTypes['User'],
     ParentType,
@@ -401,6 +427,16 @@ export type QueryResolvers<
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
 }
 
+export type RateingResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Rateing'] = ResolversParentTypes['Rateing'],
+> = {
+  fromId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  rate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  toId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
 export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
   name: 'Upload'
 }
@@ -414,6 +450,8 @@ export type UserResolvers<
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  myRates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
+  rates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
@@ -425,6 +463,7 @@ export type Resolvers<ContextType = UserContext> = {
   Event?: EventResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
+  Rateing?: RateingResolvers<ContextType>
   Upload?: GraphQLScalarType
   User?: UserResolvers<ContextType>
 }

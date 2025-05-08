@@ -3,7 +3,7 @@ import Announces from './Announce.vue';
 import Participants from '../user/ProfileMini.vue';
 import { onMounted, ref, watch } from 'vue';
 
-import { type Event, SubscribeEventDocument, UnsubscribeEventDocument } from '@/api/graphql';
+import { type Event, SubscribeEventDocument, UnsubscribeEventDocument, RateUserDocument, type Rateing } from '@/api/graphql';
 import { useUserStore } from '@/store/user';
 
 import { useMutation } from '@vue/apollo-composable';
@@ -11,6 +11,7 @@ import router from '@/router';
 
 const { mutate: mutateSub } = useMutation(SubscribeEventDocument)
 const { mutate: mutateUnSub } = useMutation(UnsubscribeEventDocument)
+const { mutate: mutateRate } = useMutation(RateUserDocument)
 
 const props = defineProps<{
   event: Event
@@ -53,6 +54,34 @@ const userStore = useUserStore()
 onMounted(() => {
   emit('refetch')  
 })
+
+const rate = ref<number>(0)
+const userRates = ref<Rateing[]>([])
+if(props.event.creator.myRates) {
+  userRates.value = props.event.creator.myRates
+}
+
+props.event.creator.myRates?.forEach(r => {
+  if(r.fromId == userStore.user?.id) { rate.value = r.rate }
+})
+
+function range(start: number, end: number) {
+ return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}
+
+async function changeRate(i: number) {
+  rate.value = i
+  const userId = userStore.user?.id
+  if(!userId) return
+  await mutateRate({ fromId: userId, toId: props.event.creator.id, rate: rate.value })
+  userRates.value = userRates.value.map((r) => {
+    if(r.fromId == userId) {
+      return { ...r, rate: rate.value }
+    }
+    return r
+  })
+}
+
 </script>
 
 <template>
@@ -86,7 +115,12 @@ onMounted(() => {
         <button v-else>Loading...</button>
         <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
-        <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a></div>
+        <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a>{{ userRates.length > 0 ? userRates.reduce((a, v) => a+v.rate, 0)/userRates.length : 0 }}<i class="fa-solid fa-star"></i></div>
+        <div>Ofera o nota acestui utilizator:</div>
+        <div>
+          <i v-for="i in range(1, rate)" :key="i" @click="() => changeRate(i)" class="fa-solid fa-star"></i>
+          <i v-for="i in range(rate+1, 5)" :key="i" @click="() => changeRate(i)" class="fa-regular fa-star"></i>
+        </div>
       </div>
     </div>
   </div>

@@ -53,6 +53,11 @@ query Event($eventId: ID!) {
     creator {
       username
       id
+      myRates {
+        fromId
+        toId
+        rate
+      }
     }
     announces {
       title

@@ -52,6 +52,7 @@ type Mutation {
     title: String!
   ): Event!
   login(password: String!, username: String!): User!
+  rateUser(fromId: String!, rate: Int!, toId: String!): Boolean
   register(email: String!, password: String!, username: String!): User!
   subscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!
@@ -66,6 +67,12 @@ type Query {
   myEvents: [Event!]
 }
 
+type Rateing {
+  fromId: ID!
+  rate: Int!
+  toId: ID!
+}
+
 scalar Upload
 
 type User {
@@ -74,5 +81,7 @@ type User {
   email: String!
   events: [Event!]
   id: ID!
+  myRates: [Rateing!]
+  rates: [Rateing!]
   username: String!
 }

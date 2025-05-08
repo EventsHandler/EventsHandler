@@ -13,6 +13,7 @@ import { createEvent as Mutation_createEvent } from './events/resolvers/Mutation
 import { deleteEvent as Mutation_deleteEvent } from './events/resolvers/Mutation/deleteEvent.js'
 import { editEvent as Mutation_editEvent } from './events/resolvers/Mutation/editEvent.js'
 import { login as Mutation_login } from './events/resolvers/Mutation/login.js'
+import { rateUser as Mutation_rateUser } from './events/resolvers/Mutation/rateUser.js'
 import { register as Mutation_register } from './events/resolvers/Mutation/register.js'
 import { subscribe as Mutation_subscribe } from './events/resolvers/Mutation/subscribe.js'
 import { testUpload as Mutation_testUpload } from './events/resolvers/Mutation/testUpload.js'
@@ -20,6 +21,7 @@ import { unsubscribe as Mutation_unsubscribe } from './events/resolvers/Mutation
 import { Announces } from './events/resolvers/Announces.js'
 import { Category } from './events/resolvers/Category.js'
 import { Event } from './events/resolvers/Event.js'
+import { Rateing } from './events/resolvers/Rateing.js'
 import { User } from './events/resolvers/User.js'
 import { DateTime } from './events/resolvers/DateTime.js'
 import { Upload } from './events/resolvers/Upload.js'
@@ -40,6 +42,7 @@ export const resolvers: Resolvers = {
     deleteEvent: Mutation_deleteEvent,
     editEvent: Mutation_editEvent,
     login: Mutation_login,
+    rateUser: Mutation_rateUser,
     register: Mutation_register,
     subscribe: Mutation_subscribe,
     testUpload: Mutation_testUpload,
@@ -49,6 +52,7 @@ export const resolvers: Resolvers = {
   Announces: Announces,
   Category: Category,
   Event: Event,
+  Rateing: Rateing,
   User: User,
   DateTime: DateTime,
   Upload: Upload,
