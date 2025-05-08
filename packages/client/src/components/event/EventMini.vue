@@ -94,7 +94,6 @@ function formatDate(date: string) {
 }
 
 .details {
-  padding: 12px 25px;
   background: linear-gradient(45deg, #007bff, #0056b3);
   color: white;
   border-radius: 5px;
@@ -113,6 +112,7 @@ function formatDate(date: string) {
 }
 
 .details a {
+  padding: 12px 25px;
   color: white;
   text-decoration: none;
   display: inline-block;

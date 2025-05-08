@@ -65,6 +65,7 @@ type Query {
   events(category: String): [Event!]!
   me: User
   myEvents: [Event!]
+  users: [User!]
 }
 
 type Rateing {
@@ -82,6 +83,7 @@ type User {
   events: [Event!]
   id: ID!
   myRates: [Rateing!]
+  password: String!
   rates: [Rateing!]
   username: String!
 }

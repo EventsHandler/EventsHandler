@@ -6,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-    <div v-if="users" >
+    <div v-if="users?.length" >
     <p class="participants-title">Participanți:</p>
     <ul class="participants-list participants-wrapper" >
       <li v-for="usr in users" :key="usr.id" class="participant-item">

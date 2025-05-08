@@ -147,6 +147,7 @@ export type Query = {
   events: Array<Event>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
+  users?: Maybe<Array<User>>
 }
 
 export type QueryeventArgs = {
@@ -172,6 +173,7 @@ export type User = {
   events?: Maybe<Array<Event>>
   id: Scalars['ID']['output']
   myRates?: Maybe<Array<Rateing>>
+  password: Scalars['String']['output']
   rates?: Maybe<Array<Rateing>>
   username: Scalars['String']['output']
 }
@@ -425,6 +427,7 @@ export type QueryResolvers<
   events?: Resolver<Array<ResolversTypes['Event']>, ParentType, ContextType, Partial<QueryeventsArgs>>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
 }
 
 export type RateingResolvers<
@@ -451,6 +454,7 @@ export type UserResolvers<
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   myRates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   rates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>

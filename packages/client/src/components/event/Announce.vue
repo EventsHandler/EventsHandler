@@ -5,7 +5,7 @@ defineProps<{
 }>()
 </script>
 <template>
-  <div v-if="announces" class="announce-wrapper">
+  <div v-if="announces?.length" class="announce-wrapper">
       <h2>Anunțuri:</h2>
       <div v-for="ann in announces" class="announce-box">
           <h3 class="announce-title">{{ ann.title }}</h3> 
