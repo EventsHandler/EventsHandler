@@ -18,17 +18,24 @@ export const typeDefs = {
             },
           ],
           type: {
-            kind: 'NonNullType',
-            type: {
-              kind: 'ListType',
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
-            },
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
           },
           directives: [],
         },
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'myEvents' },
+          arguments: [],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'joinedEvents' },
           arguments: [],
           type: {
             kind: 'ListType',

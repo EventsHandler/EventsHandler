@@ -141,7 +141,8 @@ export type Query = {
   __typename?: 'Query'
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
-  events: Array<Event>
+  events?: Maybe<Array<Event>>
+  joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
   users?: Maybe<Array<User>>
@@ -281,7 +282,7 @@ export type EventsQueryVariables = Exact<{
 
 export type EventsQuery = {
   __typename?: 'Query'
-  events: Array<{
+  events?: Array<{
     __typename?: 'Event'
     id: string
     title: string
@@ -292,7 +293,7 @@ export type EventsQuery = {
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
-  }>
+  }> | null
 }
 
 export type MyEventsQueryVariables = Exact<{ [key: string]: never }>

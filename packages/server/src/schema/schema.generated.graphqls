@@ -62,7 +62,8 @@ type Mutation {
 type Query {
   categories: [Category!]
   event(eventId: ID!): Event
-  events(category: String): [Event!]!
+  events(category: String): [Event!]
+  joinedEvents: [Event!]
   me: User
   myEvents: [Event!]
   users: [User!]
