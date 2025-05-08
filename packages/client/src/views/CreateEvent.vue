@@ -152,7 +152,7 @@ const addEvent = async () => {
   if (!validateForm()) return;
   
   const sendDateToClient = `${form.value.date}T${form.value.time}:00.000Z`
-  await mutate({
+  const res = await mutate({
     title: form.value.title,
     description: form.value.description,
     image: image.value,
@@ -160,7 +160,11 @@ const addEvent = async () => {
     address: form.value.location,
     categoryName: form.value.category
   })
-  router.push("/events")
+  if(res?.data?.createEvent) {
+    router.push("/event/" + res.data.createEvent.id)
+  } else {
+    router.push("/events")
+  }
 };
 
 const editEvent = async () => {

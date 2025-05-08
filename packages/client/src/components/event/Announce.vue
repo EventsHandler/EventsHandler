@@ -32,6 +32,7 @@ defineProps<{
   border: 1px solid #e5e7eb;
   padding: 10px;
   border-radius: 6px;
+  margin: 10px
 }
 
 .announce-title {

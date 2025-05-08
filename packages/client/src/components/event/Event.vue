@@ -70,9 +70,10 @@ function range(start: number, end: number) {
 }
 
 async function changeRate(i: number) {
-  rate.value = i
   const userId = userStore.user?.id
   if(!userId) return
+  if(userId == props.event.creator.id) return
+  rate.value = i
   await mutateRate({ fromId: userId, toId: props.event.creator.id, rate: rate.value })
   userRates.value = userRates.value.map((r) => {
     if(r.fromId == userId) {
@@ -116,10 +117,12 @@ async function changeRate(i: number) {
         <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
         <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a>{{ userRates.length > 0 ? userRates.reduce((a, v) => a+v.rate, 0)/userRates.length : 0 }}<i class="fa-solid fa-star"></i></div>
-        <div>Ofera o nota acestui utilizator:</div>
-        <div>
-          <i v-for="i in range(1, rate)" :key="i" @click="() => changeRate(i)" class="fa-solid fa-star"></i>
-          <i v-for="i in range(rate+1, 5)" :key="i" @click="() => changeRate(i)" class="fa-regular fa-star"></i>
+        <div class="flex flex-col" v-if="userStore.user && userStore.user.id != event.creator.id">
+          <div>Ofera o nota acestui utilizator:</div>
+          <div>
+            <i v-for="i in range(1, rate)" :key="i" @click="() => changeRate(i)" class="fa-solid fa-star"></i>
+            <i v-for="i in range(rate+1, 5)" :key="i" @click="() => changeRate(i)" class="fa-regular fa-star"></i>
+          </div>
         </div>
       </div>
     </div>

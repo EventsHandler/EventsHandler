@@ -1,5 +1,6 @@
 import type { MutationResolvers } from './../../../types.generated.js'
 import path from 'path'
+import { mkdir } from 'fs/promises'
 import fs from 'fs'
 import { prisma } from '../../../../prisma.js'
 export const editEvent: NonNullable<MutationResolvers['editEvent']> = async (_parent, { address, categoryName, date, description, title, image, eventId }, _ctx) => {
@@ -15,9 +16,7 @@ export const editEvent: NonNullable<MutationResolvers['editEvent']> = async (_pa
   if(image) {
     const { createReadStream, filename, mimetype } = await image
     const uploadDir = path.resolve(process.cwd(), 'uploads')
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true })
-    }
+    await mkdir(uploadDir, { recursive: true })
     const uniqueFilename = `${Date.now()}-${filename}`
     const filePath = path.join(uploadDir, uniqueFilename)
     const stream = createReadStream()
