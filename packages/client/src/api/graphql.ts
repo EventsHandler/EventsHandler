@@ -52,7 +52,8 @@ export type Event = {
 export type Mutation = {
   __typename?: 'Mutation'
   apiTest?: Maybe<Scalars['String']['output']>
-  askForCategory: Scalars['String']['output']
+  askForCategory?: Maybe<Scalars['String']['output']>
+  askForDescription?: Maybe<Scalars['String']['output']>
   createAnnounce: Announces
   createEvent: Event
   deleteEvent?: Maybe<Event>
@@ -69,6 +70,10 @@ export type MutationApiTestArgs = {
 }
 
 export type MutationAskForCategoryArgs = {
+  input: Scalars['String']['input']
+}
+
+export type MutationAskForDescriptionArgs = {
   input: Scalars['String']['input']
 }
 
@@ -234,7 +239,13 @@ export type AskForCategoryMutationVariables = Exact<{
   input: Scalars['String']['input']
 }>
 
-export type AskForCategoryMutation = { __typename?: 'Mutation'; askForCategory: string }
+export type AskForCategoryMutation = { __typename?: 'Mutation'; askForCategory?: string | null }
+
+export type AskForDescriptionMutationVariables = Exact<{
+  input: Scalars['String']['input']
+}>
+
+export type AskForDescriptionMutation = { __typename?: 'Mutation'; askForDescription?: string | null }
 
 export type EventsQueryVariables = Exact<{
   category?: InputMaybe<Scalars['String']['input']>
@@ -838,6 +849,39 @@ export const AskForCategoryDocument = {
     },
   ],
 } as unknown as DocumentNode<AskForCategoryMutation, AskForCategoryMutationVariables>
+export const AskForDescriptionDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'AskForDescription' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'askForDescription' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<AskForDescriptionMutation, AskForDescriptionMutationVariables>
 export const EventsDocument = {
   kind: 'Document',
   definitions: [
