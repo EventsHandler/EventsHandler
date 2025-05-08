@@ -14,10 +14,14 @@ const router = createRouter({
       component: () => import('../views/RandomEvents.vue'),
     },
     {
-
       path: '/myEvents',
       name: 'my events',
       component: () => import('../views/MyEvents.vue'),
+    },
+    {
+      path: '/joined',
+      name: 'joined events',
+      component: () => import('../views/JoinedEvents.vue'),
     },
     {
       path: '/auth',

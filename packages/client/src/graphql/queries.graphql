@@ -20,6 +20,28 @@ query Events($category: String) {
   }
 }
 
+query JoinedEvents {
+  joinedEvents {
+    id
+    title
+    description
+    date
+    image
+    address
+    creator {
+      username
+      id
+    }
+    announces {
+      title
+      description
+    }
+    participants {
+      username
+    }
+  }
+}
+
 query MyEvents {
   myEvents {
     id
