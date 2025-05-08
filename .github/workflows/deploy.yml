@@ -1,0 +1,15 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Invoke deployment hook
+        run: curl -X POST https://portainer.beast.nickmessing.com/api/stacks/webhooks/bb34b2f4-404b-4b39-a882-1674ac920b1d
+
