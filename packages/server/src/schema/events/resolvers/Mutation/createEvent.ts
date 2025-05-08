@@ -2,10 +2,45 @@ import { prisma } from '../../../../prisma.js'
 import type { MutationResolvers } from './../../../types.generated.js'
 import path from 'path'
 import fs from 'fs'
-export const createEvent: NonNullable<MutationResolvers['createEvent']> = async (_parent, { title, description, address, date, image, categoryName }, _ctx) => {
-  if(!_ctx.user) {
+
+export const createEvent: NonNullable<MutationResolvers['createEvent']> = async (_parent, { title, description, date, address, categoryName, image }, _ctx) => {
+  if (!_ctx.user) {
     throw new Error("Unauthorised")
   }
+
+  if (!title || title.length < 3) {
+    throw new Error("Title must be at least 3 characters long")
+  }
+
+  if (!description || description.length < 10) {
+    throw new Error("Description must be at least 10 characters long")
+  }
+
+  const eventDate = new Date(date)
+  const today = new Date()
+  if (eventDate < today) {
+    throw new Error("Event date cannot be in the past")
+  }
+
+  if (!address || address.length < 3) {
+    throw new Error("Address must be at least 3 characters long")
+  }
+
+  if (!categoryName) {
+    throw new Error("Category is required")
+  }
+
+  const existingCategory = await prisma.category.findFirst({
+    where: { name: categoryName }
+  })
+  if (!existingCategory) {
+    throw new Error("Invalid category")
+  }
+
+  if (!image) {
+    throw new Error("Image is required")
+  }
+
   const { createReadStream, filename, mimetype } = await image
   const uploadDir = path.resolve(process.cwd(), 'uploads')
   if (!fs.existsSync(uploadDir)) {
@@ -16,12 +51,7 @@ export const createEvent: NonNullable<MutationResolvers['createEvent']> = async 
   const stream = createReadStream()
   const out = fs.createWriteStream(filePath)
   stream.pipe(out)
-  let category = await prisma.category.findUnique({
-    where: {
-      name: categoryName
-    }
-  })
-  if(!category) category = { id: "", name: "" }
+
   return await prisma.event.create({
     data: {
       title,
@@ -30,7 +60,7 @@ export const createEvent: NonNullable<MutationResolvers['createEvent']> = async 
       date,
       address,
       userId: _ctx.user.id,
-      categoryId: category.id
+      categoryId: existingCategory.id
     }
   })
 }

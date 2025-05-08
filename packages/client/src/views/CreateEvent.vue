@@ -74,7 +74,75 @@ const uploadPhoto = (event: any) => {
   if(image.value) form.value.imagePreview = URL.createObjectURL(image.value)
 }
 
+const errors = ref({
+  title: '',
+  description: '',
+  date: '',
+  time: '',
+  location: '',
+  category: '',
+  image: ''
+});
+
+const validateForm = () => {
+  let isValid = true;
+  errors.value = {
+    title: '',
+    description: '',
+    date: '',
+    time: '',
+    location: '',
+    category: '',
+    image: ''
+  };
+
+  if (!form.value.title) {
+    errors.value.title = 'Titlul este necesar';
+    isValid = false;
+  } else if (form.value.title.length < 3) {
+    errors.value.title = 'Titlul trebuie să aibă minim 3 caractere';
+    isValid = false;
+  }
+
+  if (!form.value.description) {
+    errors.value.description = 'Descrierea este necesară';
+    isValid = false;
+  } else if (form.value.description.length < 10) {
+    errors.value.description = 'Descrierea trebuie să aibă minim 10 caractere';
+    isValid = false;
+  }
+
+  if (!form.value.date) {
+    errors.value.date = 'Data este necesară';
+    isValid = false;
+  }
+
+  if (!form.value.time) {
+    errors.value.time = 'Ora este necesară';
+    isValid = false;
+  }
+
+  if (!form.value.location) {
+    errors.value.location = 'Locația evenimentului este necesară';
+    isValid = false;
+  }
+
+  if (!form.value.category) {
+    errors.value.category = 'Categoria evenimentului este necesară';
+    isValid = false;
+  }
+
+  if (!image.value && !form.value.imagePreview) {
+    errors.value.image = 'Imagine evenimentului este necesară';
+    isValid = false;
+  }
+
+  return isValid;
+};
+
 const addEvent = async () => {
+  if (!validateForm()) return;
+  
   const sendDateToClient = `${form.value.date}T${form.value.time}:00.000Z`
   await mutate({
     title: form.value.title,
@@ -88,6 +156,8 @@ const addEvent = async () => {
 };
 
 const editEvent = async () => {
+  if (!validateForm()) return;
+  
   const sendDateToClient = `${form.value.date}T${form.value.time}:00.000Z`
   await mutateEdit({
     title: form.value.title,
@@ -133,22 +203,27 @@ const userStore = useUserStore()
 
       <template #event-name-input>
         <input type="text" v-model="form.title" placeholder="Denumirea evenimentului" class="event-name-input"/>
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.title">{{ errors.title }}</span>
       </template>
 
       <template #event-desc-input>
         <textarea v-model="form.description" placeholder="Descrierea evenimentului"></textarea>
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.description">{{ errors.description }}</span>
       </template>
 
       <template #event-date-input>
         <input type="date" v-model="form.date" />
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.date">{{ errors.date }}</span>
       </template>
 
       <template #event-time-input>
         <input type="time" v-model="form.time" />
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.time">{{ errors.time }}</span>
       </template>
 
       <template #event-location-input>
         <input type="text" v-model="form.location" placeholder="Locația evenimentului" />
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.location">{{ errors.location }}</span>
       </template>
 
       <template #event-category-input>
@@ -156,6 +231,7 @@ const userStore = useUserStore()
           <option value="">Selectează categoria</option>
           <option v-for="c in categories" :value="c.name">{{ c.name }}</option>
         </select>
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.category">{{ errors.category }}</span>
       </template>
 
       <template #create-button>
@@ -229,5 +305,4 @@ main {
   border: none !important; 
   font-size: 1.5em !important; 
 }
-
 </style>

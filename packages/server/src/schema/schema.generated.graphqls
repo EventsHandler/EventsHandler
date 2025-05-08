@@ -50,7 +50,7 @@ type Mutation {
     image: Upload
     title: String!
   ): Event!
-  login(email: String!): User!
+  login(password: String!, username: String!): User!
   register(email: String!, password: String!, username: String!): User!
   subscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!

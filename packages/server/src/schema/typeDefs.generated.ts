@@ -81,7 +81,13 @@ export const typeDefs = {
           arguments: [
             {
               kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'email' },
+              name: { kind: 'Name', value: 'username' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'password' },
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
               directives: [],
             },

@@ -22,8 +22,8 @@ mutation UnsubscribeEvent($eventId: ID!) {
   }
 }
 
-mutation Login($email: String!) {
-  login(email: $email) {
+mutation Login($username: String!, $password: String!) {
+  login(username: $username, password: $password) {
     id
     username
     email
