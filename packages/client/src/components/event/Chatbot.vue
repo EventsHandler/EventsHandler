@@ -1,4 +1,4 @@
-<script setup lang="ts">
+ <script setup lang="ts">
 import { ref } from 'vue'
 
 import { AskForCategoryDocument } from '@/api/graphql';
@@ -22,7 +22,7 @@ const chatHandle = async () => {
   userInput.value = ''
   const res = await mutate({ input })
   const category = res?.data?.askForCategory
-  if(!category) return
+  if(!category) return messages.value.push({ text: "Nu am primit un raspuns de la AI.", type: 'incoming' })
   messages.value.push({ text: "Cauta: " + category, type: 'incoming' })
   emit('refetchCategory', category)
 }
@@ -67,6 +67,7 @@ const toggleVisibility = () =>{
           v-model="userInput"
           placeholder="Introduceți întrebarea..."
           required
+          @keydown.enter.exact.prevent="chatHandle"
         ></textarea>
         <span
           id="send-btn"

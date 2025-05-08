@@ -2,12 +2,17 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "tsx --env-file .env --watch src/index.ts",
     "postinstall": "prisma generate",
-    "migrate": "pnpm prisma migrate deploy"
+    "migrate": "pnpm prisma migrate deploy",
+    "build": "pkgroll build",
+    "start": "prisma migrate deploy && node dist/index.js",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +22,7 @@
     "@tsconfig/node23": "^23.0.1",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.3",
+    "pkgroll": "^2.12.2",
     "prisma": "^6.7.0",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"

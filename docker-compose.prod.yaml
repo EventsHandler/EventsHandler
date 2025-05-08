@@ -1,0 +1,51 @@
+version: '3.8'
+
+networks:
+  events-handler-net: # Internal network for services communication
+    driver: bridge
+  public: # For server's outbound internet access (e.g., OpenAI API)
+    external: true # This network must be created manually: docker network create public
+  proxy: # For Nginx Proxy Manager to access the client service
+    external: true # This network must be created manually: docker network create proxy
+
+services:
+  events-db:
+    image: postgres:17
+    restart: on-failure
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: events
+      POSTGRES_PASSWORD: eventspwd
+      POSTGRES_DB: events
+    networks:
+      - events-handler-net
+    # No ports exposed externally; server connects via internal network
+
+  events-server:
+    build:
+      dockerfile: Dockerfile.server
+    restart: on-failure
+    depends_on:
+      - events-db
+    environment:
+      DATABASE_URL: "postgresql://events:eventspwd@events-db:5432/events?schema=public"
+      API_AI_KEY: ${API_AI_KEY}
+      APP_PORT: 4000 # Port the server application listens on internally
+      NODE_ENV: production
+    networks:
+      - events-handler-net # For client and db communication
+      - public # For external API calls (e.g., OpenAI)
+
+  events-client:
+    build:
+      dockerfile: Dockerfile.client
+    restart: on-failure
+    depends_on:
+      - events-server
+    networks:
+      - events-handler-net # To connect to server for /graphql proxy
+      - proxy # For Nginx Proxy Manager to connect to this client's Nginx
+
+volumes:
+  postgres_data_prod: # Use a distinct volume name for production data

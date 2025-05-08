@@ -1,5 +1,5 @@
-import { User } from "../generated/prisma";
+import { User } from '../generated/prisma/index.js'
 
 export interface UserContext {
-  user: User;
+  user: User
 }

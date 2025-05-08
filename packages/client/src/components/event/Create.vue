@@ -1,3 +1,8 @@
+<script setup lang="ts">
+defineProps<{
+  loadingAskDesc: boolean
+}>()
+</script>
 <template>
   <div class="createEvent">
     <div class="upload-container">
@@ -5,7 +10,11 @@
     </div>
     <div class="form-container">
       <slot name="event-name-input"></slot>
-      <slot name="event-desc-input"></slot>
+      <div class="relative">
+        <slot name="event-desc-input"></slot>
+        <i v-if="!loadingAskDesc" class="fa-solid fa-brain absolute bottom-3 right-3 text-2xl cursor-pointer" @click="$emit('aiGenDesc')"></i>
+        <i v-else class="fa-solid fa-hourglass-start absolute bottom-3 right-3 text-2xl cursor-progress"></i>
+      </div>
       <div class="date-and-time">
         <slot name="event-date-input"></slot>
         <slot name="event-time-input"></slot>
