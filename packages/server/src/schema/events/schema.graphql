@@ -97,5 +97,5 @@ extend type Mutation {
   askForCategory(input: String!): String
   askForDescription(input: String!): String
   rateUser(fromId: String!, toId: String!, rate: Int!): Boolean
-  comment(fromId: String!, eventId: String!, comment: String!): Comment
+  comment(fromId: String!, eventId: String!, comment: String!): Comment!
 }

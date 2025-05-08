@@ -65,7 +65,7 @@ export type Mutation = {
   apiTest?: Maybe<Scalars['String']['output']>
   askForCategory?: Maybe<Scalars['String']['output']>
   askForDescription?: Maybe<Scalars['String']['output']>
-  comment?: Maybe<Comment>
+  comment: Comment
   createAnnounce: Announces
   createEvent: Event
   deleteEvent?: Maybe<Event>
@@ -394,7 +394,7 @@ export type MutationResolvers<
     RequireFields<MutationaskForDescriptionArgs, 'input'>
   >
   comment?: Resolver<
-    Maybe<ResolversTypes['Comment']>,
+    ResolversTypes['Comment'],
     ParentType,
     ContextType,
     RequireFields<MutationcommentArgs, 'comment' | 'eventId' | 'fromId'>

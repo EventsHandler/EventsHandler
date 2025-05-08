@@ -71,16 +71,16 @@ const toggleEvents = () => {
             >
               <div class="py-1">
                 <RouterLink 
-                  to="/joined" 
-                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
-                >
-                  Participă
-                </RouterLink>
-                <RouterLink 
                   to="/events" 
                   class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
                 >
                   Aleatorii
+                </RouterLink>
+                <RouterLink 
+                  to="/joined" 
+                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
+                >
+                  Participările mele
                 </RouterLink>
                 <RouterLink 
                   to="/myEvents" 

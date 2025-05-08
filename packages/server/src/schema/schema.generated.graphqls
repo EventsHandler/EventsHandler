@@ -39,7 +39,7 @@ type Mutation {
   apiTest(input: String!): String
   askForCategory(input: String!): String
   askForDescription(input: String!): String
-  comment(comment: String!, eventId: String!, fromId: String!): Comment
+  comment(comment: String!, eventId: String!, fromId: String!): Comment!
   createAnnounce(description: String!, eventId: ID!, title: String!): Announces!
   createEvent(
     address: String!

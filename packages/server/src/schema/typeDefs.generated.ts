@@ -411,7 +411,7 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Comment' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Comment' } } },
           directives: [],
         },
       ],
