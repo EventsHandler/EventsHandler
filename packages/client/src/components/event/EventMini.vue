@@ -49,6 +49,7 @@ function formatDate(date: string) {
 <style scoped>
 .event {
   width: 100%;
+  max-width: 500px;
   margin: 0 auto;
   overflow: hidden;
   border-radius: 10px;

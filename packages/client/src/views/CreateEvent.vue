@@ -3,7 +3,7 @@ import CreateEvent from '@/components/event/Create.vue';
 import NoLoggin from '@/components/assets/NoLoggin.vue';
 import { onMounted, ref, toRef } from 'vue';
 
-import { CreateEventDocument, CategorysDocument, type Category, EventDocument, EditEventDocument, DeleteEventDocument } from '@/api/graphql';
+import { CreateEventDocument, CategorysDocument, type Category, EventDocument, EditEventDocument, DeleteEventDocument, AskForDescriptionDocument } from '@/api/graphql';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 
 import router from '@/router'
@@ -15,6 +15,7 @@ const route = useRoute()
 const { mutate } = useMutation(CreateEventDocument)
 const { mutate: mutateEdit } = useMutation(EditEventDocument)
 const { mutate: mutateDelete } = useMutation(DeleteEventDocument)
+const { mutate: mutateAskDesc, loading: loadingAskDesc } = useMutation(AskForDescriptionDocument)
 const { onResult } = useQuery(CategorysDocument)
 
 const categories = ref<Category[] | null>(null)
@@ -108,12 +109,17 @@ const deleteEvent = async () => {
   router.push('/events')
 }
 
+async function generateDesc() {
+  const res = await mutateAskDesc({ input: form.value.description })
+  if(res?.data?.askForDescription) form.value.description = res.data.askForDescription
+}
+
 const userStore = useUserStore()
 </script>
 
 <template>
   <main>
-    <CreateEvent v-if="userStore.user">
+    <CreateEvent v-if="userStore.user" @ai-gen-desc="generateDesc" :loadingAskDesc="loadingAskDesc">
       <template #upload-input>
         <div v-if="!image && !form.imagePreview" class="upload-area" @click="uploadPhoto " :style="{ cursor: 'pointer' }">
           <input

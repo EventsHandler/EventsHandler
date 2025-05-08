@@ -322,7 +322,7 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
           directives: [],
         },
         {
@@ -336,7 +336,7 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
           directives: [],
         },
       ],
