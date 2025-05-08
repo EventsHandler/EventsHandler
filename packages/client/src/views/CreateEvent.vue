@@ -115,6 +115,13 @@ const validateForm = () => {
   if (!form.value.date) {
     errors.value.date = 'Data este necesară';
     isValid = false;
+  } else {
+    const selectedDate = new Date(`${form.value.date}T${form.value.time}:00.000Z`);
+    const currentDate = new Date();
+    if (selectedDate < currentDate) {
+      errors.value.date = 'Data evenimentului nu poate fi în trecut';
+      isValid = false;
+    }
   }
 
   if (!form.value.time) {
@@ -152,7 +159,7 @@ const addEvent = async () => {
     address: form.value.location,
     categoryName: form.value.category
   })
-  router.push('/events')
+  router.push("/events")
 };
 
 const editEvent = async () => {
@@ -193,12 +200,13 @@ const userStore = useUserStore()
           />
           <p>Apasă pentru a încărca imaginea evenimentului</p>
         </div>
-
         <div v-else class="preview-item">
           <img v-if="form.imagePreview" :src="form.imagePreview" :alt="form.title" />
           <button class="remove-btn" @click.stop="removeImage()">X</button>
         </div>
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.image">{{ errors.image }}</span>
       </template>
+      
 
 
       <template #event-name-input>

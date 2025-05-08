@@ -18,7 +18,8 @@ const errors = ref({
   email: '',
   username: '',
   password: '',
-  confirm: ''
+  confirm: '',
+  general: ''
 });
 
 const userStore = useUserStore()
@@ -29,7 +30,8 @@ const validateForm = () => {
     email: '',
     username: '',
     password: '',
-    confirm: ''
+    confirm: '',
+    general: ''
   };
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -77,12 +79,16 @@ async function register() {
       username: username.value,
       password: password.value
     })
-    if(!res?.data?.register.email) return
+    if(!res?.data?.register.email || !res?.data?.register.username) {
+      errors.value.general = 'Un utilizator cu acest email sau username există deja';
+      return;
+    }
     localStorage.setItem('token', res?.data?.register.email)
     userStore.refreshUser()
     router.push("/events")
   } catch(error) {
     console.error(error)
+    errors.value.general = 'A apărut o eroare la înregistrare. Vă rugăm să încercați din nou.';
   }
 };
 </script>
@@ -98,6 +104,7 @@ async function register() {
     </template>
 
     <template #input-header>
+      <span class="text-red-500 text-sm mt-1 block" v-if="errors.general">{{ errors.general }}</span>
       <h1 class="email">Email:</h1>
       <input type="text" v-model="email" class="auth-input" placeholder="exemplu@email.com" />
       <span class="text-red-500 text-sm mt-1 block" v-if="errors.email">{{ errors.email }}</span>
