@@ -19,7 +19,7 @@ const toggleMenu = () => {
           <img :src="logo" alt="logo" />
         </RouterLink>
 
-        <button @click="toggleMenu" class="md:hidden inline-flex items-center justify-center">
+        <button @click="toggleMenu" class="lg:hidden inline-flex items-center justify-center">
           <svg class="h-8 w-8" :class="{ 'hidden': isMenuOpen, 'block': !isMenuOpen }"
             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -30,12 +30,12 @@ const toggleMenu = () => {
           </svg>
         </button>
 
-        <div class="hidden md:flex items-center space-x-12">
+        <div class="hidden lg:flex items-center space-x-12">
           <Menu @close-menu="isMenuOpen = false" />
         </div>
       </div>
 
-      <div class="md:hidden" :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }">
+      <div class="lg:hidden" :class="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }">
         <hr class="border-t-2">
         <div class="pl-5 py-5 space-y-5">
           <Menu @close-menu="isMenuOpen = false" />

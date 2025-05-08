@@ -79,7 +79,7 @@ async function login() {
 
     <template #button>
       <button class="auth-button" @click="login">Login</button>
-      <button class="auth-button-register" @click="$emit('switch')">Creează un cont</button>
+      <button class="auth-button-register cursor-pointer" @click="$emit('switch')">Creează un cont</button>
     </template>
   </AuthTemplate>
 </template>

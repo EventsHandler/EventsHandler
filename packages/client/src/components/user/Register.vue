@@ -124,7 +124,7 @@ async function register() {
 
     <template #button>
       <button class="auth-button" @click="register">Creează cont</button>
-      <button class="auth-button-register" @click="$emit('switch')">Loghează-te</button>
+      <button class="auth-button-register cursor-pointer" @click="$emit('switch')">Loghează-te</button>
     </template>
   </AuthTemplate>
 </template>
