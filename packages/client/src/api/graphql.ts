@@ -53,6 +53,7 @@ export type Mutation = {
   __typename?: 'Mutation'
   apiTest?: Maybe<Scalars['String']['output']>
   askForCategory: Scalars['String']['output']
+  askForDescription: Scalars['String']['output']
   createAnnounce: Announces
   createEvent: Event
   deleteEvent?: Maybe<Event>
@@ -69,6 +70,10 @@ export type MutationApiTestArgs = {
 }
 
 export type MutationAskForCategoryArgs = {
+  input: Scalars['String']['input']
+}
+
+export type MutationAskForDescriptionArgs = {
   input: Scalars['String']['input']
 }
 

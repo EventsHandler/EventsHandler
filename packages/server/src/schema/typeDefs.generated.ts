@@ -325,6 +325,20 @@ export const typeDefs = {
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
           directives: [],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'askForDescription' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'input' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+          directives: [],
+        },
       ],
       directives: [],
       interfaces: [],

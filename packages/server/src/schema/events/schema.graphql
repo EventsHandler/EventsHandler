@@ -75,4 +75,5 @@ extend type Mutation {
   apiTest(input: String!): String
   deleteEvent(eventId: ID!): Event
   askForCategory(input: String!): String!
+  askForDescription(input: String!): String!
 }

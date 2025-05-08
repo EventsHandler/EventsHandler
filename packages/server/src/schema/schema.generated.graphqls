@@ -31,6 +31,7 @@ type Event {
 type Mutation {
   apiTest(input: String!): String
   askForCategory(input: String!): String!
+  askForDescription(input: String!): String!
   createAnnounce(description: String!, eventId: ID!, title: String!): Announces!
   createEvent(
     address: String!
