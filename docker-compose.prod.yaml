@@ -29,6 +29,7 @@ services:
     depends_on:
       - db
     environment:
+      DATABASE_URL: "postgresql://events:eventspwd@events-db:5432/events?schema=public"
       APP_PORT: 4000 # Port the server application listens on internally
       NODE_ENV: production
     networks:
