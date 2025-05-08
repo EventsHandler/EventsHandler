@@ -10,6 +10,7 @@ import { users as Query_users } from './events/resolvers/Query/users.js'
 import { apiTest as Mutation_apiTest } from './events/resolvers/Mutation/apiTest.js'
 import { askForCategory as Mutation_askForCategory } from './events/resolvers/Mutation/askForCategory.js'
 import { askForDescription as Mutation_askForDescription } from './events/resolvers/Mutation/askForDescription.js'
+import { comment as Mutation_comment } from './events/resolvers/Mutation/comment.js'
 import { createAnnounce as Mutation_createAnnounce } from './events/resolvers/Mutation/createAnnounce.js'
 import { createEvent as Mutation_createEvent } from './events/resolvers/Mutation/createEvent.js'
 import { deleteEvent as Mutation_deleteEvent } from './events/resolvers/Mutation/deleteEvent.js'
@@ -22,6 +23,7 @@ import { testUpload as Mutation_testUpload } from './events/resolvers/Mutation/t
 import { unsubscribe as Mutation_unsubscribe } from './events/resolvers/Mutation/unsubscribe.js'
 import { Announces } from './events/resolvers/Announces.js'
 import { Category } from './events/resolvers/Category.js'
+import { Comment } from './events/resolvers/Comment.js'
 import { Event } from './events/resolvers/Event.js'
 import { Rateing } from './events/resolvers/Rateing.js'
 import { User } from './events/resolvers/User.js'
@@ -41,6 +43,7 @@ export const resolvers: Resolvers = {
     apiTest: Mutation_apiTest,
     askForCategory: Mutation_askForCategory,
     askForDescription: Mutation_askForDescription,
+    comment: Mutation_comment,
     createAnnounce: Mutation_createAnnounce,
     createEvent: Mutation_createEvent,
     deleteEvent: Mutation_deleteEvent,
@@ -55,6 +58,7 @@ export const resolvers: Resolvers = {
 
   Announces: Announces,
   Category: Category,
+  Comment: Comment,
   Event: Event,
   Rateing: Rateing,
   User: User,

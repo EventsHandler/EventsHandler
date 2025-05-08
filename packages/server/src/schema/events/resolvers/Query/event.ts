@@ -12,7 +12,12 @@ export const event: NonNullable<QueryResolvers['event']> = async (_parent, { eve
         }
       },
       announces: true,
-      participants: true
+      participants: true,
+      comments: {
+        include: {
+          from: true
+        }
+      }
     }
   })
 }

@@ -49,6 +49,7 @@ model Event {
   // m-1 for Category
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
+  comments Comment[] @relation("commentsEvent")
 }
 
 model Announce {
@@ -77,6 +78,7 @@ model User {
   events  Event[]   @relation("EventParticipants")
   rates   Rateing[] @relation("fromRates")
   myRates Rateing[] @relation("toRates")
+  comments Comment[] @relation("commentsUser")
 }
 
 model Category {
@@ -94,4 +96,13 @@ model Rateing {
   toId     String
   toUser   User?  @relation("toRates", fields: [toId], references: [id])
   rate     Int    @default(0)
+}
+
+model Comment {
+  id String @id @default(cuid(2))
+  fromId String
+  from User @relation("commentsUser", fields: [fromId], references: [id])
+  eventId String
+  event Event @relation("commentsEvent", fields: [eventId], references: [id])
+  comment String
 }

@@ -36,11 +36,19 @@ export type Category = {
   name: Scalars['String']['output']
 }
 
+export type Comment = {
+  __typename?: 'Comment'
+  comment?: Maybe<Scalars['String']['output']>
+  event: Event
+  from: User
+}
+
 export type Event = {
   __typename?: 'Event'
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
   category: Category
+  comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
   creator: User
   date: Scalars['DateTime']['output']
@@ -57,6 +65,7 @@ export type Mutation = {
   apiTest?: Maybe<Scalars['String']['output']>
   askForCategory?: Maybe<Scalars['String']['output']>
   askForDescription?: Maybe<Scalars['String']['output']>
+  comment: Comment
   createAnnounce: Announces
   createEvent: Event
   deleteEvent?: Maybe<Event>
@@ -79,6 +88,12 @@ export type MutationaskForCategoryArgs = {
 
 export type MutationaskForDescriptionArgs = {
   input: Scalars['String']['input']
+}
+
+export type MutationcommentArgs = {
+  comment: Scalars['String']['input']
+  eventId: Scalars['String']['input']
+  fromId: Scalars['String']['input']
 }
 
 export type MutationcreateAnnounceArgs = {
@@ -168,6 +183,7 @@ export type Rateing = {
 
 export type User = {
   __typename?: 'User'
+  comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
   createdEvents?: Maybe<Array<Event>>
   email: Scalars['String']['output']
@@ -255,6 +271,9 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']['output']>
   Category: ResolverTypeWrapper<Omit<Category, 'events'> & { events?: Maybe<Array<ResolversTypes['Event']>> }>
   ID: ResolverTypeWrapper<Scalars['ID']['output']>
+  Comment: ResolverTypeWrapper<
+    Omit<Comment, 'event' | 'from'> & { event: ResolversTypes['Event']; from: ResolversTypes['User'] }
+  >
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
   Event: ResolverTypeWrapper<EventMapper>
   Mutation: ResolverTypeWrapper<{}>
@@ -264,7 +283,8 @@ export type ResolversTypes = {
   Rateing: ResolverTypeWrapper<Rateing>
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
   User: ResolverTypeWrapper<
-    Omit<User, 'createdEvents' | 'events'> & {
+    Omit<User, 'comments' | 'createdEvents' | 'events'> & {
+      comments?: Maybe<Array<ResolversTypes['Comment']>>
       createdEvents?: Maybe<Array<ResolversTypes['Event']>>
       events?: Maybe<Array<ResolversTypes['Event']>>
     }
@@ -277,6 +297,10 @@ export type ResolversParentTypes = {
   String: Scalars['String']['output']
   Category: Omit<Category, 'events'> & { events?: Maybe<Array<ResolversParentTypes['Event']>> }
   ID: Scalars['ID']['output']
+  Comment: Omit<Comment, 'event' | 'from'> & {
+    event: ResolversParentTypes['Event']
+    from: ResolversParentTypes['User']
+  }
   DateTime: Scalars['DateTime']['output']
   Event: EventMapper
   Mutation: {}
@@ -285,7 +309,8 @@ export type ResolversParentTypes = {
   Query: {}
   Rateing: Rateing
   Upload: Scalars['Upload']['output']
-  User: Omit<User, 'createdEvents' | 'events'> & {
+  User: Omit<User, 'comments' | 'createdEvents' | 'events'> & {
+    comments?: Maybe<Array<ResolversParentTypes['Comment']>>
     createdEvents?: Maybe<Array<ResolversParentTypes['Event']>>
     events?: Maybe<Array<ResolversParentTypes['Event']>>
   }
@@ -312,6 +337,16 @@ export type CategoryResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
+export type CommentResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment'],
+> = {
+  comment?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  event?: Resolver<ResolversTypes['Event'], ParentType, ContextType>
+  from?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime'
 }
@@ -323,6 +358,7 @@ export type EventResolvers<
   address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   announces?: Resolver<Maybe<Array<ResolversTypes['Announces']>>, ParentType, ContextType>
   category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>
+  comments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   creator?: Resolver<ResolversTypes['User'], ParentType, ContextType>
   date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
@@ -356,6 +392,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationaskForDescriptionArgs, 'input'>
+  >
+  comment?: Resolver<
+    ResolversTypes['Comment'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationcommentArgs, 'comment' | 'eventId' | 'fromId'>
   >
   createAnnounce?: Resolver<
     ResolversTypes['Announces'],
@@ -450,6 +492,7 @@ export type UserResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
 > = {
+  comments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   createdEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
@@ -465,6 +508,7 @@ export type UserResolvers<
 export type Resolvers<ContextType = UserContext> = {
   Announces?: AnnouncesResolvers<ContextType>
   Category?: CategoryResolvers<ContextType>
+  Comment?: CommentResolvers<ContextType>
   DateTime?: GraphQLScalarType
   Event?: EventResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>

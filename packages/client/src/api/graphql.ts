@@ -33,11 +33,19 @@ export type Category = {
   name: Scalars['String']['output']
 }
 
+export type Comment = {
+  __typename?: 'Comment'
+  comment?: Maybe<Scalars['String']['output']>
+  event: Event
+  from: User
+}
+
 export type Event = {
   __typename?: 'Event'
   address: Scalars['String']['output']
   announces?: Maybe<Array<Announces>>
   category: Category
+  comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
   creator: User
   date: Scalars['DateTime']['output']
@@ -54,6 +62,7 @@ export type Mutation = {
   apiTest?: Maybe<Scalars['String']['output']>
   askForCategory?: Maybe<Scalars['String']['output']>
   askForDescription?: Maybe<Scalars['String']['output']>
+  comment: Comment
   createAnnounce: Announces
   createEvent: Event
   deleteEvent?: Maybe<Event>
@@ -76,6 +85,12 @@ export type MutationAskForCategoryArgs = {
 
 export type MutationAskForDescriptionArgs = {
   input: Scalars['String']['input']
+}
+
+export type MutationCommentArgs = {
+  comment: Scalars['String']['input']
+  eventId: Scalars['String']['input']
+  fromId: Scalars['String']['input']
 }
 
 export type MutationCreateAnnounceArgs = {
@@ -165,6 +180,7 @@ export type Rateing = {
 
 export type User = {
   __typename?: 'User'
+  comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
   createdEvents?: Maybe<Array<Event>>
   email: Scalars['String']['output']
@@ -276,6 +292,17 @@ export type RateUserMutationVariables = Exact<{
 
 export type RateUserMutation = { __typename?: 'Mutation'; rateUser?: boolean | null }
 
+export type CommentMutationVariables = Exact<{
+  fromId: Scalars['String']['input']
+  eventId: Scalars['String']['input']
+  comment: Scalars['String']['input']
+}>
+
+export type CommentMutation = {
+  __typename?: 'Mutation'
+  comment: { __typename?: 'Comment'; comment?: string | null; from: { __typename?: 'User'; username: string } }
+}
+
 export type EventsQueryVariables = Exact<{
   category?: InputMaybe<Scalars['String']['input']>
 }>
@@ -355,6 +382,11 @@ export type EventQuery = {
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; id: string; username: string }> | null
     category: { __typename?: 'Category'; name: string }
+    comments?: Array<{
+      __typename?: 'Comment'
+      comment?: string | null
+      from: { __typename?: 'User'; username: string }
+    }> | null
   } | null
 }
 
@@ -997,6 +1029,73 @@ export const RateUserDocument = {
     },
   ],
 } as unknown as DocumentNode<RateUserMutation, RateUserMutationVariables>
+export const CommentDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'Comment' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'fromId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'comment' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'fromId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'fromId' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'eventId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'eventId' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'comment' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'comment' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'from' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CommentMutation, CommentMutationVariables>
 export const EventsDocument = {
   kind: 'Document',
   definitions: [
@@ -1278,6 +1377,24 @@ export const EventDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'comments' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'comment' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'from' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                        },
+                      },
+                    ],
                   },
                 },
               ],

@@ -28,6 +28,7 @@ type Event {
   participants: [User!]
   announces: [Announces!]
   category: Category!
+  comments: [Comment!]
 }
 
 type User {
@@ -42,12 +43,19 @@ type User {
 
   rates: [Rateing!]
   myRates: [Rateing!]
+  comments: [Comment!]
 }
 
 type Rateing {
   fromId: ID!
   toId: ID!
   rate: Int!
+}
+
+type Comment {
+  from: User!
+  event: Event!
+  comment: String
 }
 
 extend type Query {
@@ -89,4 +97,5 @@ extend type Mutation {
   askForCategory(input: String!): String
   askForDescription(input: String!): String
   rateUser(fromId: String!, toId: String!, rate: Int!): Boolean
+  comment(fromId: String!, eventId: String!, comment: String!): Comment!
 }

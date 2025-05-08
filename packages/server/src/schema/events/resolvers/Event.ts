@@ -51,4 +51,15 @@ export const Event: EventResolvers = {
 
     return event.category
   },
+  comments: async (_parent, _arg, _ctx) => {
+    return await prisma.comment.findMany({
+      where: {
+        eventId: _parent.id
+      },
+      include: {
+        event: true,
+        from: true
+      }
+    })
+  },
 }

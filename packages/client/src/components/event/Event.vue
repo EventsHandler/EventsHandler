@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Announces from './Announce.vue';
 import Participants from '../user/ProfileMini.vue';
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
-import { type Event, SubscribeEventDocument, UnsubscribeEventDocument, RateUserDocument, type Rateing } from '@/api/graphql';
+import { type Event, SubscribeEventDocument, UnsubscribeEventDocument, RateUserDocument, CommentDocument, type Rateing, type Comment } from '@/api/graphql';
 import { useUserStore } from '@/store/user';
 
 import { useMutation } from '@vue/apollo-composable';
@@ -12,6 +12,7 @@ import router from '@/router';
 const { mutate: mutateSub } = useMutation(SubscribeEventDocument)
 const { mutate: mutateUnSub } = useMutation(UnsubscribeEventDocument)
 const { mutate: mutateRate } = useMutation(RateUserDocument)
+const { mutate: mutateComment } = useMutation(CommentDocument)
 
 const props = defineProps<{
   event: Event
@@ -81,6 +82,26 @@ async function changeRate(i: number) {
     }
     return r
   })
+  if(!userRates.value.find(a => a.fromId == userId)) {
+    userRates.value.push({fromId: userId, toId: props.event.creator.id, rate: rate.value})
+  }
+}
+
+const commentInp = ref<string>("")
+const comments = ref<Comment[]>([])
+const commentsAddedNow = ref<Comment[]>([])
+const reverseComments = computed(() => [...comments.value].reverse())
+
+if(props.event.comments) {
+  comments.value = props.event.comments
+}
+
+async function comment() {
+  const userId = userStore.user?.id
+  if(!userId) return
+  const res = await mutateComment({ fromId: userId, eventId: props.event.id, comment: commentInp.value })
+  if(res?.data?.comment) commentsAddedNow.value.push(res.data.comment as Comment)
+  commentInp.value = ""
 }
 
 </script>
@@ -101,6 +122,12 @@ async function changeRate(i: number) {
         <Announces :announces="event.announces" />
         <p v-if="event.category"><strong>Category:</strong> {{ event.category.name }}</p>
         <Participants :users="event.participants" />
+        <form class="w-full relative" @submit.prevent="comment">
+          <input v-model="commentInp" type="text" class="w-full commentInput" placeholder="comment">
+          <i class="fa-solid fa-paper-plane absolute right-6 bottom-[50%] translate-x-[50%] translate-y-[50%] cursor-pointer" @click="comment"></i>
+        </form>
+        <div v-for="comment in commentsAddedNow.reverse()">{{ comment.from.username }}: {{ comment.comment }}</div>
+        <div v-for="comment in reverseComments">{{ comment.from.username }}: {{ comment.comment }}</div>
       </div>
       <div class="detaiils-container">
         <div v-if="!loading">
@@ -116,7 +143,8 @@ async function changeRate(i: number) {
         <button v-else>Loading...</button>
         <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
-        <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a>{{ userRates.length > 0 ? userRates.reduce((a, v) => a+v.rate, 0)/userRates.length : 0 }}<i class="fa-solid fa-star"></i></div>
+        <div><i class="fa-solid fa-layer-group"></i> {{ event.category.name }}</div>
+        <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a>{{ userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a+v.rate, 0)/userRates.length * 10)/10 : 0 }}<i class="fa-solid fa-star"></i></div>
         <div class="flex flex-col" v-if="userStore.user && userStore.user.id != event.creator.id">
           <div>Ofera o nota acestui utilizator:</div>
           <div>
@@ -138,6 +166,15 @@ async function changeRate(i: number) {
 .event-container {
   padding: 5rem;
   background-color: #f9fafb;
+}
+.commentInput {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 @media (max-width: 768px) {
   .event-container {

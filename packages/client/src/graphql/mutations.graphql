@@ -67,3 +67,12 @@ mutation AskForDescription($input: String!) {
 mutation RateUser($fromId: String!, $toId: String!, $rate: Int!) {
   rateUser(fromId: $fromId, toId: $toId, rate: $rate)
 }
+
+mutation Comment($fromId: String!, $eventId: String!, $comment: String!) {
+  comment(fromId: $fromId, eventId: $eventId, comment: $comment) {
+    comment
+    from {
+      username
+    }
+  }
+}
