@@ -65,6 +65,7 @@ export type Mutation = {
   apiTest?: Maybe<Scalars['String']['output']>
   askForCategory?: Maybe<Scalars['String']['output']>
   askForDescription?: Maybe<Scalars['String']['output']>
+  comment?: Maybe<Comment>
   createAnnounce: Announces
   createEvent: Event
   deleteEvent?: Maybe<Event>
@@ -87,6 +88,12 @@ export type MutationaskForCategoryArgs = {
 
 export type MutationaskForDescriptionArgs = {
   input: Scalars['String']['input']
+}
+
+export type MutationcommentArgs = {
+  comment: Scalars['String']['input']
+  eventId: Scalars['String']['input']
+  fromId: Scalars['String']['input']
 }
 
 export type MutationcreateAnnounceArgs = {
@@ -385,6 +392,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationaskForDescriptionArgs, 'input'>
+  >
+  comment?: Resolver<
+    Maybe<ResolversTypes['Comment']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationcommentArgs, 'comment' | 'eventId' | 'fromId'>
   >
   createAnnounce?: Resolver<
     ResolversTypes['Announces'],
