@@ -1,17 +1,17 @@
-import { PrismaClient } from './generated/prisma'
+import { PrismaClient } from './generated/prisma/index.js'
 
 export const prisma = new PrismaClient()
 
-const categories = ["none", "Music", "Art", "Sports", "Technology", "Food", "Education", "Health", "Travel", "Business"]
+const categories = ['none', 'Music', 'Art', 'Sports', 'Technology', 'Food', 'Education', 'Health', 'Travel', 'Business']
 
 try {
   categories.forEach(async c => {
     await prisma.category.upsert({
       where: { name: c },
       update: {},
-      create: { name: c }
+      create: { name: c },
     })
   })
-} catch(error) {
+} catch (error) {
   console.error(error)
 }

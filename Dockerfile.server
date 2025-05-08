@@ -1,0 +1,15 @@
+FROM node:23
+
+WORKDIR /app
+
+COPY . /app/
+
+RUN corepack enable
+RUN corepack install
+
+RUN pnpm install
+RUN pnpm build:server
+
+ENV NODE_ENV=production
+
+CMD ["pnpm", "start:server"]

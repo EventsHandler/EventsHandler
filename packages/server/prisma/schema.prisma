@@ -16,8 +16,9 @@
 // If you don't want to turn the pager off just type "q"
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
 }
 
 datasource db {
@@ -73,8 +74,8 @@ model User {
   createdEvents Event[] @relation("CreatedEvents")
 
   // m-m: for Participants
-  events Event[] @relation("EventParticipants")
-  rates Rateing[] @relation("fromRates")
+  events  Event[]   @relation("EventParticipants")
+  rates   Rateing[] @relation("fromRates")
   myRates Rateing[] @relation("toRates")
 }
 
@@ -87,10 +88,10 @@ model Category {
 }
 
 model Rateing {
-  id String @id @default(cuid(2))
-  fromId String
-  fromUser User? @relation("fromRates", fields: [fromId], references: [id])
-  toId String
-  toUser User? @relation("toRates", fields: [toId], references: [id])
-  rate Int @default(0)
+  id       String @id @default(cuid(2))
+  fromId   String
+  fromUser User?  @relation("fromRates", fields: [fromId], references: [id])
+  toId     String
+  toUser   User?  @relation("toRates", fields: [toId], references: [id])
+  rate     Int    @default(0)
 }
