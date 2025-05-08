@@ -49,7 +49,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  login(email: String!): User!
+  login(username: String!, password: String!): User!
   register(username: String!, password: String!, email: String!): User!
   createEvent(
     title: String!

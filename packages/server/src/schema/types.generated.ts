@@ -110,7 +110,8 @@ export type MutationeditEventArgs = {
 }
 
 export type MutationloginArgs = {
-  email: Scalars['String']['input']
+  password: Scalars['String']['input']
+  username: Scalars['String']['input']
 }
 
 export type MutationregisterArgs = {
@@ -357,7 +358,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationeditEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'eventId' | 'title'>
   >
-  login?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationloginArgs, 'email'>>
+  login?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationloginArgs, 'password' | 'username'>
+  >
   register?: Resolver<
     ResolversTypes['User'],
     ParentType,

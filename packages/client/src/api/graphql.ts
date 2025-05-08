@@ -107,7 +107,8 @@ export type MutationEditEventArgs = {
 }
 
 export type MutationLoginArgs = {
-  email: Scalars['String']['input']
+  password: Scalars['String']['input']
+  username: Scalars['String']['input']
 }
 
 export type MutationRegisterArgs = {
@@ -192,7 +193,8 @@ export type UnsubscribeEventMutationVariables = Exact<{
 export type UnsubscribeEventMutation = { __typename?: 'Mutation'; unsubscribe: { __typename?: 'Event'; id: string } }
 
 export type LoginMutationVariables = Exact<{
-  email: Scalars['String']['input']
+  username: Scalars['String']['input']
+  password: Scalars['String']['input']
 }>
 
 export type LoginMutation = {
@@ -585,7 +587,12 @@ export const LoginDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'email' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'username' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'password' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
         },
       ],
@@ -598,8 +605,13 @@ export const LoginDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'email' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'email' } },
+                name: { kind: 'Name', value: 'username' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'username' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'password' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'password' } },
               },
             ],
             selectionSet: {

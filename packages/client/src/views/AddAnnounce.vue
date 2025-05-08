@@ -12,15 +12,48 @@ const { mutate } = useMutation(CreateAnnounceDocument)
 const title = ref('')
 const description = ref('')
 
+const errors = ref({
+  title: '',
+  description: ''
+});
+
 const route = useRoute()
 
+const validateForm = () => {
+  let isValid = true;
+  errors.value = {
+    title: '',
+    description: ''
+  };
+
+  if (!title.value) {
+    errors.value.title = 'Titlul este necesar';
+    isValid = false;
+  } else if (title.value.length < 3) {
+    errors.value.title = 'Titlul trebuie să aibă minim 3 caractere';
+    isValid = false;
+  }
+
+  if (!description.value) {
+    errors.value.description = 'Descrierea este necesară';
+    isValid = false;
+  } else if (description.value.length < 10) {
+    errors.value.description = 'Descrierea trebuie să aibă minim 10 caractere';
+    isValid = false;
+  }
+
+  return isValid;
+};
+
 const addAnnounce = async () => {
-    await mutate({
-        description: description.value,
-        title: title.value,
-        eventId: route.params.id as string
-    })
-    router.push("/event/" + route.params.id)
+  if (!validateForm()) return;
+  
+  await mutate({
+    description: description.value,
+    title: title.value,
+    eventId: route.params.id as string
+  })
+  router.push("/event/" + route.params.id)
 };
 
 </script>
@@ -30,9 +63,11 @@ const addAnnounce = async () => {
         <Announce>
             <template #announce-title>
                 <input type="text" v-model="title" placeholder="Denumirea anunțului" class="event-name-input" />
+                <span class="text-red-500 text-sm mt-1 block" v-if="errors.title">{{ errors.title }}</span>
             </template>
             <template #announce-desc>
                 <textarea v-model="description" placeholder="Descrierea anunțului" class="event-description-input" />
+                <span class="text-red-500 text-sm mt-1 block" v-if="errors.description">{{ errors.description }}</span>
             </template>
             <template #add-announce-button>
                 <button class="add-announce-button" @click="addAnnounce">Adaugă anunț</button>
