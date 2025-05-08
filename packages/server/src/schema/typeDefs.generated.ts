@@ -345,6 +345,32 @@ export const typeDefs = {
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
           directives: [],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'rateUser' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'fromId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'toId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'rate' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } },
+          directives: [],
+        },
       ],
       directives: [],
       interfaces: [],

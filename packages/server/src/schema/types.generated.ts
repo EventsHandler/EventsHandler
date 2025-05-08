@@ -62,6 +62,7 @@ export type Mutation = {
   deleteEvent?: Maybe<Event>
   editEvent: Event
   login: User
+  rateUser?: Maybe<Scalars['Boolean']['output']>
   register: User
   subscribe: Event
   testUpload: Scalars['String']['output']
@@ -112,6 +113,12 @@ export type MutationeditEventArgs = {
 export type MutationloginArgs = {
   password: Scalars['String']['input']
   username: Scalars['String']['input']
+}
+
+export type MutationrateUserArgs = {
+  fromId: Scalars['String']['input']
+  rate: Scalars['Int']['input']
+  toId: Scalars['String']['input']
 }
 
 export type MutationregisterArgs = {
@@ -248,9 +255,10 @@ export type ResolversTypes = {
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
   Event: ResolverTypeWrapper<EventMapper>
   Mutation: ResolverTypeWrapper<{}>
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>
   Query: ResolverTypeWrapper<{}>
   Rateing: ResolverTypeWrapper<Rateing>
-  Int: ResolverTypeWrapper<Scalars['Int']['output']>
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
   User: ResolverTypeWrapper<
     Omit<User, 'createdEvents' | 'events'> & {
@@ -258,7 +266,6 @@ export type ResolversTypes = {
       events?: Maybe<Array<ResolversTypes['Event']>>
     }
   >
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
 }
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -270,15 +277,15 @@ export type ResolversParentTypes = {
   DateTime: Scalars['DateTime']['output']
   Event: EventMapper
   Mutation: {}
+  Boolean: Scalars['Boolean']['output']
+  Int: Scalars['Int']['output']
   Query: {}
   Rateing: Rateing
-  Int: Scalars['Int']['output']
   Upload: Scalars['Upload']['output']
   User: Omit<User, 'createdEvents' | 'events'> & {
     createdEvents?: Maybe<Array<ResolversParentTypes['Event']>>
     events?: Maybe<Array<ResolversParentTypes['Event']>>
   }
-  Boolean: Scalars['Boolean']['output']
 }
 
 export type AnnouncesResolvers<
@@ -376,6 +383,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationloginArgs, 'password' | 'username'>
+  >
+  rateUser?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationrateUserArgs, 'fromId' | 'rate' | 'toId'>
   >
   register?: Resolver<
     ResolversTypes['User'],

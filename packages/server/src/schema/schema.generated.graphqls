@@ -52,6 +52,7 @@ type Mutation {
     title: String!
   ): Event!
   login(password: String!, username: String!): User!
+  rateUser(fromId: String!, rate: Int!, toId: String!): Boolean
   register(email: String!, password: String!, username: String!): User!
   subscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!

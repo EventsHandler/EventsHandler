@@ -85,4 +85,5 @@ extend type Mutation {
   deleteEvent(eventId: ID!): Event
   askForCategory(input: String!): String
   askForDescription(input: String!): String
+  rateUser(fromId: String!, toId: String!, rate: Int!): Boolean
 }
