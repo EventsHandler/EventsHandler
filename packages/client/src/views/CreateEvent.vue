@@ -12,9 +12,9 @@ import { useUserStore } from '@/store/user';
 
 const route = useRoute()
 
-const { mutate } = useMutation(CreateEventDocument)
-const { mutate: mutateEdit } = useMutation(EditEventDocument)
-const { mutate: mutateDelete } = useMutation(DeleteEventDocument)
+const { mutate, loading: loadingCreate } = useMutation(CreateEventDocument)
+const { mutate: mutateEdit, loading: loadingEdit } = useMutation(EditEventDocument)
+const { mutate: mutateDelete, loading: loadingDelete } = useMutation(DeleteEventDocument)
 const { mutate: mutateAskDesc, loading: loadingAskDesc } = useMutation(AskForDescriptionDocument)
 const { onResult } = useQuery(CategorysDocument)
 
@@ -253,11 +253,14 @@ const userStore = useUserStore()
       </template>
 
       <template #create-button>
-        <button v-if="!result?.event" @click="addEvent">Create Event</button>
-        <div v-else class="flex flex-col">
-          <button @click="editEvent">Edit Event</button>
-          <button @click="deleteEvent">Delete Event</button>
+        <div v-if="!loadingCreate && !loadingDelete && !loadingEdit" class="w-full">
+          <button v-if="!result?.event" @click="addEvent" class="w-full">Create Event</button>
+          <div v-else class="flex flex-col w-full">
+            <button @click="editEvent" class="w-full">Edit Event</button>
+            <button @click="deleteEvent" class="w-full">Delete Event</button>
+          </div>
         </div>
+        <button v-else class="cursor-block w-full">Loading...</button>
       </template>
     </CreateEvent>
     <NoLoggin v-else-if="!userStore.loading" />
