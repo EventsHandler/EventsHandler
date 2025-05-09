@@ -127,7 +127,7 @@ const toggleEvents = () => {
             
             <div 
               v-show="isEventsOpen"
-              class="mt-2 w-48 w-full"
+              class="mt-2 w-full"
             >
               <div class="py-1 w-full">
                 <RouterLink 
