@@ -48,7 +48,7 @@ const toggleEvents = () => {
           <div class="relative group">
             <button 
               @click="toggleEvents"
-              class="hover:text-blue-200 transition flex items-center"
+              class="hover:text-blue-200 transition flex items-center cursor-pointer"
             >
               Evenimente
               <svg 
