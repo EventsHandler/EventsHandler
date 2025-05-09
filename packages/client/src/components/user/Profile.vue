@@ -56,7 +56,7 @@ async function changeRate(i: number) {
 }
 </script>
 <template>
-  <div class="detaiils-container w-full lg:w-[400px]">
+  <div class="detaiils-container w-full lg:w-[400px] lg:h-[250px] lg:sticky">
     <div><i class="fa fa-user"></i> <a :href="'/user/'+user.id">{{ user?.username }}</a>{{ userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a+v.rate, 0)/userRates.length * 10)/10 : 0 }}<i class="fa-solid fa-star"></i></div>
     <div><i class="fa-solid fa-clock"></i> {{ formatDate(user?.createdAt) }}</div>
     <div><i class="fa-solid fa-layer-group"></i> {{ user?.email }}</div>
@@ -81,7 +81,6 @@ async function changeRate(i: number) {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-    position: sticky;
   top: 2rem;
 }
 .detaiils-container div {

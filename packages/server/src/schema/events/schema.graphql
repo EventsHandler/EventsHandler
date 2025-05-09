@@ -61,7 +61,7 @@ type Comment {
 extend type Query {
   events(category: String): [Event!]
   myEvents: [Event!]
-  joinedEvents: [Event!]
+  joinedEvents(userId: String): [Event!]
   event(eventId: ID!): Event
   me: User
   categories: [Category!]

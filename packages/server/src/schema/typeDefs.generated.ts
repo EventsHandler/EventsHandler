@@ -36,7 +36,14 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'joinedEvents' },
-          arguments: [],
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+          ],
           type: {
             kind: 'ListType',
             type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },

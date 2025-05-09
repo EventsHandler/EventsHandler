@@ -175,6 +175,10 @@ export type QueryeventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+export type QueryjoinedEventsArgs = {
+  userId?: InputMaybe<Scalars['String']['input']>
+}
+
 export type QueryuserArgs = {
   userId: Scalars['String']['input']
 }
@@ -473,7 +477,12 @@ export type QueryResolvers<
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType, Partial<QueryeventsArgs>>
-  joinedEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  joinedEvents?: Resolver<
+    Maybe<Array<ResolversTypes['Event']>>,
+    ParentType,
+    ContextType,
+    Partial<QueryjoinedEventsArgs>
+  >
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryuserArgs, 'userId'>>

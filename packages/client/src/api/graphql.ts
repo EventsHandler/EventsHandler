@@ -172,6 +172,10 @@ export type QueryEventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+export type QueryJoinedEventsArgs = {
+  userId?: InputMaybe<Scalars['String']['input']>
+}
+
 export type QueryUserArgs = {
   userId: Scalars['String']['input']
 }
@@ -329,7 +333,9 @@ export type EventsQuery = {
   }> | null
 }
 
-export type JoinedEventsQueryVariables = Exact<{ [key: string]: never }>
+export type JoinedEventsQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']['input']>
+}>
 
 export type JoinedEventsQuery = {
   __typename?: 'Query'
@@ -1222,12 +1228,26 @@ export const JoinedEventsDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'JoinedEvents' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+        },
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'joinedEvents' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'userId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
+              },
+            ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [

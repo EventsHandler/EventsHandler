@@ -23,8 +23,8 @@ query Events($category: String) {
   }
 }
 
-query JoinedEvents {
-  joinedEvents {
+query JoinedEvents($userId: String) {
+  joinedEvents(userId: $userId) {
     id
     title
     description
