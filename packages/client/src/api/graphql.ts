@@ -325,6 +325,7 @@ export type EventsQuery = {
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
+    category: { __typename?: 'Category'; name: string }
   }> | null
 }
 
@@ -343,6 +344,7 @@ export type JoinedEventsQuery = {
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
+    category: { __typename?: 'Category'; name: string }
   }> | null
 }
 
@@ -361,6 +363,7 @@ export type MyEventsQuery = {
     creator: { __typename?: 'User'; username: string; id: string }
     announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
     participants?: Array<{ __typename?: 'User'; username: string }> | null
+    category: { __typename?: 'Category'; name: string }
   }> | null
 }
 
@@ -404,6 +407,35 @@ export type CategorysQueryVariables = Exact<{ [key: string]: never }>
 export type CategorysQuery = {
   __typename?: 'Query'
   categories?: Array<{ __typename?: 'Category'; name: string }> | null
+}
+
+export type UserQueryVariables = Exact<{
+  userId: Scalars['String']['input']
+}>
+
+export type UserQuery = {
+  __typename?: 'Query'
+  user?: {
+    __typename?: 'User'
+    id: string
+    username: string
+    email: string
+    createdAt: any
+    createdEvents?: Array<{
+      __typename?: 'Event'
+      id: string
+      title: string
+      description: string
+      date: any
+      image: string
+      address: string
+      creator: { __typename?: 'User'; username: string; id: string }
+      announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
+      participants?: Array<{ __typename?: 'User'; username: string }> | null
+      category: { __typename?: 'Category'; name: string }
+    }> | null
+    myRates?: Array<{ __typename?: 'Rateing'; fromId: string; toId: string; rate: number }> | null
+  } | null
 }
 
 export const CreateEventDocument = {
@@ -1167,6 +1199,14 @@ export const EventsDocument = {
                     selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
                   },
                 },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'category' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
+                  },
+                },
               ],
             },
           },
@@ -1227,6 +1267,14 @@ export const JoinedEventsDocument = {
                     selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
                   },
                 },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'category' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
+                  },
+                },
               ],
             },
           },
@@ -1285,6 +1333,14 @@ export const MyEventsDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'category' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
                   },
                 },
               ],
@@ -1459,3 +1515,110 @@ export const CategorysDocument = {
     },
   ],
 } as unknown as DocumentNode<CategorysQuery, CategorysQueryVariables>
+export const UserDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'User' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'user' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'userId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'userId' } },
+              },
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'createdEvents' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'image' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'address' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'creator' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'announces' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+                          ],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'participants' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                        },
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'category' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'name' } }],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'myRates' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'fromId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'toId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'rate' } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<UserQuery, UserQueryVariables>

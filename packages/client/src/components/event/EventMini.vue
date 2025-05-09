@@ -25,7 +25,8 @@ function formatDate(date: string) {
         <div class="event-mini-info">
         <div class="event-title">{{ event.title }}</div>
         <div class="event-address"><i class="fa fa-location-dot event-icon"></i> {{ event.address }}</div>
-        <div class="event-address flex gap-4"><i class="fa fa-user"></i> {{ event.creator.username }}</div>
+        <div class="event-address"><i class="fa fa-user event-icon"></i> <a :href="'/user/'+event.creator.id">{{ event.creator.username }}</a></div>
+        <div class="event-address"><i class="fa fa-solid fa-layer-group event-icon"></i> {{ event.category.name }}</div>
         <div class="start-day"><svg class="event-icon" fill="none" stroke="#007bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M19.5 3.75h-15A2.25 2.25 0 0 0 2.25 6v13.5a2.25 2.25 0 0 0 2.25 2.25h15a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25Z"></path>
       <path fill="#000000" stroke="none" d="M13.875 12a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z"></path>
@@ -121,6 +122,9 @@ function formatDate(date: string) {
 }
 .event-icon {
   width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 20px;
   margin-right: 10px;
   color: #007bff !important;

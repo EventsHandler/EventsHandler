@@ -48,6 +48,11 @@ const router = createRouter({
       name: 'announce',
       component: () => import('../views/AddAnnounce.vue'),
     },
+    {
+      path: '/user/:id',
+      name: 'user profile',
+      component: () => import('../views/UserProfile.vue'),
+    },
   ],
 })
 

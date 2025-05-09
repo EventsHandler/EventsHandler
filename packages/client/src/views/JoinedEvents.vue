@@ -28,6 +28,6 @@ watch(user, () => {
 </script>
 
 <template>
-  <EventsList v-if="events && userStore.user && !loading" :events="events"></EventsList>
+  <EventsList :noSearchBar="false" v-if="events && userStore.user && !loading" :events="events"></EventsList>
   <NoLoggin v-else-if="!userStore.loading && !loading" />
 </template>
