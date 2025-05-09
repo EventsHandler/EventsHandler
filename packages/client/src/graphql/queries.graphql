@@ -105,6 +105,7 @@ query Event($eventId: ID!) {
       comment
       from {
         username
+        id
       }
     }
   }

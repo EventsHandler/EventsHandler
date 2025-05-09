@@ -120,14 +120,13 @@ async function comment() {
   {{ showFullDescription ? 'Afișează mai puțin' : 'Afișează mai mult' }}
 </button></div>
         <Announces :announces="event.announces" />
-        <p v-if="event.category"><strong>Category:</strong> {{ event.category.name }}</p>
         <Participants :users="event.participants" />
-        <form class="w-full relative" @submit.prevent="comment">
-          <input v-model="commentInp" type="text" class="w-full commentInput" placeholder="comment">
+        <form class="w-full relative" style="margin-bottom: 1rem;" @submit.prevent="comment">
+          <input v-model="commentInp" type="text" class="w-full commentInput" placeholder="comentează">
           <i class="fa-solid fa-paper-plane absolute right-6 bottom-[50%] translate-x-[50%] translate-y-[50%] cursor-pointer" @click="comment"></i>
         </form>
-        <div v-for="comment in commentsAddedNow.reverse()">{{ comment.from.username }}: {{ comment.comment }}</div>
-        <div v-for="comment in reverseComments">{{ comment.from.username }}: {{ comment.comment }}</div>
+        <div v-for="comment in commentsAddedNow.reverse()"><a class="font-bold" :href="'/user/'+comment.from.id">{{ comment.from.username }}</a>: {{ comment.comment }}</div>
+        <div v-for="comment in reverseComments"><a class="font-bold" :href="'/user/'+comment.from.id">{{ comment.from.username }}</a>: {{ comment.comment }}</div>
       </div>
       <div class="detaiils-container">
         <div v-if="!loading">
@@ -141,10 +140,10 @@ async function comment() {
           </div>
         </div>
         <button v-else>Loading...</button>
-        <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
-        <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
-        <div><i class="fa-solid fa-layer-group"></i> {{ event.category.name }}</div>
-        <div><i class="fa fa-user"></i> <a :href="'/user/' + event.creator.id">{{ event.creator.username }}</a>{{ userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a+v.rate, 0)/userRates.length * 10)/10 : 0 }}<i class="fa-solid fa-star"></i></div>
+        <div><i class="fa fa-location-arrow icon-details"></i> {{ event.address }}</div>
+        <div><i class="fa-solid fa-clock icon-details"></i> {{ formatDate(event.date) }}</div>
+        <div><i class="fa-solid fa-layer-group icon-details"></i> {{ event.category.name }}</div>
+        <div><i class="fa fa-user icon-details"></i> <a :href="'/user/' + event.creator.id">{{ event.creator.username }}</a>{{ userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a+v.rate, 0)/userRates.length * 10)/10 : 0 }}<i class="fa-solid fa-star"></i></div>
         <div class="flex flex-col" v-if="userStore.user && userStore.user.id != event.creator.id">
           <div>Ofera o nota acestui utilizator:</div>
           <div>
@@ -158,6 +157,11 @@ async function comment() {
 </template>
 
 <style scoped>
+.icon-details {
+  display: flex;
+  width: 20px;
+  justify-content: center;
+}
 * {
   margin: 0;
   padding: 0;

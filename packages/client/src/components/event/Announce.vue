@@ -6,7 +6,7 @@ defineProps<{
 </script>
 <template>
   <div v-if="announces?.length" class="announce-wrapper">
-      <h2>Anunțuri:</h2>
+      <div class="text-2xl font-bold">Anunțuri:</div>
       <div v-for="ann in announces" class="announce-box">
           <h3 class="announce-title">{{ ann.title }}</h3> 
           <p v-if="ann.description != ''"  class="announce-description">{{  ann.description }}</p>
@@ -17,7 +17,6 @@ defineProps<{
 <style scoped>
 .announce-wrapper {
   margin-top: 10px;
-  padding: 8px;
 }
 
 .section-title {

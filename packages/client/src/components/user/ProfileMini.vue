@@ -7,9 +7,9 @@ defineProps<{
 
 <template>
     <div v-if="users?.length" >
-    <p class="participants-title">Participanți:</p>
+    <div class="participants-title text-2xl">Participanți:</div>
     <ul class="participants-list participants-wrapper" >
-      <li v-for="usr in users" :key="usr.id" class="participant-item">
+      <li v-for="usr in users" :key="usr.id" class="participant-item ml-4">
         <a :href="'/user/'+usr.id" class="participant-link">{{ usr.username }}</a>
       </li>
     </ul>
@@ -18,6 +18,7 @@ defineProps<{
 
 <style scoped>
 .participants-wrapper {
+  margin-left: .8rem;
   margin-top: 20px;
   padding: 10px;
   background-color: #f9fafb;
@@ -26,9 +27,7 @@ defineProps<{
 }
 
 .participants-title {
-  font-size: 0.95rem;
   font-weight: 600;
-  color: #1f2937;
   margin-bottom: 6px;
 }
 
