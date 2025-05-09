@@ -26,6 +26,8 @@ services:
     build:
       dockerfile: Dockerfile.server
     restart: on-failure
+    volumes:
+      - uploads:/app/packages/server/uploads
     depends_on:
       - events-db
     environment:
@@ -41,8 +43,6 @@ services:
     build:
       dockerfile: Dockerfile.client
     restart: on-failure
-    volumes:
-      - uploads:/app/packages/server/uploads
     depends_on:
       - events-server
     networks:
