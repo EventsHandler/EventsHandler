@@ -67,7 +67,7 @@ const toggleEvents = () => {
             
             <div 
               v-show="isEventsOpen"
-              class="absolute left-0 mt-2 w-48 rounded-b-md bg-blue-600 z-50 w-70"
+              class="absolute left-0 mt-2 rounded-b-md bg-blue-600 z-50 w-70"
             >
               <div class="py-1 w-full">
                 <RouterLink 
