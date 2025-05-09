@@ -26,17 +26,21 @@ const emit = defineEmits<{
 function edit() {
   router.push("/create/" + props.event.id)
 }
+
 async function join() {
   await mutateSub({ eventId: props.event.id })
   emit('refetch')
 }
+
 async function leave() {
   await mutateUnSub({ eventId: props.event.id })
   emit('refetch')
 }
+
 function announce() {
   router.push("/announce/" + props.event.id)
 }
+
 function formatDate(date: string) {
   return new Date(date).toLocaleString("ro-RO", {
     day: "2-digit",
@@ -53,37 +57,37 @@ const showFullDescription = ref<boolean>(false)
 const userStore = useUserStore()
 
 onMounted(() => {
-  emit('refetch')  
+  emit('refetch')
 })
 
 const rate = ref<number>(0)
 const userRates = ref<Rateing[]>([])
-if(props.event.creator.myRates) {
+if (props.event.creator.myRates) {
   userRates.value = props.event.creator.myRates
 }
 
 props.event.creator.myRates?.forEach(r => {
-  if(r.fromId == userStore.user?.id) { rate.value = r.rate }
+  if (r.fromId == userStore.user?.id) { rate.value = r.rate }
 })
 
 function range(start: number, end: number) {
- return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
 
 async function changeRate(i: number) {
   const userId = userStore.user?.id
-  if(!userId) return
-  if(userId == props.event.creator.id) return
+  if (!userId) return
+  if (userId == props.event.creator.id) return
   rate.value = i
   await mutateRate({ fromId: userId, toId: props.event.creator.id, rate: rate.value })
   userRates.value = userRates.value.map((r) => {
-    if(r.fromId == userId) {
+    if (r.fromId == userId) {
       return { ...r, rate: rate.value }
     }
     return r
   })
-  if(!userRates.value.find(a => a.fromId == userId)) {
-    userRates.value.push({fromId: userId, toId: props.event.creator.id, rate: rate.value})
+  if (!userRates.value.find(a => a.fromId == userId)) {
+    userRates.value.push({ fromId: userId, toId: props.event.creator.id, rate: rate.value })
   }
 }
 
@@ -92,7 +96,7 @@ const comments = ref<Comment[]>([])
 const commentsAddedNow = ref<Comment[]>([])
 const reverseComments = computed(() => [...comments.value].reverse())
 
-if(props.event.comments) {
+if (props.event.comments) {
   comments.value = props.event.comments
 }
 
@@ -101,7 +105,7 @@ async function comment() {
   if(!userId) return
   if(commentInp.value == "") return
   const res = await mutateComment({ fromId: userId, eventId: props.event.id, comment: commentInp.value })
-  if(res?.data?.comment) commentsAddedNow.value.push(res.data.comment as Comment)
+  if (res?.data?.comment) commentsAddedNow.value.push(res.data.comment as Comment)
   commentInp.value = ""
 }
 
@@ -114,25 +118,40 @@ async function comment() {
     <div class="event-content-grid">
       <div class="event-info">
         <h1>{{ event.title }}</h1>
-        <div><p>
-  {{ showFullDescription ? event.description : event.description.slice(0, 200) + '...' }}
-</p>
-<button v-if="event.description.length > 200" @click="showFullDescription = !showFullDescription" class="toggle-description-btn">
-  {{ showFullDescription ? 'Afișează mai puțin' : 'Afișează mai mult' }}
-</button></div>
+        <div>
+          <p>
+            {{ showFullDescription ? event.description : event.description.slice(0, 200) + '...' }}
+          </p>
+          <button v-if="event.description.length > 200" @click="showFullDescription = !showFullDescription"
+            class="toggle-description-btn">
+            {{ showFullDescription ? 'Afișează mai puțin' : 'Afișează mai mult' }}
+          </button>
+        </div>
         <Announces :announces="event.announces" />
         <Participants :users="event.participants" />
-        <form class="w-full relative" style="margin-bottom: 1rem;" @submit.prevent="comment">
-          <input v-model="commentInp" type="text" class="w-full commentInput" placeholder="comentează">
-          <i class="fa-solid fa-paper-plane absolute right-6 bottom-[50%] translate-x-[50%] translate-y-[50%] cursor-pointer" @click="comment"></i>
-        </form>
-        <div v-for="comment in commentsAddedNow.reverse()"><a class="font-bold" :href="'/user/'+comment.from.id">{{ comment.from.username }}</a>: {{ comment.comment }}</div>
-        <div v-for="comment in reverseComments"><a class="font-bold" :href="'/user/'+comment.from.id">{{ comment.from.username }}</a>: {{ comment.comment }}</div>
+        <div class="!mt-2 bg-gray-200 !p-2 rounded-lg">
+          <form class="w-full relative" @submit.prevent="comment">
+            <input v-model="commentInp" type="text" class="w-full commentInput" placeholder="comment">
+            <i class="fa-solid fa-paper-plane absolute right-6 bottom-[50%] translate-x-[50%] translate-y-[50%] cursor-pointer"
+              @click="comment"></i>
+          </form>
+
+          <div v-for="comment in commentsAddedNow.reverse()" class="bg-gray-50 rounded-lg !px-2 !py-[0.125rem] !mt-2">
+            <a :href="'/user/'+comment.from.id" class="font-semibold text-gray-800">{{ comment.from.username }}</a>
+            <p class="text-gray-700">{{ comment.comment }}</p>
+          </div>
+          <div v-for="comment in reverseComments" class="bg-gray-50 rounded-lg !px-2 !py-[0.125rem] !mt-2">
+            <a :href="'/user/'+comment.from.id" class="font-semibold text-gray-800">{{ comment.from.username }}</a>
+            <p class="text-gray-700">{{ comment.comment }}</p>
+          </div>
+        </div>
       </div>
+
       <div class="detaiils-container">
         <div v-if="!loading">
           <div v-if="userStore.user?.id != event.creator.id" class="w-full">
-            <button class="w-full" v-if="!event.participants?.find(a => a.id == userStore.user?.id)" @click="join">Alătură-te evenimentului</button>
+            <button class="w-full" v-if="!event.participants?.find(a => a.id == userStore.user?.id)"
+              @click="join">Alătură-te evenimentului</button>
             <button class="w-full" v-else @click="leave">Ieși din eveniment</button>
           </div>
           <div v-else class="flex-col flex w-full">
@@ -149,7 +168,7 @@ async function comment() {
           <div>Ofera o nota acestui utilizator:</div>
           <div>
             <i v-for="i in range(1, rate)" :key="i" @click="() => changeRate(i)" class="fa-solid fa-star"></i>
-            <i v-for="i in range(rate+1, 5)" :key="i" @click="() => changeRate(i)" class="fa-regular fa-star"></i>
+            <i v-for="i in range(rate + 1, 5)" :key="i" @click="() => changeRate(i)" class="fa-regular fa-star"></i>
           </div>
         </div>
       </div>
@@ -168,10 +187,12 @@ async function comment() {
   padding: 0;
   box-sizing: border-box;
 }
+
 .event-container {
   padding: 5rem;
   background-color: #f9fafb;
 }
+
 .commentInput {
   width: 100%;
   padding: 12px 15px;
@@ -181,11 +202,13 @@ async function comment() {
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 @media (max-width: 768px) {
   .event-container {
     padding: 2rem;
-  }  
+  }
 }
+
 .event-image {
   width: 100%;
   max-width: 1000px;
@@ -195,6 +218,7 @@ async function comment() {
   display: block;
   margin: 0 auto 2rem auto;
 }
+
 .event-content-grid {
   max-width: 1200px;
   margin: 0 auto;
@@ -203,6 +227,7 @@ async function comment() {
   gap: 2.5rem;
   align-items: start;
 }
+
 .event-info {
   max-width: 700px;
   background: white;
@@ -210,18 +235,21 @@ async function comment() {
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
 .event-info h1 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
 }
-.event-info > div,
+
+.event-info>div,
 .event-info p {
   font-size: 1rem;
   line-height: 1.6;
   color: #444;
   margin-bottom: 1rem;
 }
+
 .toggle-description-btn {
   background-color: transparent;
   color: #007bff;
@@ -234,10 +262,12 @@ async function comment() {
   display: inline-block;
   transition: color 0.2s ease;
 }
+
 .toggle-description-btn:hover {
   color: #0056b3;
   text-decoration: underline;
 }
+
 .detaiils-container {
   background-color: white;
   padding: 2rem;
@@ -248,26 +278,31 @@ async function comment() {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-    position: sticky;
+  position: sticky;
   top: 2rem;
 }
+
 .detaiils-container div {
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
+
 .detaiils-container i {
   color: #007bff;
   font-size: 1.2rem;
 }
+
 .detaiils-container a {
   color: #28a745;
   text-decoration: none;
   font-weight: 500;
 }
+
 .detaiils-container a:hover {
   text-decoration: underline;
 }
+
 .detaiils-container button {
   background-color: #007bff;
   color: white;
@@ -283,14 +318,17 @@ async function comment() {
   justify-content: center;
   gap: 0.5rem;
 }
+
 .detaiils-container button:hover {
   background-color: #0056b3;
   transform: scale(1.02);
 }
+
 @media (max-width: 768px) {
   .event-content-grid {
     grid-template-columns: 1fr;
   }
+
   .detaiils-container {
     width: 100%;
     margin-top: 1.5rem;
