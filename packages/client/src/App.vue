@@ -6,7 +6,6 @@ import Nav from '@/components/Nav.vue'
 <template>
   <header>
     <div class="wrapper">
-      test
       <Nav />
     </div>
   </header>
