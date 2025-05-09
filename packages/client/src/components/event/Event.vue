@@ -99,6 +99,7 @@ if(props.event.comments) {
 async function comment() {
   const userId = userStore.user?.id
   if(!userId) return
+  if(commentInp.value == "") return
   const res = await mutateComment({ fromId: userId, eventId: props.event.id, comment: commentInp.value })
   if(res?.data?.comment) commentsAddedNow.value.push(res.data.comment as Comment)
   commentInp.value = ""
