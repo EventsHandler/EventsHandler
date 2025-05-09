@@ -75,7 +75,7 @@ const addAnnounce = async () => {
       </template>
       <template #add-announce-button>
         <button v-if="!loading" class="add-announce-button" @click="addAnnounce">Adaugă anunț</button>
-        <button class="add-announce-button cursor-not-allowed">Loading...</button>
+        <button v-else class="add-announce-button cursor-not-allowed">Loading...</button>
       </template>
     </Announce>
   </main>
