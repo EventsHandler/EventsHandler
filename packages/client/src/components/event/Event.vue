@@ -109,6 +109,9 @@ async function comment() {
   commentInp.value = ""
 }
 
+function redirectLogin() {
+  router.push("/auth")
+}
 </script>
 
 <template>
@@ -148,7 +151,7 @@ async function comment() {
       </div>
 
       <div class="detaiils-container">
-        <div v-if="!loading">
+        <div v-if="!loading && userStore.user">
           <div v-if="userStore.user?.id != event.creator.id" class="w-full">
             <button class="w-full" v-if="!event.participants?.find(a => a.id == userStore.user?.id)"
               @click="join">Alătură-te evenimentului</button>
@@ -159,7 +162,8 @@ async function comment() {
             <button class="w-full" @click="announce">Posteaza un anunț</button>
           </div>
         </div>
-        <button v-else>Loading...</button>
+        <button v-else-if="userStore.user">Loading...</button>
+        <button v-else @click="redirectLogin">Autentificare</button>
         <div><i class="fa fa-location-arrow icon-details"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock icon-details"></i> {{ formatDate(event.date) }}</div>
         <div><i class="fa-solid fa-layer-group icon-details"></i> {{ event.category.name }}</div>

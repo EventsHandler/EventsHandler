@@ -24,7 +24,7 @@ const userStore = useUserStore()
 
 <template>
   <main>
-    <Event v-if="event" :loading :event :user="userStore.user" @refetch="refetch"></Event>
+    <Event v-if="event" :loading :event @refetch="refetch"></Event>
   </main> 
 </template>
 
