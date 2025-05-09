@@ -23,7 +23,7 @@ const switching = () => {
       <Login v-if="switchLog" @switch="switching"/>
       <Register v-else @switch="switching"/>
     </div>
-    <div v-else-if="!userStore.loading">
+    <div v-else-if="!userStore.loading" class="flex justify-center">
       <div class="bg-white p-8 rounded-xl shadow-md text-center max-w-md w-[90%]">
         <h2 class="text-2xl font-semibold text-gray-800 mb-2">Bine ai revenit, {{ userStore.user?.username }}!</h2>
         <p class="text-gray-600 mb-6 text-lg">Contul tău este activ și gata de utilizare</p>

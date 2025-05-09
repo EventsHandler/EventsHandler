@@ -42,7 +42,7 @@ const toggleEvents = () => {
 
         <div class="hidden lg:flex items-center space-x-12">
           <RouterLink to="/create" class="block hover:text-blue-200 transition">
-            Crează
+            Creează
           </RouterLink>
           
           <div class="relative group">
@@ -105,7 +105,7 @@ const toggleEvents = () => {
         <hr class="border-t-2">
         <div class="pl-5 py-5 space-y-5">
           <RouterLink to="/create" class="block hover:text-blue-200 transition" @click="isMenuOpen = false">
-            Crează
+            Creează
           </RouterLink>
           
           <div class="relative">
