@@ -260,7 +260,7 @@ const userStore = useUserStore()
             <button @click="deleteEvent" class="w-full">Delete Event</button>
           </div>
         </div>
-        <button v-else class="cursor-block w-full">Loading...</button>
+        <button v-else class="cursor-not-allowed w-full">Loading...</button>
       </template>
     </CreateEvent>
     <NoLoggin v-else-if="!userStore.loading" />
