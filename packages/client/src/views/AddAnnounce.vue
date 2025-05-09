@@ -47,43 +47,48 @@ const validateForm = () => {
 
 const addAnnounce = async () => {
   if (!validateForm()) return;
-  
-  await mutate({
-    description: description.value,
-    title: title.value,
-    eventId: route.params.id as string
-  })
-  router.push("/event/" + route.params.id)
+
+  try {
+    const result = await mutate({
+      description: description.value,
+      title: title.value,
+      eventId: route.params.id as string
+    });
+    await router.push("/event/" + route.params.id);
+  } catch (error) {
+    console.error('Error creating announcement:', error);
+  }
 };
 
 </script>
 
 <template>
-    <main>
-        <Announce>
-            <template #announce-title>
-                <input type="text" v-model="title" placeholder="Denumirea anunțului" class="event-name-input" />
-                <span class="text-red-500 text-sm mt-1 block" v-if="errors.title">{{ errors.title }}</span>
-            </template>
-            <template #announce-desc>
-                <textarea v-model="description" placeholder="Descrierea anunțului" class="event-description-input" />
-                <span class="text-red-500 text-sm mt-1 block" v-if="errors.description">{{ errors.description }}</span>
-            </template>
-            <template #add-announce-button>
-                <button class="add-announce-button" @click="addAnnounce">Adaugă anunț</button>
-            </template>
-        </Announce>
-    </main>
+  <main>
+    <Announce>
+      <template #announce-title>
+        <input type="text" v-model="title" placeholder="Denumirea anunțului" class="event-name-input" />
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.title">{{ errors.title }}</span>
+      </template>
+      <template #announce-desc>
+        <textarea v-model="description" placeholder="Descrierea anunțului" class="event-description-input" />
+        <span class="text-red-500 text-sm mt-1 block" v-if="errors.description">{{ errors.description }}</span>
+      </template>
+      <template #add-announce-button>
+        <button class="add-announce-button" @click="addAnnounce">Adaugă anunț</button>
+      </template>
+    </Announce>
+  </main>
 </template>
 
 <style scoped>
 main {
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
 }
+
 .event-name-input {
-    border: none !important; 
-    font-size: 1.5em !important;   
+  border: none !important;
+  font-size: 1.5em !important;
 }
 </style>
