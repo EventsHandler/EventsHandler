@@ -102,7 +102,8 @@ if (props.event.comments) {
 
 async function comment() {
   const userId = userStore.user?.id
-  if (!userId) return
+  if(!userId) return
+  if(commentInp.value == "") return
   const res = await mutateComment({ fromId: userId, eventId: props.event.id, comment: commentInp.value })
   if (res?.data?.comment) commentsAddedNow.value.push(res.data.comment as Comment)
   commentInp.value = ""
@@ -127,10 +128,7 @@ async function comment() {
           </button>
         </div>
         <Announces :announces="event.announces" />
-
-        <p v-if="event.category"><strong>Category:</strong> {{ event.category.name }}</p>
         <Participants :users="event.participants" />
-
         <div class="!mt-2 bg-gray-200 !p-2 rounded-lg">
           <form class="w-full relative" @submit.prevent="comment">
             <input v-model="commentInp" type="text" class="w-full commentInput" placeholder="comment">
@@ -138,12 +136,15 @@ async function comment() {
               @click="comment"></i>
           </form>
 
+          <div v-for="comment in commentsAddedNow.reverse()" class="bg-gray-50 rounded-lg !px-2 !py-[0.125rem] !mt-2">
+            <a :href="'/user/'+comment.from.id" class="font-semibold text-gray-800">{{ comment.from.username }}</a>
+            <p class="text-gray-700">{{ comment.comment }}</p>
+          </div>
           <div v-for="comment in reverseComments" class="bg-gray-50 rounded-lg !px-2 !py-[0.125rem] !mt-2">
-            <span class="font-semibold text-gray-800">{{ comment.from.username }}</span>
+            <a :href="'/user/'+comment.from.id" class="font-semibold text-gray-800">{{ comment.from.username }}</a>
             <p class="text-gray-700">{{ comment.comment }}</p>
           </div>
         </div>
-
       </div>
 
       <div class="detaiils-container">
@@ -159,12 +160,10 @@ async function comment() {
           </div>
         </div>
         <button v-else>Loading...</button>
-        <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
-        <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
-        <div><i class="fa-solid fa-layer-group"></i> {{ event.category.name }}</div>
-        <div><i class="fa fa-user"></i> <a :href="'/user/' + event.creator.id">{{ event.creator.username }}</a>{{
-          userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a + v.rate, 0) / userRates.length * 10) / 10 : 0
-          }}<i class="fa-solid fa-star"></i></div>
+        <div><i class="fa fa-location-arrow icon-details"></i> {{ event.address }}</div>
+        <div><i class="fa-solid fa-clock icon-details"></i> {{ formatDate(event.date) }}</div>
+        <div><i class="fa-solid fa-layer-group icon-details"></i> {{ event.category.name }}</div>
+        <div><i class="fa fa-user icon-details"></i> <a :href="'/user/' + event.creator.id">{{ event.creator.username }}</a>{{ userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a+v.rate, 0)/userRates.length * 10)/10 : 0 }}<i class="fa-solid fa-star"></i></div>
         <div class="flex flex-col" v-if="userStore.user && userStore.user.id != event.creator.id">
           <div>Ofera o nota acestui utilizator:</div>
           <div>
@@ -178,6 +177,11 @@ async function comment() {
 </template>
 
 <style scoped>
+.icon-details {
+  display: flex;
+  width: 20px;
+  justify-content: center;
+}
 * {
   margin: 0;
   padding: 0;

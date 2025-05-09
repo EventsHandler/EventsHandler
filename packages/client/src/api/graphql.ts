@@ -399,7 +399,7 @@ export type EventQuery = {
     comments?: Array<{
       __typename?: 'Comment'
       comment?: string | null
-      from: { __typename?: 'User'; username: string }
+      from: { __typename?: 'User'; username: string; id: string }
     }> | null
   } | null
 }
@@ -1472,7 +1472,10 @@ export const EventDocument = {
                         name: { kind: 'Name', value: 'from' },
                         selectionSet: {
                           kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                          ],
                         },
                       },
                     ],
