@@ -67,7 +67,7 @@ const toggleEvents = () => {
             
             <div 
               v-show="isEventsOpen"
-              class="absolute left-0 mt-2 rounded-b-md bg-blue-600 z-50 w-70"
+              class="absolute left-0 mt-2 rounded-b-md bg-blue-600 z-50 w-60"
             >
               <div class="py-1 w-full">
                 <RouterLink 
@@ -127,26 +127,26 @@ const toggleEvents = () => {
             
             <div 
               v-show="isEventsOpen"
-              class="mt-2 w-48"
+              class="mt-2 w-48 w-full"
             >
-              <div class="py-1 ">
-                <RouterLink 
-                  to="/joined" 
-                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
-                  @click="isMenuOpen = false"
-                >
-                  Participă
-                </RouterLink>
+              <div class="py-1 w-full">
                 <RouterLink 
                   to="/events" 
-                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
+                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200 w-full"
                   @click="isMenuOpen = false"
                 >
                   Aleatorii
                 </RouterLink>
                 <RouterLink 
+                  to="/joined" 
+                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200 w-full"
+                  @click="isMenuOpen = false"
+                >
+                  Participările mele
+                </RouterLink>
+                <RouterLink 
                   to="/myEvents" 
-                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
+                  class="block px-4 py-2 text-[1.25rem] hover:text-blue-200 w-full"
                   @click="isMenuOpen = false"
                 >
                   Evenimentele mele
