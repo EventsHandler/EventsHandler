@@ -7,7 +7,7 @@ import { CreateAnnounceDocument } from '@/api/graphql';
 import { useMutation } from '@vue/apollo-composable';
 import router from '@/router';
 
-const { mutate } = useMutation(CreateAnnounceDocument)
+const { mutate, loading } = useMutation(CreateAnnounceDocument)
 
 const title = ref('')
 const description = ref('')
@@ -74,7 +74,8 @@ const addAnnounce = async () => {
         <span class="text-red-500 text-sm mt-1 block" v-if="errors.description">{{ errors.description }}</span>
       </template>
       <template #add-announce-button>
-        <button class="add-announce-button" @click="addAnnounce">Adaugă anunț</button>
+        <button v-if="!loading" class="add-announce-button" @click="addAnnounce">Adaugă anunț</button>
+        <button class="add-announce-button cursor-not-allowed">Loading...</button>
       </template>
     </Announce>
   </main>
