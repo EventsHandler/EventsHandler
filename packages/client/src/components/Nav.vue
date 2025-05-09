@@ -67,24 +67,27 @@ const toggleEvents = () => {
             
             <div 
               v-show="isEventsOpen"
-              class="absolute left-0 mt-2 w-48 rounded-b-md bg-blue-600 z-50"
+              class="absolute left-0 mt-2 rounded-b-md bg-blue-600 z-50 w-70"
             >
-              <div class="py-1">
+              <div class="py-1 w-full">
                 <RouterLink 
                   to="/events" 
                   class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
+                  @click="isEventsOpen = false"
                 >
                   Aleatorii
                 </RouterLink>
                 <RouterLink 
                   to="/joined" 
                   class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
+                  @click="isEventsOpen = false"
                 >
                   Participările mele
                 </RouterLink>
                 <RouterLink 
                   to="/myEvents" 
                   class="block px-4 py-2 text-[1.25rem] hover:text-blue-200"
+                  @click="isEventsOpen = false"
                 >
                   Evenimentele mele
                 </RouterLink>

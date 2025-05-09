@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import EventMini from '@/components/event/EventMini.vue';
 import { ref, computed } from 'vue';
+import { type Event } from '@/api/graphql';
 
 const props = defineProps<{
   events: any
+  noSearchBar: boolean | undefined
 }>();
 
 const searchQuery = ref('');
@@ -15,17 +17,15 @@ const filteredEvents = computed(() => {
     const searchLower = searchQuery.value.toLowerCase();
     return (
       event.creator.username.toLowerCase().includes(searchLower) ||
-      event.participants?.some((participant: any) => 
-        participant.username.toLowerCase().includes(searchLower)
-      )
+      event.category.name.toLowerCase().includes(searchLower)
     );
   });
 });
 </script>
 
 <template>
-  <main class="p-12">
-    <div class="max-w-7xl mx-auto mb-8">
+  <main class="p-8">
+    <div class="max-w-7xl mx-auto mb-8" v-if="!noSearchBar">
       <div class="relative">
         <input
           type="text"
@@ -37,7 +37,7 @@ const filteredEvents = computed(() => {
       </div>
     </div>
 
-    <div v-if="filteredEvents && filteredEvents.length > 0" class="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6">
+    <div v-if="filteredEvents && filteredEvents.length > 0" class="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
       <EventMini v-for="event in filteredEvents" :event="event"></EventMini>
     </div>
     <div v-else class="bg-white p-12 rounded-xl shadow-md text-center max-w-md mx-auto">

@@ -17,6 +17,9 @@ query Events($category: String) {
     participants {
       username
     }
+    category {
+      name
+    }
   }
 }
 
@@ -39,6 +42,9 @@ query JoinedEvents {
     participants {
       username
     }
+    category {
+      name
+    }
   }
 }
 
@@ -60,6 +66,9 @@ query MyEvents {
     }
     participants {
       username
+    }
+    category {
+      name
     }
   }
 }
@@ -111,5 +120,41 @@ query Me {
 query Categorys {
   categories {
     name
+  }
+}
+
+query User($userId: String!) {
+  user(userId: $userId) {
+    id
+    username
+    email
+    createdAt
+    createdEvents {
+      id
+      title
+      description
+      date
+      image
+      address
+      creator {
+        username
+        id
+      }
+      announces {
+        title
+        description
+      }
+      participants {
+        username
+      }
+      category {
+        name
+      }
+    }
+    myRates {
+      fromId
+      toId
+      rate
+    }
   }
 }

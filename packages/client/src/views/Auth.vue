@@ -29,7 +29,7 @@ const switching = () => {
         <p class="text-gray-600 mb-6 text-lg">Contul tău este activ și gata de utilizare</p>
         <button 
           @click="logout"
-          class="bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-medium inline-flex items-center gap-2 transition-all duration-200 hover:bg-red-700 hover:-translate-y-0.5 active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
+          class="bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-medium inline-flex items-center gap-2 transition-all duration-200 hover:bg-red-700 hover:-translate-y-0.5 active:translate-y-0 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none cursor-pointer"
         >
           Deconectare
         </button>

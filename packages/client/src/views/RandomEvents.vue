@@ -26,6 +26,6 @@ function refetchCategory(c: string | null) {
 </script>
 
 <template>
-  <EventsList v-if="events" :events="events" @refetchCategory="(c) => refetchCategory(c)"></EventsList>
+  <EventsList :noSearchBar="false" v-if="events" :events="events" @refetchCategory="(c) => refetchCategory(c)"></EventsList>
   <Chatbot @refetch-category="(c) => refetchCategory(c)"></Chatbot>
 </template>

@@ -144,7 +144,7 @@ async function comment() {
         <div><i class="fa fa-location-arrow"></i> {{ event.address }}</div>
         <div><i class="fa-solid fa-clock"></i> {{ formatDate(event.date) }}</div>
         <div><i class="fa-solid fa-layer-group"></i> {{ event.category.name }}</div>
-        <div><i class="fa fa-user"></i> <a href="">{{ event.creator.username }}</a>{{ userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a+v.rate, 0)/userRates.length * 10)/10 : 0 }}<i class="fa-solid fa-star"></i></div>
+        <div><i class="fa fa-user"></i> <a :href="'/user/' + event.creator.id">{{ event.creator.username }}</a>{{ userRates.length > 0 ? Math.round(userRates.reduce((a, v) => a+v.rate, 0)/userRates.length * 10)/10 : 0 }}<i class="fa-solid fa-star"></i></div>
         <div class="flex flex-col" v-if="userStore.user && userStore.user.id != event.creator.id">
           <div>Ofera o nota acestui utilizator:</div>
           <div>
