@@ -163,6 +163,7 @@ export type Query = {
   joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
+  user?: Maybe<User>
   users?: Maybe<Array<User>>
 }
 
@@ -172,6 +173,10 @@ export type QueryeventArgs = {
 
 export type QueryeventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
+}
+
+export type QueryuserArgs = {
+  userId: Scalars['String']['input']
 }
 
 export type Rateing = {
@@ -471,6 +476,7 @@ export type QueryResolvers<
   joinedEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryuserArgs, 'userId'>>
   users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
 }
 

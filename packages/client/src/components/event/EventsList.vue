@@ -24,7 +24,7 @@ const filteredEvents = computed(() => {
 </script>
 
 <template>
-  <main class="p-12">
+  <main class="p-8">
     <div class="max-w-7xl mx-auto mb-8">
       <div class="relative">
         <input

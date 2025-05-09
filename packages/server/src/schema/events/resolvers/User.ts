@@ -7,5 +7,12 @@ export const User: UserResolvers = {
         toId: _parent.id as string
       }
     })
+  },
+  createdEvents: async (_parent, _arg, _ctx) => {
+    return await prisma.event.findMany({
+      where: {
+        userId: _parent.id as string
+      }
+    })
   }
 }

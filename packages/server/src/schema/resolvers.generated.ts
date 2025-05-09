@@ -6,6 +6,7 @@ import { events as Query_events } from './events/resolvers/Query/events.js'
 import { joinedEvents as Query_joinedEvents } from './events/resolvers/Query/joinedEvents.js'
 import { me as Query_me } from './events/resolvers/Query/me.js'
 import { myEvents as Query_myEvents } from './events/resolvers/Query/myEvents.js'
+import { user as Query_user } from './events/resolvers/Query/user.js'
 import { users as Query_users } from './events/resolvers/Query/users.js'
 import { apiTest as Mutation_apiTest } from './events/resolvers/Mutation/apiTest.js'
 import { askForCategory as Mutation_askForCategory } from './events/resolvers/Mutation/askForCategory.js'
@@ -37,6 +38,7 @@ export const resolvers: Resolvers = {
     joinedEvents: Query_joinedEvents,
     me: Query_me,
     myEvents: Query_myEvents,
+    user: Query_user,
     users: Query_users,
   },
   Mutation: {
