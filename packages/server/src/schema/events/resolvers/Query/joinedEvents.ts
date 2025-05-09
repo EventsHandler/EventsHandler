@@ -14,6 +14,9 @@ export const joinedEvents: NonNullable<QueryResolvers['joinedEvents']> = async (
       creator: true,
       announces: true,
       participants: true
+    },
+    orderBy: {
+      createdAt: 'desc'
     }
   })
 }
