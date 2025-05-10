@@ -17,7 +17,8 @@ const filteredEvents = computed(() => {
     const searchLower = searchQuery.value.toLowerCase();
     return (
       event.creator.username.toLowerCase().includes(searchLower) ||
-      event.category.name.toLowerCase().includes(searchLower)
+      event.category.name.toLowerCase().includes(searchLower) ||
+      event.title.toLowerCase().includes(searchLower)
     );
   });
 });
