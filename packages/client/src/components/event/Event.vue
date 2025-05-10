@@ -123,7 +123,7 @@ function redirectLogin() {
         <h1>{{ event.title }}</h1>
         <div>
           <p>
-            {{ showFullDescription ? event.description : event.description.slice(0, 200) + '...' }}
+            {{ showFullDescription || event.description.length <= 199 ? event.description : event.description.slice(0, 200) + '...' }}
           </p>
           <button v-if="event.description.length > 200" @click="showFullDescription = !showFullDescription"
             class="toggle-description-btn">
