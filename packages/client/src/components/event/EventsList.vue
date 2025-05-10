@@ -37,7 +37,7 @@ const filteredEvents = computed(() => {
       </div>
     </div>
 
-    <div v-if="filteredEvents && filteredEvents.length > 0" class="grid grid-cols-[repeat(auto-fit,minmax(400px,1fr))] gap-6">
+    <div v-if="filteredEvents && filteredEvents.length > 0" class="grid lg:grid-cols-[repeat(auto-fit,minmax(400px,1fr))] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
       <EventMini v-for="event in filteredEvents" :event="event"></EventMini>
     </div>
     <div v-else class="bg-white p-12 rounded-xl shadow-md text-center max-w-md mx-auto">
