@@ -180,6 +180,10 @@ export type QueryUserArgs = {
   userId: Scalars['String']['input']
 }
 
+export type QueryUsersArgs = {
+  test: Scalars['String']['input']
+}
+
 export type Rateing = {
   __typename?: 'Rateing'
   fromId: Scalars['ID']['output']

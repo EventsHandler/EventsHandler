@@ -84,12 +84,31 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'users' },
-          arguments: [],
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'test' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
           type: {
             kind: 'ListType',
             type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
           },
-          directives: [],
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'requires' },
+                  value: { kind: 'EnumValue', value: 'ADMIN' },
+                },
+              ],
+            },
+          ],
         },
         {
           kind: 'FieldDefinition',
