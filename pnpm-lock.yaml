@@ -99,6 +99,9 @@ importers:
 
   packages/server:
     dependencies:
+      '@graphql-tools/utils':
+        specifier: ^10.8.6
+        version: 10.8.6(graphql@16.11.0)
       '@prisma/client':
         specifier: 6.7.0
         version: 6.7.0(prisma@6.7.0(typescript@5.8.3))(typescript@5.8.3)

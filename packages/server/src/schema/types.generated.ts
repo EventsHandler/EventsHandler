@@ -183,6 +183,10 @@ export type QueryuserArgs = {
   userId: Scalars['String']['input']
 }
 
+export type QueryusersArgs = {
+  test: Scalars['String']['input']
+}
+
 export type Rateing = {
   __typename?: 'Rateing'
   fromId: Scalars['ID']['output']
@@ -486,7 +490,7 @@ export type QueryResolvers<
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryuserArgs, 'userId'>>
-  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
+  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<QueryusersArgs, 'test'>>
 }
 
 export type RateingResolvers<

@@ -75,7 +75,7 @@ type Query {
   me: User
   myEvents: [Event!]
   user(userId: String!): User
-  users: [User!]
+  users(test: String!): [User!]
 }
 
 type Rateing {
