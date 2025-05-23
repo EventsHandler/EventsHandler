@@ -65,8 +65,9 @@ extend type Query {
   event(eventId: ID!): Event
   me: User
   categories: [Category!]
-  users(test: String!): [User!] @auth(requires: ADMIN)
+  users(test: String!): [User!]
   user(userId: String!): User
+  findByTitle(title: String!): Event!
 }
 
 extend type Mutation {

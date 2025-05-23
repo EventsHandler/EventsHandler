@@ -60,6 +60,6 @@ export const createEvent: NonNullable<MutationResolvers['createEvent']> = async 
       address,
       userId: _ctx.user.id,
       categoryId: existingCategory.id
-    }
+    },
   })
 }

@@ -96,19 +96,7 @@ export const typeDefs = {
             kind: 'ListType',
             type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
           },
-          directives: [
-            {
-              kind: 'Directive',
-              name: { kind: 'Name', value: 'auth' },
-              arguments: [
-                {
-                  kind: 'Argument',
-                  name: { kind: 'Name', value: 'requires' },
-                  value: { kind: 'EnumValue', value: 'ADMIN' },
-                },
-              ],
-            },
-          ],
+          directives: [],
         },
         {
           kind: 'FieldDefinition',
@@ -122,6 +110,20 @@ export const typeDefs = {
             },
           ],
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+          directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'findByTitle' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'title' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
           directives: [],
         },
       ],
