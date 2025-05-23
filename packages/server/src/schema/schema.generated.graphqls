@@ -71,6 +71,7 @@ type Query {
   categories: [Category!]
   event(eventId: ID!): Event
   events(category: String): [Event!]
+  findByCategory(category: String!): [Event!]
   joinedEvents(userId: String): [Event!]
   me: User
   myEvents: [Event!]

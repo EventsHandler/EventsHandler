@@ -160,6 +160,7 @@ export type Query = {
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
   events?: Maybe<Array<Event>>
+  findByCategory?: Maybe<Array<Event>>
   joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
@@ -173,6 +174,10 @@ export type QueryeventArgs = {
 
 export type QueryeventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
+}
+
+export type QueryfindByCategoryArgs = {
+  category: Scalars['String']['input']
 }
 
 export type QueryjoinedEventsArgs = {
@@ -481,6 +486,12 @@ export type QueryResolvers<
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType, Partial<QueryeventsArgs>>
+  findByCategory?: Resolver<
+    Maybe<Array<ResolversTypes['Event']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryfindByCategoryArgs, 'category'>
+  >
   joinedEvents?: Resolver<
     Maybe<Array<ResolversTypes['Event']>>,
     ParentType,
