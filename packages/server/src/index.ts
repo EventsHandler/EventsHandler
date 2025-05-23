@@ -8,7 +8,7 @@ import express from 'express'
 import { graphqlUploadExpress } from 'graphql-upload-ts'
 import path from 'path'
 
-import { authDirectiveTransformer, authDirectiveTypeDefs } from './schema/directives/auth.js'
+import { directiveTransformer, directiveTypeDefs } from './schema/directives/directive.js'
 
 const app = express()
 app.use(graphqlUploadExpress({ maxFileSize: 10_000_000, maxFiles: 5 }))
@@ -18,10 +18,10 @@ type MyContext = {
 }
 
 let schema = createSchema<MyContext>({
-  typeDefs: [authDirectiveTypeDefs, typeDefs],
+  typeDefs: [directiveTypeDefs, typeDefs],
   resolvers
 })
-schema = authDirectiveTransformer(schema)
+schema = directiveTransformer(schema)
 
 const yoga = createYoga({
   schema,

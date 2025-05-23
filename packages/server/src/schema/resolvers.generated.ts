@@ -3,6 +3,14 @@ import type { Resolvers } from './types.generated.js'
 import { categories as Query_categories } from './events/resolvers/Query/categories.js'
 import { event as Query_event } from './events/resolvers/Query/event.js'
 import { events as Query_events } from './events/resolvers/Query/events.js'
+<<<<<<< HEAD
+<<<<<<< HEAD
+import { findByTitle as Query_findByTitle } from './events/resolvers/Query/findByTitle.js'
+=======
+import { findByCategory as Query_findByCategory } from './events/resolvers/Query/findByCategory.js'
+>>>>>>> 289757a (sda)
+=======
+>>>>>>> 5a83916 (a)
 import { joinedEvents as Query_joinedEvents } from './events/resolvers/Query/joinedEvents.js'
 import { me as Query_me } from './events/resolvers/Query/me.js'
 import { myEvents as Query_myEvents } from './events/resolvers/Query/myEvents.js'
@@ -22,19 +30,34 @@ import { register as Mutation_register } from './events/resolvers/Mutation/regis
 import { subscribe as Mutation_subscribe } from './events/resolvers/Mutation/subscribe.js'
 import { testUpload as Mutation_testUpload } from './events/resolvers/Mutation/testUpload.js'
 import { unsubscribe as Mutation_unsubscribe } from './events/resolvers/Mutation/unsubscribe.js'
-import { Announces } from './events/resolvers/Announces.js'
+import { Announce } from './events/resolvers/Announce.js'
 import { Category } from './events/resolvers/Category.js'
+import { Chat } from './events/resolvers/Chat.js'
+import { ChatMember } from './events/resolvers/ChatMember.js'
 import { Comment } from './events/resolvers/Comment.js'
 import { Event } from './events/resolvers/Event.js'
-import { Rateing } from './events/resolvers/Rateing.js'
+import { EventMember } from './events/resolvers/EventMember.js'
+import { Group } from './events/resolvers/Group.js'
+import { GroupMember } from './events/resolvers/GroupMember.js'
+import { Message } from './events/resolvers/Message.js'
+import { Rating } from './events/resolvers/Rating.js'
 import { User } from './events/resolvers/User.js'
 import { DateTime } from './events/resolvers/DateTime.js'
 import { Upload } from './events/resolvers/Upload.js'
+import { BigIntResolver } from 'graphql-scalars'
 export const resolvers: Resolvers = {
   Query: {
     categories: Query_categories,
     event: Query_event,
     events: Query_events,
+<<<<<<< HEAD
+<<<<<<< HEAD
+    findByTitle: Query_findByTitle,
+=======
+    findByCategory: Query_findByCategory,
+>>>>>>> 289757a (sda)
+=======
+>>>>>>> 5a83916 (a)
     joinedEvents: Query_joinedEvents,
     me: Query_me,
     myEvents: Query_myEvents,
@@ -58,12 +81,19 @@ export const resolvers: Resolvers = {
     unsubscribe: Mutation_unsubscribe,
   },
 
-  Announces: Announces,
+  Announce: Announce,
   Category: Category,
+  Chat: Chat,
+  ChatMember: ChatMember,
   Comment: Comment,
   Event: Event,
-  Rateing: Rateing,
+  EventMember: EventMember,
+  Group: Group,
+  GroupMember: GroupMember,
+  Message: Message,
+  Rating: Rating,
   User: User,
   DateTime: DateTime,
   Upload: Upload,
+  BigInt: BigIntResolver,
 }

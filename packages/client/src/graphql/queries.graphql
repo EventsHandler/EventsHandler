@@ -3,10 +3,11 @@ query Events($category: String) {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
-    creator {
+    owner {
       username
       id
     }
@@ -14,8 +15,10 @@ query Events($category: String) {
       title
       description
     }
-    participants {
-      username
+    members{
+      user{
+        username
+      }
     }
     category {
       name
@@ -28,10 +31,11 @@ query JoinedEvents($userId: String) {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
-    creator {
+    owner {
       username
       id
     }
@@ -39,8 +43,10 @@ query JoinedEvents($userId: String) {
       title
       description
     }
-    participants {
-      username
+    members {
+      user{
+        username
+      }
     }
     category {
       name
@@ -53,10 +59,11 @@ query MyEvents {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
-    creator {
+    owner {
       username
       id
     }
@@ -64,8 +71,10 @@ query MyEvents {
       title
       description
     }
-    participants {
-      username
+    members {
+      user {
+        username
+      }
     }
     category {
       name
@@ -78,15 +87,16 @@ query Event($eventId: ID!) {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
-    creator {
+    owner {
       username
       id
-      myRates {
-        fromId
-        toId
+      ratingsReceived {
+        raterId
+        ratedId
         rate
       }
     }
@@ -94,9 +104,11 @@ query Event($eventId: ID!) {
       title
       description
     }
-    participants {
+    members {
       id
-      username
+      user{
+        username
+      }
     }
     category {
       name
@@ -130,14 +142,15 @@ query User($userId: String!) {
     username
     email
     createdAt
-    createdEvents {
+    eventsCreated {
       id
       title
       description
-      date
+      dateStart
+      dateEnd
       image
       address
-      creator {
+      owner {
         username
         id
       }
@@ -145,16 +158,18 @@ query User($userId: String!) {
         title
         description
       }
-      participants {
-        username
+      members {
+        user{
+          username
+        }
       }
       category {
         name
       }
     }
-    myRates {
-      fromId
-      toId
+    ratingsReceived {
+      raterId
+      ratedId
       rate
     }
   }

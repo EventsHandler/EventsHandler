@@ -10,6 +10,7 @@
     "dev": "tsx --env-file .env --watch src/index.ts",
     "postinstall": "prisma generate",
     "migrate": "pnpm prisma migrate deploy",
+    "prisma:studio": "pnpm prisma studio",
     "build": "pkgroll build",
     "start": "prisma migrate deploy && node dist/index.js",
     "type-check": "tsc --noEmit"

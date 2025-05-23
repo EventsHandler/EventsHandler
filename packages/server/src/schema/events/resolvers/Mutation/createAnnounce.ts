@@ -18,7 +18,7 @@ export const createAnnounce: NonNullable<MutationResolvers['createAnnounce']> = 
         throw new Error("Event not found")
     }
 
-    if (event.userId !== _ctx.user.id) {
+    if (event.ownerId !== _ctx.user.id) {
         throw new Error("Only event creator can create announces")
     }
 

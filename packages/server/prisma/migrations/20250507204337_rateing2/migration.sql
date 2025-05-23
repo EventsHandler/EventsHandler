@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Rateing" ADD COLUMN     "rate" INTEGER NOT NULL DEFAULT 0;

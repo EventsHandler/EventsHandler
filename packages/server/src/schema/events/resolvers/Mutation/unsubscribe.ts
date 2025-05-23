@@ -9,7 +9,7 @@ export const unsubscribe: NonNullable<MutationResolvers['unsubscribe']> = async 
       id: eventId
     },
     data: {
-      participants: {
+      members: {
         disconnect: {
           id: _ctx.user.id
         }

@@ -1,18 +1,18 @@
 import { prisma } from '../../../../prisma.js'
 import type { QueryResolvers } from './../../../types.generated.js'
 export const event: NonNullable<QueryResolvers['event']> = async (_parent, { eventId }, _ctx) => {
-  return await prisma.event.findUnique({
+    return await prisma.event.findUnique({
     where: {
       id: eventId
     },
     include: {
-      creator: {
+      owner: {
         include: {
-          myRates: true
+          ratingsReceived: true
         }
       },
       announces: true,
-      participants: true,
+      members: true,
       comments: {
         include: {
           from: true

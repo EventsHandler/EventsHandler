@@ -56,10 +56,10 @@ export const createEvent: NonNullable<MutationResolvers['createEvent']> = async 
       title,
       description,
       image: uniqueFilename,
-      date,
+      dateStart: date,
       address,
-      userId: _ctx.user.id,
+      ownerId: _ctx.user.id,
       categoryId: existingCategory.id
-    }
+    },
   })
 }

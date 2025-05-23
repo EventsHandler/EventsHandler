@@ -14,15 +14,18 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
   Float: { input: number; output: number }
+  BigInt: { input: any; output: any }
   DateTime: { input: any; output: any }
   Upload: { input: any; output: any }
 }
 
-export type Announces = {
-  __typename?: 'Announces'
+export type Announce = {
+  __typename?: 'Announce'
   createdAt: Scalars['DateTime']['output']
-  description: Scalars['String']['output']
+  description?: Maybe<Scalars['String']['output']>
   event?: Maybe<Event>
+  eventId?: Maybe<Scalars['String']['output']>
+  id: Scalars['ID']['output']
   title: Scalars['String']['output']
 }
 
@@ -33,28 +36,101 @@ export type Category = {
   name: Scalars['String']['output']
 }
 
+export type Chat = {
+  __typename?: 'Chat'
+  id: Scalars['ID']['output']
+  linkedEvents?: Maybe<Array<Event>>
+  linkedGroups?: Maybe<Array<Group>>
+  members?: Maybe<Array<ChatMember>>
+  messages?: Maybe<Array<Message>>
+  name: Scalars['String']['output']
+  owner?: Maybe<User>
+  ownerId: Scalars['String']['output']
+}
+
+export type ChatMember = {
+  __typename?: 'ChatMember'
+  chat: Chat
+  chatId: Scalars['String']['output']
+  createdAt: Scalars['DateTime']['output']
+  id: Scalars['ID']['output']
+  permissions: Scalars['BigInt']['output']
+  user: User
+  userId: Scalars['String']['output']
+}
+
 export type Comment = {
   __typename?: 'Comment'
-  comment?: Maybe<Scalars['String']['output']>
+  comment: Scalars['String']['output']
   event: Event
+  eventId?: Maybe<Scalars['String']['output']>
   from: User
+  fromId: Scalars['String']['output']
+  id: Scalars['ID']['output']
 }
 
 export type Event = {
   __typename?: 'Event'
   address: Scalars['String']['output']
-  announces?: Maybe<Array<Announces>>
+  announces?: Maybe<Array<Announce>>
   category: Category
+  categoryId: Scalars['String']['output']
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  creator: User
-  date: Scalars['DateTime']['output']
+  dateEnd: Scalars['DateTime']['output']
+  dateStart: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
   image: Scalars['String']['output']
-  participants?: Maybe<Array<User>>
+  linkedChats?: Maybe<Array<Chat>>
+  linkedGroups?: Maybe<Array<Group>>
+  members?: Maybe<Array<EventMember>>
+  owner?: Maybe<User>
+  ownerId: Scalars['String']['output']
   title: Scalars['String']['output']
-  userId: Scalars['ID']['output']
+}
+
+export type EventMember = {
+  __typename?: 'EventMember'
+  createdAt: Scalars['DateTime']['output']
+  event: Event
+  eventId: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  permissions: Scalars['BigInt']['output']
+  user: User
+  userId: Scalars['String']['output']
+}
+
+export type Group = {
+  __typename?: 'Group'
+  id: Scalars['ID']['output']
+  linkedChats?: Maybe<Array<Chat>>
+  linkedEvents?: Maybe<Array<Event>>
+  members?: Maybe<Array<GroupMember>>
+  name: Scalars['String']['output']
+  owner?: Maybe<User>
+  ownerId: Scalars['String']['output']
+}
+
+export type GroupMember = {
+  __typename?: 'GroupMember'
+  createdAt: Scalars['DateTime']['output']
+  group: Group
+  groupId: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  permissions: Scalars['BigInt']['output']
+  user: User
+  userId: Scalars['String']['output']
+}
+
+export type Message = {
+  __typename?: 'Message'
+  chat: Chat
+  chatId: Scalars['String']['output']
+  content: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  user: User
+  userId: Scalars['String']['output']
 }
 
 export type Mutation = {
@@ -63,7 +139,7 @@ export type Mutation = {
   askForCategory?: Maybe<Scalars['String']['output']>
   askForDescription?: Maybe<Scalars['String']['output']>
   comment: Comment
-  createAnnounce: Announces
+  createAnnounce: Announce
   createEvent: Event
   deleteEvent?: Maybe<Event>
   editEvent: Event
@@ -102,7 +178,8 @@ export type MutationCreateAnnounceArgs = {
 export type MutationCreateEventArgs = {
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
+  dateEnd: Scalars['DateTime']['input']
+  dateStart: Scalars['DateTime']['input']
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
   title: Scalars['String']['input']
@@ -115,7 +192,8 @@ export type MutationDeleteEventArgs = {
 export type MutationEditEventArgs = {
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
+  dateEnd: Scalars['DateTime']['input']
+  dateStart: Scalars['DateTime']['input']
   description: Scalars['String']['input']
   eventId: Scalars['ID']['input']
   image?: InputMaybe<Scalars['Upload']['input']>
@@ -157,6 +235,11 @@ export type Query = {
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
   events?: Maybe<Array<Event>>
+<<<<<<< HEAD
+  findByTitle: Event
+=======
+  findByCategory?: Maybe<Array<Event>>
+>>>>>>> 289757a (sda)
   joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
@@ -172,6 +255,15 @@ export type QueryEventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+<<<<<<< HEAD
+export type QueryFindByTitleArgs = {
+  title: Scalars['String']['input']
+=======
+export type QueryFindByCategoryArgs = {
+  category: Scalars['String']['input']
+>>>>>>> 289757a (sda)
+}
+
 export type QueryJoinedEventsArgs = {
   userId?: InputMaybe<Scalars['String']['input']>
 }
@@ -184,31 +276,41 @@ export type QueryUsersArgs = {
   test: Scalars['String']['input']
 }
 
-export type Rateing = {
-  __typename?: 'Rateing'
-  fromId: Scalars['ID']['output']
+export type Rating = {
+  __typename?: 'Rating'
+  id: Scalars['ID']['output']
   rate: Scalars['Int']['output']
-  toId: Scalars['ID']['output']
+  rated: User
+  ratedId: Scalars['String']['output']
+  rater: User
+  raterId: Scalars['String']['output']
 }
 
 export type User = {
   __typename?: 'User'
+  authToken?: Maybe<Scalars['String']['output']>
+  chats?: Maybe<Array<ChatMember>>
+  chatsCreated?: Maybe<Array<Chat>>
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  createdEvents?: Maybe<Array<Event>>
   email: Scalars['String']['output']
-  events?: Maybe<Array<Event>>
+  events?: Maybe<Array<EventMember>>
+  eventsCreated?: Maybe<Array<Event>>
+  groups?: Maybe<Array<GroupMember>>
+  groupsCreated?: Maybe<Array<Group>>
   id: Scalars['ID']['output']
-  myRates?: Maybe<Array<Rateing>>
+  messages?: Maybe<Array<Message>>
   password: Scalars['String']['output']
-  rates?: Maybe<Array<Rateing>>
+  ratingsGiven?: Maybe<Array<Rating>>
+  ratingsReceived?: Maybe<Array<Rating>>
   username: Scalars['String']['output']
 }
 
 export type CreateEventMutationVariables = Exact<{
   title: Scalars['String']['input']
   description: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
+  dateStart: Scalars['DateTime']['input']
+  dateEnd: Scalars['DateTime']['input']
   image: Scalars['Upload']['input']
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
@@ -219,7 +321,8 @@ export type CreateEventMutation = { __typename?: 'Mutation'; createEvent: { __ty
 export type EditEventMutationVariables = Exact<{
   title: Scalars['String']['input']
   description: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
+  dateStart: Scalars['DateTime']['input']
+  dateEnd: Scalars['DateTime']['input']
   image?: InputMaybe<Scalars['Upload']['input']>
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
@@ -276,7 +379,7 @@ export type CreateAnnounceMutationVariables = Exact<{
 
 export type CreateAnnounceMutation = {
   __typename?: 'Mutation'
-  createAnnounce: { __typename?: 'Announces'; title: string }
+  createAnnounce: { __typename?: 'Announce'; title: string }
 }
 
 export type DeleteEventMutationVariables = Exact<{
@@ -313,7 +416,7 @@ export type CommentMutationVariables = Exact<{
 
 export type CommentMutation = {
   __typename?: 'Mutation'
-  comment: { __typename?: 'Comment'; comment?: string | null; from: { __typename?: 'User'; username: string } }
+  comment: { __typename?: 'Comment'; comment: string; from: { __typename?: 'User'; username: string } }
 }
 
 export type EventsQueryVariables = Exact<{
@@ -327,12 +430,13 @@ export type EventsQuery = {
     id: string
     title: string
     description: string
-    date: any
+    dateStart: any
+    dateEnd: any
     image: string
     address: string
-    creator: { __typename?: 'User'; username: string; id: string }
-    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
-    participants?: Array<{ __typename?: 'User'; username: string }> | null
+    owner?: { __typename?: 'User'; username: string; id: string } | null
+    announces?: Array<{ __typename?: 'Announce'; title: string; description?: string | null }> | null
+    members?: Array<{ __typename?: 'EventMember'; user: { __typename?: 'User'; username: string } }> | null
     category: { __typename?: 'Category'; name: string }
   }> | null
 }
@@ -348,12 +452,13 @@ export type JoinedEventsQuery = {
     id: string
     title: string
     description: string
-    date: any
+    dateStart: any
+    dateEnd: any
     image: string
     address: string
-    creator: { __typename?: 'User'; username: string; id: string }
-    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
-    participants?: Array<{ __typename?: 'User'; username: string }> | null
+    owner?: { __typename?: 'User'; username: string; id: string } | null
+    announces?: Array<{ __typename?: 'Announce'; title: string; description?: string | null }> | null
+    members?: Array<{ __typename?: 'EventMember'; user: { __typename?: 'User'; username: string } }> | null
     category: { __typename?: 'Category'; name: string }
   }> | null
 }
@@ -367,12 +472,13 @@ export type MyEventsQuery = {
     id: string
     title: string
     description: string
-    date: any
+    dateStart: any
+    dateEnd: any
     image: string
     address: string
-    creator: { __typename?: 'User'; username: string; id: string }
-    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
-    participants?: Array<{ __typename?: 'User'; username: string }> | null
+    owner?: { __typename?: 'User'; username: string; id: string } | null
+    announces?: Array<{ __typename?: 'Announce'; title: string; description?: string | null }> | null
+    members?: Array<{ __typename?: 'EventMember'; user: { __typename?: 'User'; username: string } }> | null
     category: { __typename?: 'Category'; name: string }
   }> | null
 }
@@ -388,21 +494,22 @@ export type EventQuery = {
     id: string
     title: string
     description: string
-    date: any
+    dateStart: any
+    dateEnd: any
     image: string
     address: string
-    creator: {
+    owner?: {
       __typename?: 'User'
       username: string
       id: string
-      myRates?: Array<{ __typename?: 'Rateing'; fromId: string; toId: string; rate: number }> | null
-    }
-    announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
-    participants?: Array<{ __typename?: 'User'; id: string; username: string }> | null
+      ratingsReceived?: Array<{ __typename?: 'Rating'; raterId: string; ratedId: string; rate: number }> | null
+    } | null
+    announces?: Array<{ __typename?: 'Announce'; title: string; description?: string | null }> | null
+    members?: Array<{ __typename?: 'EventMember'; id: string; user: { __typename?: 'User'; username: string } }> | null
     category: { __typename?: 'Category'; name: string }
     comments?: Array<{
       __typename?: 'Comment'
-      comment?: string | null
+      comment: string
       from: { __typename?: 'User'; username: string; id: string }
     }> | null
   } | null
@@ -431,20 +538,21 @@ export type UserQuery = {
     username: string
     email: string
     createdAt: any
-    createdEvents?: Array<{
+    eventsCreated?: Array<{
       __typename?: 'Event'
       id: string
       title: string
       description: string
-      date: any
+      dateStart: any
+      dateEnd: any
       image: string
       address: string
-      creator: { __typename?: 'User'; username: string; id: string }
-      announces?: Array<{ __typename?: 'Announces'; title: string; description: string }> | null
-      participants?: Array<{ __typename?: 'User'; username: string }> | null
+      owner?: { __typename?: 'User'; username: string; id: string } | null
+      announces?: Array<{ __typename?: 'Announce'; title: string; description?: string | null }> | null
+      members?: Array<{ __typename?: 'EventMember'; user: { __typename?: 'User'; username: string } }> | null
       category: { __typename?: 'Category'; name: string }
     }> | null
-    myRates?: Array<{ __typename?: 'Rateing'; fromId: string; toId: string; rate: number }> | null
+    ratingsReceived?: Array<{ __typename?: 'Rating'; raterId: string; ratedId: string; rate: number }> | null
   } | null
 }
 
@@ -468,7 +576,12 @@ export const CreateEventDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'dateStart' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'dateEnd' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
         },
         {
@@ -506,8 +619,13 @@ export const CreateEventDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'date' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+                name: { kind: 'Name', value: 'dateStart' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'dateStart' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'dateEnd' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'dateEnd' } },
               },
               {
                 kind: 'Argument',
@@ -555,7 +673,12 @@ export const EditEventDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'dateStart' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'dateEnd' } },
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
         },
         {
@@ -598,8 +721,13 @@ export const EditEventDocument = {
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'date' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'date' } },
+                name: { kind: 'Name', value: 'dateStart' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'dateStart' } },
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'dateEnd' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'dateEnd' } },
               },
               {
                 kind: 'Argument',
@@ -1176,12 +1304,13 @@ export const EventsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateStart' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateEnd' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'creator' },
+                  name: { kind: 'Name', value: 'owner' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -1203,10 +1332,19 @@ export const EventsDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'participants' },
+                  name: { kind: 'Name', value: 'members' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'user' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                        },
+                      },
+                    ],
                   },
                 },
                 {
@@ -1258,12 +1396,13 @@ export const JoinedEventsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateStart' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateEnd' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'creator' },
+                  name: { kind: 'Name', value: 'owner' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -1285,10 +1424,19 @@ export const JoinedEventsDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'participants' },
+                  name: { kind: 'Name', value: 'members' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'user' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                        },
+                      },
+                    ],
                   },
                 },
                 {
@@ -1326,12 +1474,13 @@ export const MyEventsDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateStart' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateEnd' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'creator' },
+                  name: { kind: 'Name', value: 'owner' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -1353,10 +1502,19 @@ export const MyEventsDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'participants' },
+                  name: { kind: 'Name', value: 'members' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'user' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                        },
+                      },
+                    ],
                   },
                 },
                 {
@@ -1408,12 +1566,13 @@ export const EventDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateStart' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'dateEnd' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'creator' },
+                  name: { kind: 'Name', value: 'owner' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
@@ -1421,12 +1580,12 @@ export const EventDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'myRates' },
+                        name: { kind: 'Name', value: 'ratingsReceived' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'fromId' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'toId' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'raterId' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'ratedId' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'rate' } },
                           ],
                         },
@@ -1447,12 +1606,19 @@ export const EventDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'participants' },
+                  name: { kind: 'Name', value: 'members' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'user' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                        },
+                      },
                     ],
                   },
                 },
@@ -1578,19 +1744,20 @@ export const UserDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'createdEvents' },
+                  name: { kind: 'Name', value: 'eventsCreated' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'title' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'description' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'date' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'dateStart' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'dateEnd' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'image' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'address' } },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'creator' },
+                        name: { kind: 'Name', value: 'owner' },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
@@ -1612,10 +1779,19 @@ export const UserDocument = {
                       },
                       {
                         kind: 'Field',
-                        name: { kind: 'Name', value: 'participants' },
+                        name: { kind: 'Name', value: 'members' },
                         selectionSet: {
                           kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'user' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'username' } }],
+                              },
+                            },
+                          ],
                         },
                       },
                       {
@@ -1631,12 +1807,12 @@ export const UserDocument = {
                 },
                 {
                   kind: 'Field',
-                  name: { kind: 'Name', value: 'myRates' },
+                  name: { kind: 'Name', value: 'ratingsReceived' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'fromId' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'toId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'raterId' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'ratedId' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'rate' } },
                     ],
                   },

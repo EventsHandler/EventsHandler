@@ -17,15 +17,18 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
   Float: { input: number; output: number }
+  BigInt: { input: bigint; output: bigint }
   DateTime: { input: Date | string; output: Date | string }
   Upload: { input: any; output: any }
 }
 
-export type Announces = {
-  __typename?: 'Announces'
+export type Announce = {
+  __typename?: 'Announce'
   createdAt: Scalars['DateTime']['output']
-  description: Scalars['String']['output']
+  description?: Maybe<Scalars['String']['output']>
   event?: Maybe<Event>
+  eventId?: Maybe<Scalars['String']['output']>
+  id: Scalars['ID']['output']
   title: Scalars['String']['output']
 }
 
@@ -36,28 +39,101 @@ export type Category = {
   name: Scalars['String']['output']
 }
 
+export type Chat = {
+  __typename?: 'Chat'
+  id: Scalars['ID']['output']
+  linkedEvents?: Maybe<Array<Event>>
+  linkedGroups?: Maybe<Array<Group>>
+  members?: Maybe<Array<ChatMember>>
+  messages?: Maybe<Array<Message>>
+  name: Scalars['String']['output']
+  owner?: Maybe<User>
+  ownerId: Scalars['String']['output']
+}
+
+export type ChatMember = {
+  __typename?: 'ChatMember'
+  chat: Chat
+  chatId: Scalars['String']['output']
+  createdAt: Scalars['DateTime']['output']
+  id: Scalars['ID']['output']
+  permissions: Scalars['BigInt']['output']
+  user: User
+  userId: Scalars['String']['output']
+}
+
 export type Comment = {
   __typename?: 'Comment'
-  comment?: Maybe<Scalars['String']['output']>
+  comment: Scalars['String']['output']
   event: Event
+  eventId?: Maybe<Scalars['String']['output']>
   from: User
+  fromId: Scalars['String']['output']
+  id: Scalars['ID']['output']
 }
 
 export type Event = {
   __typename?: 'Event'
   address: Scalars['String']['output']
-  announces?: Maybe<Array<Announces>>
+  announces?: Maybe<Array<Announce>>
   category: Category
+  categoryId: Scalars['String']['output']
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  creator: User
-  date: Scalars['DateTime']['output']
+  dateEnd: Scalars['DateTime']['output']
+  dateStart: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
   image: Scalars['String']['output']
-  participants?: Maybe<Array<User>>
+  linkedChats?: Maybe<Array<Chat>>
+  linkedGroups?: Maybe<Array<Group>>
+  members?: Maybe<Array<EventMember>>
+  owner?: Maybe<User>
+  ownerId: Scalars['String']['output']
   title: Scalars['String']['output']
-  userId: Scalars['ID']['output']
+}
+
+export type EventMember = {
+  __typename?: 'EventMember'
+  createdAt: Scalars['DateTime']['output']
+  event: Event
+  eventId: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  permissions: Scalars['BigInt']['output']
+  user: User
+  userId: Scalars['String']['output']
+}
+
+export type Group = {
+  __typename?: 'Group'
+  id: Scalars['ID']['output']
+  linkedChats?: Maybe<Array<Chat>>
+  linkedEvents?: Maybe<Array<Event>>
+  members?: Maybe<Array<GroupMember>>
+  name: Scalars['String']['output']
+  owner?: Maybe<User>
+  ownerId: Scalars['String']['output']
+}
+
+export type GroupMember = {
+  __typename?: 'GroupMember'
+  createdAt: Scalars['DateTime']['output']
+  group: Group
+  groupId: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  permissions: Scalars['BigInt']['output']
+  user: User
+  userId: Scalars['String']['output']
+}
+
+export type Message = {
+  __typename?: 'Message'
+  chat: Chat
+  chatId: Scalars['String']['output']
+  content: Scalars['String']['output']
+  id: Scalars['ID']['output']
+  user: User
+  userId: Scalars['String']['output']
 }
 
 export type Mutation = {
@@ -66,7 +142,7 @@ export type Mutation = {
   askForCategory?: Maybe<Scalars['String']['output']>
   askForDescription?: Maybe<Scalars['String']['output']>
   comment: Comment
-  createAnnounce: Announces
+  createAnnounce: Announce
   createEvent: Event
   deleteEvent?: Maybe<Event>
   editEvent: Event
@@ -105,7 +181,8 @@ export type MutationcreateAnnounceArgs = {
 export type MutationcreateEventArgs = {
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
+  dateEnd: Scalars['DateTime']['input']
+  dateStart: Scalars['DateTime']['input']
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
   title: Scalars['String']['input']
@@ -118,7 +195,8 @@ export type MutationdeleteEventArgs = {
 export type MutationeditEventArgs = {
   address: Scalars['String']['input']
   categoryName: Scalars['String']['input']
-  date: Scalars['DateTime']['input']
+  dateEnd: Scalars['DateTime']['input']
+  dateStart: Scalars['DateTime']['input']
   description: Scalars['String']['input']
   eventId: Scalars['ID']['input']
   image?: InputMaybe<Scalars['Upload']['input']>
@@ -160,6 +238,14 @@ export type Query = {
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
   events?: Maybe<Array<Event>>
+<<<<<<< HEAD
+<<<<<<< HEAD
+  findByTitle: Event
+=======
+  findByCategory?: Maybe<Array<Event>>
+>>>>>>> 289757a (sda)
+=======
+>>>>>>> 5a83916 (a)
   joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
@@ -175,6 +261,18 @@ export type QueryeventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+export type QueryfindByTitleArgs = {
+  title: Scalars['String']['input']
+=======
+export type QueryfindByCategoryArgs = {
+  category: Scalars['String']['input']
+>>>>>>> 289757a (sda)
+}
+
+=======
+>>>>>>> 5a83916 (a)
 export type QueryjoinedEventsArgs = {
   userId?: InputMaybe<Scalars['String']['input']>
 }
@@ -187,24 +285,33 @@ export type QueryusersArgs = {
   test: Scalars['String']['input']
 }
 
-export type Rateing = {
-  __typename?: 'Rateing'
-  fromId: Scalars['ID']['output']
+export type Rating = {
+  __typename?: 'Rating'
+  id: Scalars['ID']['output']
   rate: Scalars['Int']['output']
-  toId: Scalars['ID']['output']
+  rated: User
+  ratedId: Scalars['String']['output']
+  rater: User
+  raterId: Scalars['String']['output']
 }
 
 export type User = {
   __typename?: 'User'
+  authToken?: Maybe<Scalars['String']['output']>
+  chats?: Maybe<Array<ChatMember>>
+  chatsCreated?: Maybe<Array<Chat>>
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  createdEvents?: Maybe<Array<Event>>
   email: Scalars['String']['output']
-  events?: Maybe<Array<Event>>
+  events?: Maybe<Array<EventMember>>
+  eventsCreated?: Maybe<Array<Event>>
+  groups?: Maybe<Array<GroupMember>>
+  groupsCreated?: Maybe<Array<Group>>
   id: Scalars['ID']['output']
-  myRates?: Maybe<Array<Rateing>>
+  messages?: Maybe<Array<Message>>
   password: Scalars['String']['output']
-  rates?: Maybe<Array<Rateing>>
+  ratingsGiven?: Maybe<Array<Rating>>
+  ratingsReceived?: Maybe<Array<Rating>>
   username: Scalars['String']['output']
 }
 
@@ -280,64 +387,167 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Announces: ResolverTypeWrapper<Omit<Announces, 'event'> & { event?: Maybe<ResolversTypes['Event']> }>
+  Announce: ResolverTypeWrapper<Omit<Announce, 'event'> & { event?: Maybe<ResolversTypes['Event']> }>
   String: ResolverTypeWrapper<Scalars['String']['output']>
-  Category: ResolverTypeWrapper<Omit<Category, 'events'> & { events?: Maybe<Array<ResolversTypes['Event']>> }>
   ID: ResolverTypeWrapper<Scalars['ID']['output']>
+  BigInt: ResolverTypeWrapper<Scalars['BigInt']['output']>
+  Category: ResolverTypeWrapper<Omit<Category, 'events'> & { events?: Maybe<Array<ResolversTypes['Event']>> }>
+  Chat: ResolverTypeWrapper<
+    Omit<Chat, 'linkedEvents' | 'linkedGroups' | 'members' | 'messages' | 'owner'> & {
+      linkedEvents?: Maybe<Array<ResolversTypes['Event']>>
+      linkedGroups?: Maybe<Array<ResolversTypes['Group']>>
+      members?: Maybe<Array<ResolversTypes['ChatMember']>>
+      messages?: Maybe<Array<ResolversTypes['Message']>>
+      owner?: Maybe<ResolversTypes['User']>
+    }
+  >
+  ChatMember: ResolverTypeWrapper<
+    Omit<ChatMember, 'chat' | 'user'> & { chat: ResolversTypes['Chat']; user: ResolversTypes['User'] }
+  >
   Comment: ResolverTypeWrapper<
     Omit<Comment, 'event' | 'from'> & { event: ResolversTypes['Event']; from: ResolversTypes['User'] }
   >
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>
   Event: ResolverTypeWrapper<EventMapper>
+  EventMember: ResolverTypeWrapper<
+    Omit<EventMember, 'event' | 'user'> & { event: ResolversTypes['Event']; user: ResolversTypes['User'] }
+  >
+  Group: ResolverTypeWrapper<
+    Omit<Group, 'linkedChats' | 'linkedEvents' | 'members' | 'owner'> & {
+      linkedChats?: Maybe<Array<ResolversTypes['Chat']>>
+      linkedEvents?: Maybe<Array<ResolversTypes['Event']>>
+      members?: Maybe<Array<ResolversTypes['GroupMember']>>
+      owner?: Maybe<ResolversTypes['User']>
+    }
+  >
+  GroupMember: ResolverTypeWrapper<
+    Omit<GroupMember, 'group' | 'user'> & { group: ResolversTypes['Group']; user: ResolversTypes['User'] }
+  >
+  Message: ResolverTypeWrapper<
+    Omit<Message, 'chat' | 'user'> & { chat: ResolversTypes['Chat']; user: ResolversTypes['User'] }
+  >
   Mutation: ResolverTypeWrapper<{}>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
   Int: ResolverTypeWrapper<Scalars['Int']['output']>
   Query: ResolverTypeWrapper<{}>
-  Rateing: ResolverTypeWrapper<Rateing>
+  Rating: ResolverTypeWrapper<
+    Omit<Rating, 'rated' | 'rater'> & { rated: ResolversTypes['User']; rater: ResolversTypes['User'] }
+  >
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
   User: ResolverTypeWrapper<
-    Omit<User, 'comments' | 'createdEvents' | 'events'> & {
+    Omit<
+      User,
+      | 'chats'
+      | 'chatsCreated'
+      | 'comments'
+      | 'events'
+      | 'eventsCreated'
+      | 'groups'
+      | 'groupsCreated'
+      | 'messages'
+      | 'ratingsGiven'
+      | 'ratingsReceived'
+    > & {
+      chats?: Maybe<Array<ResolversTypes['ChatMember']>>
+      chatsCreated?: Maybe<Array<ResolversTypes['Chat']>>
       comments?: Maybe<Array<ResolversTypes['Comment']>>
-      createdEvents?: Maybe<Array<ResolversTypes['Event']>>
-      events?: Maybe<Array<ResolversTypes['Event']>>
+      events?: Maybe<Array<ResolversTypes['EventMember']>>
+      eventsCreated?: Maybe<Array<ResolversTypes['Event']>>
+      groups?: Maybe<Array<ResolversTypes['GroupMember']>>
+      groupsCreated?: Maybe<Array<ResolversTypes['Group']>>
+      messages?: Maybe<Array<ResolversTypes['Message']>>
+      ratingsGiven?: Maybe<Array<ResolversTypes['Rating']>>
+      ratingsReceived?: Maybe<Array<ResolversTypes['Rating']>>
     }
   >
 }
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Announces: Omit<Announces, 'event'> & { event?: Maybe<ResolversParentTypes['Event']> }
+  Announce: Omit<Announce, 'event'> & { event?: Maybe<ResolversParentTypes['Event']> }
   String: Scalars['String']['output']
-  Category: Omit<Category, 'events'> & { events?: Maybe<Array<ResolversParentTypes['Event']>> }
   ID: Scalars['ID']['output']
+  BigInt: Scalars['BigInt']['output']
+  Category: Omit<Category, 'events'> & { events?: Maybe<Array<ResolversParentTypes['Event']>> }
+  Chat: Omit<Chat, 'linkedEvents' | 'linkedGroups' | 'members' | 'messages' | 'owner'> & {
+    linkedEvents?: Maybe<Array<ResolversParentTypes['Event']>>
+    linkedGroups?: Maybe<Array<ResolversParentTypes['Group']>>
+    members?: Maybe<Array<ResolversParentTypes['ChatMember']>>
+    messages?: Maybe<Array<ResolversParentTypes['Message']>>
+    owner?: Maybe<ResolversParentTypes['User']>
+  }
+  ChatMember: Omit<ChatMember, 'chat' | 'user'> & {
+    chat: ResolversParentTypes['Chat']
+    user: ResolversParentTypes['User']
+  }
   Comment: Omit<Comment, 'event' | 'from'> & {
     event: ResolversParentTypes['Event']
     from: ResolversParentTypes['User']
   }
   DateTime: Scalars['DateTime']['output']
   Event: EventMapper
+  EventMember: Omit<EventMember, 'event' | 'user'> & {
+    event: ResolversParentTypes['Event']
+    user: ResolversParentTypes['User']
+  }
+  Group: Omit<Group, 'linkedChats' | 'linkedEvents' | 'members' | 'owner'> & {
+    linkedChats?: Maybe<Array<ResolversParentTypes['Chat']>>
+    linkedEvents?: Maybe<Array<ResolversParentTypes['Event']>>
+    members?: Maybe<Array<ResolversParentTypes['GroupMember']>>
+    owner?: Maybe<ResolversParentTypes['User']>
+  }
+  GroupMember: Omit<GroupMember, 'group' | 'user'> & {
+    group: ResolversParentTypes['Group']
+    user: ResolversParentTypes['User']
+  }
+  Message: Omit<Message, 'chat' | 'user'> & { chat: ResolversParentTypes['Chat']; user: ResolversParentTypes['User'] }
   Mutation: {}
   Boolean: Scalars['Boolean']['output']
   Int: Scalars['Int']['output']
   Query: {}
-  Rateing: Rateing
+  Rating: Omit<Rating, 'rated' | 'rater'> & { rated: ResolversParentTypes['User']; rater: ResolversParentTypes['User'] }
   Upload: Scalars['Upload']['output']
-  User: Omit<User, 'comments' | 'createdEvents' | 'events'> & {
+  User: Omit<
+    User,
+    | 'chats'
+    | 'chatsCreated'
+    | 'comments'
+    | 'events'
+    | 'eventsCreated'
+    | 'groups'
+    | 'groupsCreated'
+    | 'messages'
+    | 'ratingsGiven'
+    | 'ratingsReceived'
+  > & {
+    chats?: Maybe<Array<ResolversParentTypes['ChatMember']>>
+    chatsCreated?: Maybe<Array<ResolversParentTypes['Chat']>>
     comments?: Maybe<Array<ResolversParentTypes['Comment']>>
-    createdEvents?: Maybe<Array<ResolversParentTypes['Event']>>
-    events?: Maybe<Array<ResolversParentTypes['Event']>>
+    events?: Maybe<Array<ResolversParentTypes['EventMember']>>
+    eventsCreated?: Maybe<Array<ResolversParentTypes['Event']>>
+    groups?: Maybe<Array<ResolversParentTypes['GroupMember']>>
+    groupsCreated?: Maybe<Array<ResolversParentTypes['Group']>>
+    messages?: Maybe<Array<ResolversParentTypes['Message']>>
+    ratingsGiven?: Maybe<Array<ResolversParentTypes['Rating']>>
+    ratingsReceived?: Maybe<Array<ResolversParentTypes['Rating']>>
   }
 }
 
-export type AnnouncesResolvers<
+export type AnnounceResolvers<
   ContextType = UserContext,
-  ParentType extends ResolversParentTypes['Announces'] = ResolversParentTypes['Announces'],
+  ParentType extends ResolversParentTypes['Announce'] = ResolversParentTypes['Announce'],
 > = {
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType>
+  eventId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
+export interface BigIntScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['BigInt'], any> {
+  name: 'BigInt'
 }
 
 export type CategoryResolvers<
@@ -350,13 +560,45 @@ export type CategoryResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
+export type ChatResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Chat'] = ResolversParentTypes['Chat'],
+> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  linkedEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  linkedGroups?: Resolver<Maybe<Array<ResolversTypes['Group']>>, ParentType, ContextType>
+  members?: Resolver<Maybe<Array<ResolversTypes['ChatMember']>>, ParentType, ContextType>
+  messages?: Resolver<Maybe<Array<ResolversTypes['Message']>>, ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  owner?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  ownerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
+export type ChatMemberResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['ChatMember'] = ResolversParentTypes['ChatMember'],
+> = {
+  chat?: Resolver<ResolversTypes['Chat'], ParentType, ContextType>
+  chatId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  permissions?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
 export type CommentResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment'],
 > = {
-  comment?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  comment?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   event?: Resolver<ResolversTypes['Event'], ParentType, ContextType>
+  eventId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   from?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  fromId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
@@ -369,18 +611,77 @@ export type EventResolvers<
   ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event'],
 > = {
   address?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  announces?: Resolver<Maybe<Array<ResolversTypes['Announces']>>, ParentType, ContextType>
+  announces?: Resolver<Maybe<Array<ResolversTypes['Announce']>>, ParentType, ContextType>
   category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>
+  categoryId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   comments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-  creator?: Resolver<ResolversTypes['User'], ParentType, ContextType>
-  date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  dateEnd?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  dateStart?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  participants?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
+  linkedChats?: Resolver<Maybe<Array<ResolversTypes['Chat']>>, ParentType, ContextType>
+  linkedGroups?: Resolver<Maybe<Array<ResolversTypes['Group']>>, ParentType, ContextType>
+  members?: Resolver<Maybe<Array<ResolversTypes['EventMember']>>, ParentType, ContextType>
+  owner?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  ownerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
+export type EventMemberResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['EventMember'] = ResolversParentTypes['EventMember'],
+> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  event?: Resolver<ResolversTypes['Event'], ParentType, ContextType>
+  eventId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  permissions?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
+export type GroupResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Group'] = ResolversParentTypes['Group'],
+> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  linkedChats?: Resolver<Maybe<Array<ResolversTypes['Chat']>>, ParentType, ContextType>
+  linkedEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  members?: Resolver<Maybe<Array<ResolversTypes['GroupMember']>>, ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  owner?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  ownerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
+export type GroupMemberResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['GroupMember'] = ResolversParentTypes['GroupMember'],
+> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  group?: Resolver<ResolversTypes['Group'], ParentType, ContextType>
+  groupId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  permissions?: Resolver<ResolversTypes['BigInt'], ParentType, ContextType>
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
+}
+
+export type MessageResolvers<
+  ContextType = UserContext,
+  ParentType extends ResolversParentTypes['Message'] = ResolversParentTypes['Message'],
+> = {
+  chat?: Resolver<ResolversTypes['Chat'], ParentType, ContextType>
+  chatId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
@@ -413,7 +714,7 @@ export type MutationResolvers<
     RequireFields<MutationcommentArgs, 'comment' | 'eventId' | 'fromId'>
   >
   createAnnounce?: Resolver<
-    ResolversTypes['Announces'],
+    ResolversTypes['Announce'],
     ParentType,
     ContextType,
     RequireFields<MutationcreateAnnounceArgs, 'description' | 'eventId' | 'title'>
@@ -422,7 +723,10 @@ export type MutationResolvers<
     ResolversTypes['Event'],
     ParentType,
     ContextType,
-    RequireFields<MutationcreateEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'image' | 'title'>
+    RequireFields<
+      MutationcreateEventArgs,
+      'address' | 'categoryName' | 'dateEnd' | 'dateStart' | 'description' | 'image' | 'title'
+    >
   >
   deleteEvent?: Resolver<
     Maybe<ResolversTypes['Event']>,
@@ -434,7 +738,10 @@ export type MutationResolvers<
     ResolversTypes['Event'],
     ParentType,
     ContextType,
-    RequireFields<MutationeditEventArgs, 'address' | 'categoryName' | 'date' | 'description' | 'eventId' | 'title'>
+    RequireFields<
+      MutationeditEventArgs,
+      'address' | 'categoryName' | 'dateEnd' | 'dateStart' | 'description' | 'eventId' | 'title'
+    >
   >
   login?: Resolver<
     ResolversTypes['User'],
@@ -481,6 +788,19 @@ export type QueryResolvers<
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType, Partial<QueryeventsArgs>>
+<<<<<<< HEAD
+<<<<<<< HEAD
+  findByTitle?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<QueryfindByTitleArgs, 'title'>>
+=======
+  findByCategory?: Resolver<
+    Maybe<Array<ResolversTypes['Event']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryfindByCategoryArgs, 'category'>
+  >
+>>>>>>> 289757a (sda)
+=======
+>>>>>>> 5a83916 (a)
   joinedEvents?: Resolver<
     Maybe<Array<ResolversTypes['Event']>>,
     ParentType,
@@ -493,13 +813,16 @@ export type QueryResolvers<
   users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<QueryusersArgs, 'test'>>
 }
 
-export type RateingResolvers<
+export type RatingResolvers<
   ContextType = UserContext,
-  ParentType extends ResolversParentTypes['Rateing'] = ResolversParentTypes['Rateing'],
+  ParentType extends ResolversParentTypes['Rating'] = ResolversParentTypes['Rating'],
 > = {
-  fromId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   rate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  toId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  rated?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  ratedId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  rater?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  raterId?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
@@ -511,28 +834,41 @@ export type UserResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User'],
 > = {
+  authToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  chats?: Resolver<Maybe<Array<ResolversTypes['ChatMember']>>, ParentType, ContextType>
+  chatsCreated?: Resolver<Maybe<Array<ResolversTypes['Chat']>>, ParentType, ContextType>
   comments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-  createdEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  events?: Resolver<Maybe<Array<ResolversTypes['EventMember']>>, ParentType, ContextType>
+  eventsCreated?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  groups?: Resolver<Maybe<Array<ResolversTypes['GroupMember']>>, ParentType, ContextType>
+  groupsCreated?: Resolver<Maybe<Array<ResolversTypes['Group']>>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
-  myRates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
+  messages?: Resolver<Maybe<Array<ResolversTypes['Message']>>, ParentType, ContextType>
   password?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  rates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
+  ratingsGiven?: Resolver<Maybe<Array<ResolversTypes['Rating']>>, ParentType, ContextType>
+  ratingsReceived?: Resolver<Maybe<Array<ResolversTypes['Rating']>>, ParentType, ContextType>
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
 export type Resolvers<ContextType = UserContext> = {
-  Announces?: AnnouncesResolvers<ContextType>
+  Announce?: AnnounceResolvers<ContextType>
+  BigInt?: GraphQLScalarType
   Category?: CategoryResolvers<ContextType>
+  Chat?: ChatResolvers<ContextType>
+  ChatMember?: ChatMemberResolvers<ContextType>
   Comment?: CommentResolvers<ContextType>
   DateTime?: GraphQLScalarType
   Event?: EventResolvers<ContextType>
+  EventMember?: EventMemberResolvers<ContextType>
+  Group?: GroupResolvers<ContextType>
+  GroupMember?: GroupMemberResolvers<ContextType>
+  Message?: MessageResolvers<ContextType>
   Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
-  Rateing?: RateingResolvers<ContextType>
+  Rating?: RatingResolvers<ContextType>
   Upload?: GraphQLScalarType
   User?: UserResolvers<ContextType>
 }
