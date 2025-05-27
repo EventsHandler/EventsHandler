@@ -7,7 +7,7 @@
     "dev:server": "pnpm --filter server dev",
     "dev:client": "pnpm --filter client dev",
     "dev:codegen": "pnpm graphql-codegen --watch",
-    "prisma:studio": "pnpm --filter server exec prisma studio",
+    "prisma:studio": "pnpm --filter server prisma:studio",
     "dev": "run-p -l dev:*",
     "codegen": "pnpm graphql-codegen",
     "build:server": "pnpm --filter server build",

@@ -67,6 +67,7 @@ extend type Query {
   categories: [Category!]
   users(test: String!): [User!]
   user(userId: String!): User
+  findByCategory(category: String!): [Event!]
 }
 
 extend type Mutation {

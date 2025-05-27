@@ -160,7 +160,11 @@ export type Query = {
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
   events?: Maybe<Array<Event>>
+<<<<<<< HEAD
   findByTitle: Event
+=======
+  findByCategory?: Maybe<Array<Event>>
+>>>>>>> test/cristi
   joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
@@ -176,8 +180,13 @@ export type QueryeventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
+<<<<<<< HEAD
 export type QueryfindByTitleArgs = {
   title: Scalars['String']['input']
+=======
+export type QueryfindByCategoryArgs = {
+  category: Scalars['String']['input']
+>>>>>>> test/cristi
 }
 
 export type QueryjoinedEventsArgs = {
@@ -186,10 +195,6 @@ export type QueryjoinedEventsArgs = {
 
 export type QueryuserArgs = {
   userId: Scalars['String']['input']
-}
-
-export type QueryusersArgs = {
-  test: Scalars['String']['input']
 }
 
 export type Rateing = {
@@ -486,7 +491,16 @@ export type QueryResolvers<
   categories?: Resolver<Maybe<Array<ResolversTypes['Category']>>, ParentType, ContextType>
   event?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryeventArgs, 'eventId'>>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType, Partial<QueryeventsArgs>>
+<<<<<<< HEAD
   findByTitle?: Resolver<ResolversTypes['Event'], ParentType, ContextType, RequireFields<QueryfindByTitleArgs, 'title'>>
+=======
+  findByCategory?: Resolver<
+    Maybe<Array<ResolversTypes['Event']>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryfindByCategoryArgs, 'category'>
+  >
+>>>>>>> test/cristi
   joinedEvents?: Resolver<
     Maybe<Array<ResolversTypes['Event']>>,
     ParentType,
@@ -496,7 +510,7 @@ export type QueryResolvers<
   me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   myEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryuserArgs, 'userId'>>
-  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType, RequireFields<QueryusersArgs, 'test'>>
+  users?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
 }
 
 export type RateingResolvers<

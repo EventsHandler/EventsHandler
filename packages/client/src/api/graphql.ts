@@ -157,7 +157,6 @@ export type Query = {
   categories?: Maybe<Array<Category>>
   event?: Maybe<Event>
   events?: Maybe<Array<Event>>
-  findByTitle: Event
   joinedEvents?: Maybe<Array<Event>>
   me?: Maybe<User>
   myEvents?: Maybe<Array<Event>>
@@ -173,20 +172,12 @@ export type QueryEventsArgs = {
   category?: InputMaybe<Scalars['String']['input']>
 }
 
-export type QueryFindByTitleArgs = {
-  title: Scalars['String']['input']
-}
-
 export type QueryJoinedEventsArgs = {
   userId?: InputMaybe<Scalars['String']['input']>
 }
 
 export type QueryUserArgs = {
   userId: Scalars['String']['input']
-}
-
-export type QueryUsersArgs = {
-  test: Scalars['String']['input']
 }
 
 export type Rateing = {

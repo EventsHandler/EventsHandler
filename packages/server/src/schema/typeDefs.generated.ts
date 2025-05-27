@@ -84,14 +84,7 @@ export const typeDefs = {
         {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'users' },
-          arguments: [
-            {
-              kind: 'InputValueDefinition',
-              name: { kind: 'Name', value: 'test' },
-              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
-              directives: [],
-            },
-          ],
+          arguments: [],
           type: {
             kind: 'ListType',
             type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
@@ -114,16 +107,31 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
+<<<<<<< HEAD
           name: { kind: 'Name', value: 'findByTitle' },
           arguments: [
             {
               kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'title' },
+=======
+          name: { kind: 'Name', value: 'findByCategory' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'category' },
+>>>>>>> test/cristi
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
               directives: [],
             },
           ],
+<<<<<<< HEAD
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+=======
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          },
+>>>>>>> test/cristi
           directives: [],
         },
       ],
