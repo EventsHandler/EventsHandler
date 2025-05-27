@@ -3,7 +3,8 @@ query Events($category: String) {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
     owner {
@@ -15,7 +16,9 @@ query Events($category: String) {
       description
     }
     members{
-      username
+      user{
+        username
+      }
     }
     category {
       name
@@ -28,7 +31,8 @@ query JoinedEvents($userId: String) {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
     owner {
@@ -40,7 +44,9 @@ query JoinedEvents($userId: String) {
       description
     }
     members {
-      username
+      user{
+        username
+      }
     }
     category {
       name
@@ -53,7 +59,8 @@ query MyEvents {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
     owner {
@@ -65,7 +72,9 @@ query MyEvents {
       description
     }
     members {
-      username
+      user {
+        username
+      }
     }
     category {
       name
@@ -78,13 +87,14 @@ query Event($eventId: ID!) {
     id
     title
     description
-    date
+    dateStart
+    dateEnd
     image
     address
     owner {
       username
       id
-      ratingsRecieved {
+      ratingsReceived {
         raterId
         ratedId
         rate
@@ -96,7 +106,9 @@ query Event($eventId: ID!) {
     }
     members {
       id
-      username
+      user{
+        username
+      }
     }
     category {
       name
@@ -134,7 +146,8 @@ query User($userId: String!) {
       id
       title
       description
-      date
+      dateStart
+      dateEnd
       image
       address
       owner {
@@ -146,13 +159,15 @@ query User($userId: String!) {
         description
       }
       members {
-        username
+        user{
+          username
+        }
       }
       category {
         name
       }
     }
-    ratingsRecieved {
+    ratingsReceived {
       raterId
       ratedId
       rate
