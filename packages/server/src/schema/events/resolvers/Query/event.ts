@@ -6,13 +6,13 @@ export const event: NonNullable<QueryResolvers['event']> = async (_parent, { eve
       id: eventId
     },
     include: {
-      creator: {
+      owner: {
         include: {
-          myRates: true
+          ratingsRecieved: true
         }
       },
       announces: true,
-      participants: true,
+      members: true,
       comments: {
         include: {
           from: true

@@ -30,7 +30,7 @@ export const editEvent: NonNullable<MutationResolvers['editEvent']> = async (_pa
         title,
         description,
         image: uniqueFilename,
-        date,
+        dateStart: date,
         address,
         categoryId: category.id
       }
@@ -43,7 +43,7 @@ export const editEvent: NonNullable<MutationResolvers['editEvent']> = async (_pa
       data: {
         title,
         description,
-        date,
+        dateStart: date,
         address,
         categoryId: category.id
       }

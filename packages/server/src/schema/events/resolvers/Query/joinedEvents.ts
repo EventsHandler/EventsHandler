@@ -4,16 +4,16 @@ export const joinedEvents: NonNullable<QueryResolvers['joinedEvents']> = async (
   if(!userId) userId = _ctx.user.id
   return await prisma.event.findMany({
     where: {
-      participants: {
+      members: {
         some: {
           id: userId
         }
       }
     },
     include: {
-      creator: true,
+      owner: true,
       announces: true,
-      participants: true
+      members: true
     },
     orderBy: {
       createdAt: 'desc'

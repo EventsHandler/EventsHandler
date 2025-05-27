@@ -13,10 +13,10 @@ export const Event: EventResolvers = {
     })
     return event?.announces
   },
-  creator: async (_parent, _arg, _ctx) => {
+  owner: async (_parent, _arg, _ctx) => {
     let user = await prisma.user.findUnique({
       where: {
-        id: _parent.userId,
+        id: _parent.ownerId,
       },
     })
     if (!user) {
@@ -24,16 +24,16 @@ export const Event: EventResolvers = {
     }
     return user
   },
-  participants: async (_parent, _arg, _ctx) => {
+  members: async (_parent, _arg, _ctx) => {
     let event = await prisma.event.findUnique({
       where: {
         id: _parent.id,
       },
       include: {
-        participants: true,
+        members: true,
       },
     })
-    return event?.participants
+    return event?.members
   },
   category: async (_parent, _arg, _ctx) => {
     const event = await prisma.event.findUnique({
@@ -54,12 +54,15 @@ export const Event: EventResolvers = {
   comments: async (_parent, _arg, _ctx) => {
     return await prisma.comment.findMany({
       where: {
-        eventId: _parent.id
+        eventId: _parent.id,
       },
       include: {
         event: true,
-        from: true
-      }
+        from: true,
+      },
     })
+  },
+  date: async (_parent, _arg, _ctx) => {
+    /* Event.date resolver is required because Event.date exists but EventMapper.date does not */
   },
 }

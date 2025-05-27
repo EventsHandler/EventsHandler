@@ -9,7 +9,7 @@ export const subscribe: NonNullable<MutationResolvers['subscribe']> = async (_pa
       id: eventId
     },
     data: {
-      participants: {
+      members: {
         connect: {
           id: _ctx.user.id
         }

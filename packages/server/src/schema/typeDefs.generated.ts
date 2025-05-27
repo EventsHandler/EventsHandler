@@ -573,21 +573,21 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'userId' },
+          name: { kind: 'Name', value: 'ownerId' },
           arguments: [],
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
           directives: [],
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'creator' },
+          name: { kind: 'Name', value: 'owner' },
           arguments: [],
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } } },
           directives: [],
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'participants' },
+          name: { kind: 'Name', value: 'members' },
           arguments: [],
           type: {
             kind: 'ListType',
@@ -667,7 +667,7 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'createdEvents' },
+          name: { kind: 'Name', value: 'eventsCreated' },
           arguments: [],
           type: {
             kind: 'ListType',
@@ -687,17 +687,7 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'rates' },
-          arguments: [],
-          type: {
-            kind: 'ListType',
-            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Rateing' } } },
-          },
-          directives: [],
-        },
-        {
-          kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'myRates' },
+          name: { kind: 'Name', value: 'ratingsRecieved' },
           arguments: [],
           type: {
             kind: 'ListType',
@@ -725,14 +715,14 @@ export const typeDefs = {
       fields: [
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'fromId' },
+          name: { kind: 'Name', value: 'raterId' },
           arguments: [],
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
           directives: [],
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'toId' },
+          name: { kind: 'Name', value: 'ratedId' },
           arguments: [],
           type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
           directives: [],

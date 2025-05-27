@@ -7,12 +7,12 @@ export const myEvents: NonNullable<QueryResolvers['myEvents']> = async (_parent,
   }
   return await prisma.event.findMany({
     where: {
-      userId: _ctx.user.id
+      ownerId: _ctx.user.id
     },
     include: {
-      creator: true,
+      owner: true,
       announces: true,
-      participants: true
+      members: true
     },
     orderBy: {
       createdAt: 'desc'

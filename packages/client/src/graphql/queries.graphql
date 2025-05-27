@@ -6,7 +6,7 @@ query Events($category: String) {
     date
     image
     address
-    creator {
+    owner {
       username
       id
     }
@@ -14,7 +14,7 @@ query Events($category: String) {
       title
       description
     }
-    participants {
+    members{
       username
     }
     category {
@@ -31,7 +31,7 @@ query JoinedEvents($userId: String) {
     date
     image
     address
-    creator {
+    owner {
       username
       id
     }
@@ -39,7 +39,7 @@ query JoinedEvents($userId: String) {
       title
       description
     }
-    participants {
+    members {
       username
     }
     category {
@@ -56,7 +56,7 @@ query MyEvents {
     date
     image
     address
-    creator {
+    owner {
       username
       id
     }
@@ -64,7 +64,7 @@ query MyEvents {
       title
       description
     }
-    participants {
+    members {
       username
     }
     category {
@@ -81,12 +81,12 @@ query Event($eventId: ID!) {
     date
     image
     address
-    creator {
+    owner {
       username
       id
-      myRates {
-        fromId
-        toId
+      ratingsRecieved {
+        raterId
+        ratedId
         rate
       }
     }
@@ -94,7 +94,7 @@ query Event($eventId: ID!) {
       title
       description
     }
-    participants {
+    members {
       id
       username
     }
@@ -130,14 +130,14 @@ query User($userId: String!) {
     username
     email
     createdAt
-    createdEvents {
+    eventsCreated {
       id
       title
       description
       date
       image
       address
-      creator {
+      owner {
         username
         id
       }
@@ -145,16 +145,16 @@ query User($userId: String!) {
         title
         description
       }
-      participants {
+      members {
         username
       }
       category {
         name
       }
     }
-    myRates {
-      fromId
-      toId
+    ratingsRecieved {
+      raterId
+      ratedId
       rate
     }
   }

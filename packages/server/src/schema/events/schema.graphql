@@ -22,10 +22,10 @@ type Event {
   date: DateTime!
   address: String!
   createdAt: DateTime!
-  userId: ID!
+  ownerId: ID!
 
-  creator: User!
-  participants: [User!]
+  owner: User!
+  members: [User!]
   announces: [Announces!]
   category: Category!
   comments: [Comment!]
@@ -38,17 +38,16 @@ type User {
   email: String!
   createdAt: DateTime!
 
-  createdEvents: [Event!]
+  eventsCreated: [Event!]
   events: [Event!]
 
-  rates: [Rateing!]
-  myRates: [Rateing!]
+  ratingsRecieved: [Rateing!]
   comments: [Comment!]
 }
 
 type Rateing {
-  fromId: ID!
-  toId: ID!
+  raterId: ID!
+  ratedId: ID!
   rate: Int!
 }
 

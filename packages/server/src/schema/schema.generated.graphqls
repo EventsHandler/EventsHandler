@@ -25,14 +25,14 @@ type Event {
   category: Category!
   comments: [Comment!]
   createdAt: DateTime!
-  creator: User!
   date: DateTime!
   description: String!
   id: ID!
   image: String!
-  participants: [User!]
+  members: [User!]
+  owner: User!
+  ownerId: ID!
   title: String!
-  userId: ID!
 }
 
 type Mutation {
@@ -79,9 +79,9 @@ type Query {
 }
 
 type Rateing {
-  fromId: ID!
   rate: Int!
-  toId: ID!
+  ratedId: ID!
+  raterId: ID!
 }
 
 scalar Upload
@@ -89,12 +89,11 @@ scalar Upload
 type User {
   comments: [Comment!]
   createdAt: DateTime!
-  createdEvents: [Event!]
   email: String!
   events: [Event!]
+  eventsCreated: [Event!]
   id: ID!
-  myRates: [Rateing!]
   password: String!
-  rates: [Rateing!]
+  ratingsRecieved: [Rateing!]
   username: String!
 }

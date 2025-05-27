@@ -50,14 +50,14 @@ export type Event = {
   category: Category
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  creator: User
   date: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
   image: Scalars['String']['output']
-  participants?: Maybe<Array<User>>
+  members?: Maybe<Array<User>>
+  owner: User
+  ownerId: Scalars['ID']['output']
   title: Scalars['String']['output']
-  userId: Scalars['ID']['output']
 }
 
 export type Mutation = {
@@ -189,22 +189,21 @@ export type QueryusersArgs = {
 
 export type Rateing = {
   __typename?: 'Rateing'
-  fromId: Scalars['ID']['output']
   rate: Scalars['Int']['output']
-  toId: Scalars['ID']['output']
+  ratedId: Scalars['ID']['output']
+  raterId: Scalars['ID']['output']
 }
 
 export type User = {
   __typename?: 'User'
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  createdEvents?: Maybe<Array<Event>>
   email: Scalars['String']['output']
   events?: Maybe<Array<Event>>
+  eventsCreated?: Maybe<Array<Event>>
   id: Scalars['ID']['output']
-  myRates?: Maybe<Array<Rateing>>
   password: Scalars['String']['output']
-  rates?: Maybe<Array<Rateing>>
+  ratingsRecieved?: Maybe<Array<Rateing>>
   username: Scalars['String']['output']
 }
 
@@ -296,10 +295,10 @@ export type ResolversTypes = {
   Rateing: ResolverTypeWrapper<Rateing>
   Upload: ResolverTypeWrapper<Scalars['Upload']['output']>
   User: ResolverTypeWrapper<
-    Omit<User, 'comments' | 'createdEvents' | 'events'> & {
+    Omit<User, 'comments' | 'events' | 'eventsCreated'> & {
       comments?: Maybe<Array<ResolversTypes['Comment']>>
-      createdEvents?: Maybe<Array<ResolversTypes['Event']>>
       events?: Maybe<Array<ResolversTypes['Event']>>
+      eventsCreated?: Maybe<Array<ResolversTypes['Event']>>
     }
   >
 }
@@ -322,10 +321,10 @@ export type ResolversParentTypes = {
   Query: {}
   Rateing: Rateing
   Upload: Scalars['Upload']['output']
-  User: Omit<User, 'comments' | 'createdEvents' | 'events'> & {
+  User: Omit<User, 'comments' | 'events' | 'eventsCreated'> & {
     comments?: Maybe<Array<ResolversParentTypes['Comment']>>
-    createdEvents?: Maybe<Array<ResolversParentTypes['Event']>>
     events?: Maybe<Array<ResolversParentTypes['Event']>>
+    eventsCreated?: Maybe<Array<ResolversParentTypes['Event']>>
   }
 }
 
@@ -373,14 +372,14 @@ export type EventResolvers<
   category?: Resolver<ResolversTypes['Category'], ParentType, ContextType>
   comments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-  creator?: Resolver<ResolversTypes['User'], ParentType, ContextType>
   date?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  participants?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
+  members?: Resolver<Maybe<Array<ResolversTypes['User']>>, ParentType, ContextType>
+  owner?: Resolver<ResolversTypes['User'], ParentType, ContextType>
+  ownerId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  userId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
@@ -497,9 +496,9 @@ export type RateingResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Rateing'] = ResolversParentTypes['Rateing'],
 > = {
-  fromId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   rate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  toId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  ratedId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
+  raterId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }
 
@@ -513,13 +512,12 @@ export type UserResolvers<
 > = {
   comments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-  createdEvents?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   events?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
+  eventsCreated?: Resolver<Maybe<Array<ResolversTypes['Event']>>, ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
-  myRates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
   password?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  rates?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
+  ratingsRecieved?: Resolver<Maybe<Array<ResolversTypes['Rateing']>>, ParentType, ContextType>
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>
 }

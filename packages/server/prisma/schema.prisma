@@ -31,7 +31,7 @@ model User {
   username  String
   password  String
   email     String   @unique
-  authToken String   @unique
+  authToken String?   @unique
   //birthDate DateTime
   createdAt DateTime @default(now())
   
