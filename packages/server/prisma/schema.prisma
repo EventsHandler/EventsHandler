@@ -26,30 +26,113 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Event {
-  id          String   @id @default(cuid(2))
-  title       String
-  image       String   @default("")
-  description String   @default("")
-  date        DateTime @default(now())
-  address     String   @default("")
+model User {
+  id        String   @id @default(cuid(2))
+  username  String
+  password  String
+  email     String   @unique
+  authToken String   @unique
+  //birthDate DateTime
+  createdAt DateTime @default(now())
+  
+  //relations
+  eventsCreated Event[] @relation("eventOwner")
+  events EventMember[] @relation("UserEvents_EventMember")
+  grupsCreated Group[] @relation("groupOwner")
+  grups GroupMember[] @relation("UserGroups_GroupMember")
+  chatsCreated Chat[] @relation("chatOwner")
+  chats ChatMember[] @relation("UserChats_ChatMember")
+  messages Message[] @relation("UserMessages_UserMessage")
+  ratingsGiven Rating[] @relation("raitingsGiven")
+  ratingsRecieved Rating[] @relation("raitingsRecieved")
+  comments Comment[] @relation("commentsUser") 
+}
 
+model Event {
+  id        String   @id @default(cuid(2))
+  title     String
+  image     String   @default("")
+  description String   @default("")
+  address   String   @default("")
+  dateStart DateTime
+  dateEnd   DateTime @default(now())
   createdAt DateTime @default(now())
 
-  // m-1 for Event Creator
-  userId  String
-  creator User   @relation("CreatedEvents", fields: [userId], references: [id])
+  //relations
+  ownerId     String
+  owner       User     @relation("eventOwner", fields: [ownerId], references: [id])
+  members     EventMember[] @relation("EventMembers_EventMember")
+  announces   Announce[] @relation("EventAnnounces")
+  comments    Comment[] @relation("commentsEvent")
+  categoryId  String 
+  category    Category @relation("eventCategory", fields: [categoryId], references: [id])
+}
 
-  // m-m: for Participants
-  participants User[] @relation("EventParticipants")
+model Group {
+  id        String  @id @default(cuid(2))
+  name      String
+  //relations
+  ownerId   String
+  owner     User   @relation("groupOwner", fields: [ownerId], references: [id])
+  members     GroupMember[] @relation("GroupMembers_GroupMember")
+ }
 
-  // 1-m for Anouncement
-  announces Announce[] @relation("EventAnnounces")
+model Chat {
+  id        String  @id @default(cuid(2))
+  name      String
+  //relations
+  ownerId   String
+  owner     User   @relation("chatOwner", fields: [ownerId], references: [id])
+  members   ChatMember[] @relation("ChatMembers_ChatMember")
+  messages  Message[] @relation("ChatMessages_ChatMessage")
+ }
 
-  // m-1 for Category
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-  comments Comment[] @relation("commentsEvent")
+model EventMember {
+  id String @id @default(cuid(2))
+  userId    String
+  eventId   String
+  createdAt DateTime @default(now())
+  user      User @relation("UserEvents_EventMember", fields: [userId], references: [id])
+  event     Event @relation("EventMembers_EventMember", fields: [eventId], references: [id])
+  permissions BigInt @default(0)
+ }
+
+model GroupMember {
+  id String @id @default(cuid(2))
+  userId    String
+  groupId   String
+  createdAt DateTime @default(now())
+  user      User @relation("UserGroups_GroupMember", fields: [userId], references: [id])
+  group     Group @relation("GroupMembers_GroupMember", fields: [groupId], references: [id])
+  permissions BigInt @default(0)
+ }
+
+model ChatMember {
+  id String @id @default(cuid(2))
+  userId    String
+  chatId    String
+  createdAt DateTime @default(now())
+  user      User @relation("UserChats_ChatMember", fields: [userId], references: [id])
+  chat     Chat @relation("ChatMembers_ChatMember", fields: [chatId], references: [id])
+  permissions BigInt @default(0)
+ }
+
+model Message {
+    id      String @id @default(cuid(2))
+    content String @default("")
+    userId  String
+    chatId  String    
+    user      User @relation("UserMessages_UserMessage", fields: [userId], references: [id])
+    chat     Chat @relation("ChatMessages_ChatMessage", fields: [chatId], references: [id])
+  }
+
+model Rating {
+  id       String @id @default(cuid(2))
+  ratedId  String
+  raterId  String
+  rated    User @relation("raitingsRecieved", fields: [ratedId], references: [id])
+  rater    User @relation("raitingsGiven", fields: [raterId], references: [id])
+  rate     Int    @default(0)
 }
 
 model Announce {
@@ -63,39 +146,12 @@ model Announce {
   event   Event?  @relation("EventAnnounces", fields: [eventId], references: [id])
 }
 
-model User {
-  id        String   @id @default(cuid(2))
-  username  String
-  password  String
-  email     String   @unique
-  //birthDate DateTime
-  createdAt DateTime @default(now())
-
-  // 1-m for Event Creator
-  createdEvents Event[] @relation("CreatedEvents")
-
-  // m-m: for Participants
-  events  Event[]   @relation("EventParticipants")
-  rates   Rateing[] @relation("fromRates")
-  myRates Rateing[] @relation("toRates")
-  comments Comment[] @relation("commentsUser") 
-}
-
 model Category {
   id   String @id @default(cuid(2))
   name String @unique
 
   // 1-m: for Participants
-  events Event[]
-}
-
-model Rateing {
-  id       String @id @default(cuid(2))
-  fromId   String
-  fromUser User?  @relation("fromRates", fields: [fromId], references: [id])
-  toId     String
-  toUser   User?  @relation("toRates", fields: [toId], references: [id])
-  rate     Int    @default(0)
+  events Event[] @relation("eventCategory")
 }
 
 model Comment {
