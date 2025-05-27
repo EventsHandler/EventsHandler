@@ -71,16 +71,11 @@ type Query {
   categories: [Category!]
   event(eventId: ID!): Event
   events(category: String): [Event!]
-<<<<<<< HEAD
-  findByTitle(title: String!): Event!
-=======
-  findByCategory(category: String!): [Event!]
->>>>>>> test/cristi
   joinedEvents(userId: String): [Event!]
   me: User
   myEvents: [Event!]
   user(userId: String!): User
-  users: [User!]
+  users(test: String!): [User!]
 }
 
 type Rateing {

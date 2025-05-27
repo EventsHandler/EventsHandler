@@ -3,11 +3,6 @@ import type { Resolvers } from './types.generated.js'
 import { categories as Query_categories } from './events/resolvers/Query/categories.js'
 import { event as Query_event } from './events/resolvers/Query/event.js'
 import { events as Query_events } from './events/resolvers/Query/events.js'
-<<<<<<< HEAD
-import { findByTitle as Query_findByTitle } from './events/resolvers/Query/findByTitle.js'
-=======
-import { findByCategory as Query_findByCategory } from './events/resolvers/Query/findByCategory.js'
->>>>>>> test/cristi
 import { joinedEvents as Query_joinedEvents } from './events/resolvers/Query/joinedEvents.js'
 import { me as Query_me } from './events/resolvers/Query/me.js'
 import { myEvents as Query_myEvents } from './events/resolvers/Query/myEvents.js'
@@ -40,11 +35,6 @@ export const resolvers: Resolvers = {
     categories: Query_categories,
     event: Query_event,
     events: Query_events,
-<<<<<<< HEAD
-    findByTitle: Query_findByTitle,
-=======
-    findByCategory: Query_findByCategory,
->>>>>>> test/cristi
     joinedEvents: Query_joinedEvents,
     me: Query_me,
     myEvents: Query_myEvents,

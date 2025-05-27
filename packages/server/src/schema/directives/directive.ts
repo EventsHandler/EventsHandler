@@ -16,7 +16,7 @@ function directive (
     directive @${directiveName}(
       appPerm: PermsApp = Administrator,
       userPerm: PermsUser = None,
-      type: = None,
+      type: userPermType = None,
     ) on OBJECT | FIELD_DEFINITION
 
     enum userPermType {
