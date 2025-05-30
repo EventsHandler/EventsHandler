@@ -1,11 +1,11 @@
-mutation CreateEvent($title: String!, $description: String!, $date: DateTime!, $image: Upload!, $address: String!, $categoryName: String!) {
-  createEvent(title: $title, description: $description, date: $date, image: $image, address: $address, categoryName: $categoryName) {
+mutation CreateEvent($title: String!, $description: String!, $dateStart: DateTime!, $dateEnd: DateTime!, $image: Upload!, $address: String!, $categoryName: String!) {
+  createEvent(title: $title, description: $description, dateStart: $dateStart, dateEnd: $dateEnd, image: $image, address: $address, categoryName: $categoryName) {
     id
   }
 }
 
-mutation EditEvent($title: String!, $description: String!, $date: DateTime!, $image: Upload, $address: String!, $categoryName: String!, $eventId: ID!) {
-  editEvent(title: $title, description: $description, date: $date, image: $image, address: $address, categoryName: $categoryName, eventId: $eventId) {
+mutation EditEvent($title: String!, $description: String!, $dateStart: DateTime!, $dateEnd: DateTime!, $image: Upload, $address: String!, $categoryName: String!, $eventId: ID!) {
+  editEvent(title: $title, description: $description, dateStart: $dateStart, dateEnd: $dateEnd, image: $image, address: $address, categoryName: $categoryName, eventId: $eventId) {
     id
   }
 }

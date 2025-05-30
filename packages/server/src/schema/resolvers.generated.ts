@@ -22,14 +22,21 @@ import { register as Mutation_register } from './events/resolvers/Mutation/regis
 import { subscribe as Mutation_subscribe } from './events/resolvers/Mutation/subscribe.js'
 import { testUpload as Mutation_testUpload } from './events/resolvers/Mutation/testUpload.js'
 import { unsubscribe as Mutation_unsubscribe } from './events/resolvers/Mutation/unsubscribe.js'
-import { Announces } from './events/resolvers/Announces.js'
+import { Announce } from './events/resolvers/Announce.js'
 import { Category } from './events/resolvers/Category.js'
+import { Chat } from './events/resolvers/Chat.js'
+import { ChatMember } from './events/resolvers/ChatMember.js'
 import { Comment } from './events/resolvers/Comment.js'
 import { Event } from './events/resolvers/Event.js'
-import { Rateing } from './events/resolvers/Rateing.js'
+import { EventMember } from './events/resolvers/EventMember.js'
+import { Group } from './events/resolvers/Group.js'
+import { GroupMember } from './events/resolvers/GroupMember.js'
+import { Message } from './events/resolvers/Message.js'
+import { Rating } from './events/resolvers/Rating.js'
 import { User } from './events/resolvers/User.js'
 import { DateTime } from './events/resolvers/DateTime.js'
 import { Upload } from './events/resolvers/Upload.js'
+import { BigIntResolver } from 'graphql-scalars'
 export const resolvers: Resolvers = {
   Query: {
     categories: Query_categories,
@@ -58,12 +65,19 @@ export const resolvers: Resolvers = {
     unsubscribe: Mutation_unsubscribe,
   },
 
-  Announces: Announces,
+  Announce: Announce,
   Category: Category,
+  Chat: Chat,
+  ChatMember: ChatMember,
   Comment: Comment,
   Event: Event,
-  Rateing: Rateing,
+  EventMember: EventMember,
+  Group: Group,
+  GroupMember: GroupMember,
+  Message: Message,
+  Rating: Rating,
   User: User,
   DateTime: DateTime,
   Upload: Upload,
+  BigInt: BigIntResolver,
 }

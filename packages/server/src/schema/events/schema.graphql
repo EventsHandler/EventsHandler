@@ -1,11 +1,126 @@
 scalar DateTime
 scalar Upload
+scalar BigInt
 
-type Announces {
-  title: String!
-  description: String!
-  event: Event
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  email: String!
+  authToken: String
   createdAt: DateTime!
+
+  eventsCreated: [Event!]
+  events: [EventMember!]
+  groupsCreated: [Group!]
+  groups: [GroupMember!]
+  chatsCreated: [Chat!]
+  chats: [ChatMember!]
+  messages:[Message!]
+  ratingsGiven: [Rating!] 
+  ratingsReceived: [Rating!]
+  comments: [Comment!]
+}
+
+type Event {
+  id: ID!
+  title: String!
+  image: String!
+  description: String!
+  address: String!
+  dateStart: DateTime!
+  dateEnd: DateTime!
+  createdAt: DateTime!
+
+  ownerId: String!
+  owner: User
+  members: [EventMember!]
+  announces: [Announce!]
+  comments: [Comment!]
+  categoryId: String!
+  category: Category!
+  linkedGroups: [Group!]
+  linkedChats: [Chat!]
+}
+
+type Group {
+  id: ID!
+  name: String!
+
+  ownerId: String!
+  owner: User 
+  members: [GroupMember!]
+  linkedEvents: [Event!]
+  linkedChats: [Chat!]
+}
+
+type Chat {
+  id: ID!
+  name: String!
+
+  ownerId: String!
+  owner: User
+  members: [ChatMember!]
+  messages: [Message!]
+  linkedEvents: [Event!]
+  linkedGroups: [Group!]
+}
+
+type EventMember {
+  id: ID!
+  userId: String!
+  eventId: String!
+  createdAt: DateTime!
+  user: User!
+  event: Event!
+  permissions: BigInt!
+}
+
+type GroupMember {
+  id: ID!
+  userId: String!
+  groupId: String!
+  createdAt: DateTime!
+  user: User! 
+  group: Group! 
+  permissions: BigInt!
+}
+
+type ChatMember {
+  id: ID!
+  userId: String!
+  chatId: String!
+  createdAt: DateTime!
+  user: User! 
+  chat: Chat! 
+  permissions: BigInt!
+}
+
+type Message {
+  id: ID!
+  content: String!
+  userId: String!
+  chatId: String!    
+  user: User! 
+  chat: Chat! 
+}
+
+type Rating {
+  id: ID!
+  ratedId: String!
+  raterId: String!
+  rated: User!
+  rater: User! 
+  rate: Int!
+}
+
+type Announce {
+  id: ID!
+  title: String!
+  description: String   
+  createdAt: DateTime! 
+  eventId: String
+  event: Event  
 }
 
 type Category {
@@ -14,47 +129,13 @@ type Category {
   events: [Event!]
 }
 
-type Event {
-  id: ID!
-  title: String!
-  image: String!
-  description: String!
-  date: DateTime!
-  address: String!
-  createdAt: DateTime!
-  ownerId: ID!
-
-  owner: User!
-  members: [User!]
-  announces: [Announces!]
-  category: Category!
-  comments: [Comment!]
-}
-
-type User {
-  id: ID!
-  username: String!
-  password: String!
-  email: String!
-  createdAt: DateTime!
-
-  eventsCreated: [Event!]
-  events: [Event!]
-
-  ratingsRecieved: [Rateing!]
-  comments: [Comment!]
-}
-
-type Rateing {
-  raterId: ID!
-  ratedId: ID!
-  rate: Int!
-}
-
 type Comment {
+  id: ID!
+  fromId: String!
   from: User!
+  eventId: String
   event: Event!
-  comment: String
+  comment: String!
 }
 
 extend type Query {
@@ -74,7 +155,8 @@ extend type Mutation {
   createEvent(
     title: String!
     description: String!
-    date: DateTime!
+    dateStart: DateTime!
+    dateEnd: DateTime!
     image: Upload!
     address: String!
     categoryName: String!
@@ -82,7 +164,8 @@ extend type Mutation {
   editEvent(
     title: String!
     description: String!
-    date: DateTime!
+    dateStart: DateTime!
+    dateEnd: DateTime!
     image: Upload
     address: String!
     categoryName: String!
@@ -91,7 +174,7 @@ extend type Mutation {
   subscribe(eventId: ID!): Event!
   unsubscribe(eventId: ID!): Event!
   testUpload(file: Upload!, test: String!): String!
-  createAnnounce(eventId: ID!, title: String!, description: String!): Announces!
+  createAnnounce(eventId: ID!, title: String!, description: String!): Announce!
   apiTest(input: String!): String
   deleteEvent(eventId: ID!): Event
   askForCategory(input: String!): String
