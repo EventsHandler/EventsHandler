@@ -1,6 +1,6 @@
 import { Group, Chat, Event } from "../types.generated.js"
 
-export type SettingNames = ""
+export type SettingNames = "chat:autojoin"
 
 export type Setting = {
   bit: bigint
@@ -15,6 +15,11 @@ export type Settings = {
 }
 
 const eSettings: Setting[] = [
+  {
+    bit: 1n,
+    name: "chat:autojoin",
+    description: ""
+  }
 ]
 
 function permsUserHas(entity: Chat | Group | Event, setting: SettingNames): boolean {

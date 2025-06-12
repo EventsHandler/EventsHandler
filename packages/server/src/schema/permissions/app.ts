@@ -1,6 +1,6 @@
 import { User } from "../types.generated.js"
 
-export type AppPermNames = "administrator"
+export type AppPermNames = "administrator" | "manageChats"
 
 export type AppPerm = {
   bit: bigint
@@ -20,6 +20,11 @@ const perms: AppPerm[] = [
     name: "administrator",
     description: ""
   },
+  {
+    bit: 2n,
+    name: "manageChats",
+    description: ""
+  }
 ]
 
 function permAppUserHas(user: User, perm: AppPermNames): boolean {
@@ -32,7 +37,7 @@ function permAppUserHas(user: User, perm: AppPermNames): boolean {
 
 const defaultPermsApp: bigint = perms.reduce((acc: bigint, { bit, name }: AppPerm) => {
   if(
-    false  
+    name === "manageChats"
   ) acc = acc | bit
   return acc
 }, 0n)

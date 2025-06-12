@@ -1,7 +1,7 @@
 import { prisma } from "../../prisma.js"
 import { ChatMember, EventMember, GroupMember } from "../types.generated.js"
 
-export type MemberPermNames = "owner" | "administrator"
+export type MemberPermNames = "owner" | "administrator" | "chat:link" | "chat:sendMessage" | "chat:viewMessages" | "chat:deleteMessage" | "chat:manageMembers" | "chat:manager"
 
 export type MemberPerm = {
   bit: bigint
@@ -20,6 +20,36 @@ const perms: MemberPerm[] = [
   {
     bit: 1n,
     name: "administrator",
+    description: ""
+  },
+  {
+    bit: 2n,
+    name: "chat:link",
+    description: ""
+  },
+  {
+    bit: 4n,
+    name: "chat:sendMessage",
+    description: ""
+  },
+  {
+    bit: 8n,
+    name: "chat:viewMessages",
+    description: ""
+  },
+  {
+    bit: 16n,
+    name: "chat:deleteMessage",
+    description: ""
+  },
+  {
+    bit: 32n,
+    name: "chat:manageMembers",
+    description: ""
+  },
+  {
+    bit: 64n,
+    name: "chat:manager",
     description: ""
   },
 ]
@@ -58,7 +88,8 @@ async function requirePerm(userId: string, entityId: string, perm: MemberPermNam
 
 const defaultPermsUser: bigint = perms.reduce((acc: bigint, { name, bit }: MemberPerm) => {
   if(
-    false
+    name === "chat:sendMessage" ||
+    name === "chat:viewMessages"
   ) return acc = acc | bit
   return acc
 }, 0n)
