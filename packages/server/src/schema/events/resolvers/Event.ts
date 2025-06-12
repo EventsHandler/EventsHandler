@@ -1,25 +1,65 @@
+import { prisma } from '../../../prisma.js'
 import type { EventResolvers } from './../../types.generated.js'
 export const Event: EventResolvers = {
-  /* Implement Event resolver logic here */
   announces: async (_parent, _arg, _ctx) => {
-    /* Event.announces resolver is required because Event.announces exists but EventMapper.announces does not */
+    return await prisma.announce.findMany({
+      where: {
+        eventId: _parent.id
+      }
+    })
   },
   category: async (_parent, _arg, _ctx) => {
-    /* Event.category resolver is required because Event.category exists but EventMapper.category does not */
+    const category = await prisma.category.findUnique({
+      where: {
+        id: _parent.categoryId
+      }
+    })
+    if(!category) {
+      throw new Error("Nu am gasit categoria.")
+    }
+    return category
   },
   comments: async (_parent, _arg, _ctx) => {
-    /* Event.comments resolver is required because Event.comments exists but EventMapper.comments does not */
+    return await prisma.comment.findMany({
+      where: {
+        eventId: _parent.id
+      }
+    })
   },
   linkedChats: async (_parent, _arg, _ctx) => {
-    /* Event.linkedChats resolver is required because Event.linkedChats exists but EventMapper.linkedChats does not */
+    const event = await prisma.event.findUnique({
+      where: {
+        id: _parent.id
+      },
+      include: {
+        linkedChats: true
+      }
+    })
+    return event?.linkedChats
   },
   linkedGroups: async (_parent, _arg, _ctx) => {
-    /* Event.linkedGroups resolver is required because Event.linkedGroups exists but EventMapper.linkedGroups does not */
+    const event = await prisma.event.findUnique({
+      where: {
+        id: _parent.id
+      },
+      include: {
+        linkedGroups: true
+      }
+    })
+    return event?.linkedGroups
   },
   members: async (_parent, _arg, _ctx) => {
-    /* Event.members resolver is required because Event.members exists but EventMapper.members does not */
+    return await prisma.eventMember.findMany({
+      where: {
+        eventId: _parent.id
+      }
+    })
   },
   owner: async (_parent, _arg, _ctx) => {
-    /* Event.owner resolver is required because Event.owner exists but EventMapper.owner does not */
+    return await prisma.user.findUnique({
+      where: {
+        id: _parent.ownerId
+      }
+    })
   },
 }

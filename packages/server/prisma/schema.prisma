@@ -34,6 +34,8 @@ model User {
   authToken String?   @unique
   //birthDate DateTime
   createdAt DateTime @default(now())
+
+  appPermissions BigInt @default(0)
   
   //relations
   eventsCreated Event[] @relation("eventOwner")
@@ -109,6 +111,8 @@ model EventMember {
   permissions BigInt @default(0)
 
   accepted Boolean @default(false)
+
+  @@unique([userId, eventId])
 }
 
 model GroupMember {
@@ -121,6 +125,8 @@ model GroupMember {
   permissions BigInt @default(0)
 
   accepted Boolean @default(false)
+
+  @@unique([userId, groupId])
 }
 
 model ChatMember {
@@ -133,6 +139,8 @@ model ChatMember {
   permissions BigInt @default(0)
 
   accepted Boolean @default(false)
+  
+  @@unique([userId, chatId])
 }
 
 model Message {
@@ -142,6 +150,8 @@ model Message {
   chatId  String    
   user      User @relation("UserMessages_UserMessage", fields: [userId], references: [id])
   chat     Chat @relation("ChatMessages_ChatMessage", fields: [chatId], references: [id])
+
+  @@unique([userId, chatId])
 }
 
 model Rating {
@@ -151,6 +161,8 @@ model Rating {
   rated    User @relation("raitingsRecieved", fields: [ratedId], references: [id])
   rater    User @relation("raitingsGiven", fields: [raterId], references: [id])
   rate     Int    @default(0)
+
+  @@unique([ratedId, raterId])
 }
 
 model Announce {
@@ -160,7 +172,7 @@ model Announce {
   createdAt   DateTime @default(now())
 
   // m-1 for Anouncement
-  eventId String?
+  eventId String
   event   Event?  @relation("EventAnnounces", fields: [eventId], references: [id])
 }
 

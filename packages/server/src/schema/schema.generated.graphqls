@@ -1,8 +1,8 @@
 type Announce {
   createdAt: DateTime!
-  description: String
+  description: String!
   event: Event
-  eventId: String
+  eventId: ID!
   id: ID!
   title: String!
 }
@@ -23,25 +23,26 @@ type Chat {
   messages: [Message!]
   name: String!
   owner: User
-  ownerId: String!
+  ownerId: ID!
+  settings: BigInt!
 }
 
 type ChatMember {
-  chat: Chat!
-  chatId: String!
+  chat: Chat
+  chatId: ID!
   createdAt: DateTime!
   id: ID!
   permissions: BigInt!
-  user: User!
-  userId: String!
+  user: User
+  userId: ID!
 }
 
 type Comment {
   comment: String!
-  event: Event!
-  eventId: String
-  from: User!
-  fromId: String!
+  event: Event
+  eventId: ID!
+  from: User
+  fromId: ID!
   id: ID!
 }
 
@@ -50,8 +51,8 @@ scalar DateTime
 type Event {
   address: String!
   announces: [Announce!]
-  category: Category!
-  categoryId: String!
+  category: Category
+  categoryId: ID!
   comments: [Comment!]
   createdAt: DateTime!
   dateEnd: DateTime!
@@ -63,18 +64,19 @@ type Event {
   linkedGroups: [Group!]
   members: [EventMember!]
   owner: User
-  ownerId: String!
+  ownerId: ID!
+  settings: BigInt!
   title: String!
 }
 
 type EventMember {
   createdAt: DateTime!
-  event: Event!
-  eventId: String!
+  event: Event
+  eventId: ID!
   id: ID!
   permissions: BigInt!
-  user: User!
-  userId: String!
+  user: User
+  userId: ID!
 }
 
 type Group {
@@ -84,93 +86,50 @@ type Group {
   members: [GroupMember!]
   name: String!
   owner: User
-  ownerId: String!
+  ownerId: ID!
+  settings: BigInt!
 }
 
 type GroupMember {
   createdAt: DateTime!
-  group: Group!
-  groupId: String!
+  group: Group
+  groupId: ID!
   id: ID!
   permissions: BigInt!
-  user: User!
-  userId: String!
+  user: User
+  userId: ID!
 }
 
 type Message {
-  chat: Chat!
-  chatId: String!
+  chat: Chat
+  chatId: ID!
   content: String!
   id: ID!
-  user: User!
-  userId: String!
+  user: User
+  userId: ID!
 }
 
 type Mutation {
-  apiTest(input: String!): String
-  askForCategory(input: String!): String
-  askForDescription(input: String!): String
-  comment(comment: String!, eventId: String!, fromId: String!): Comment!
-  createAnnounce(description: String!, eventId: ID!, title: String!): Announce!
-  createEvent(
-    address: String!
-    categoryName: String!
-    dateEnd: DateTime!
-    dateStart: DateTime!
-    description: String!
-    image: Upload!
-    title: String!
-  ): Event!
-  deleteEvent(eventId: ID!): Event
-  editEvent(
-    address: String!
-    categoryName: String!
-    dateEnd: DateTime!
-    dateStart: DateTime!
-    description: String!
-    eventId: ID!
-    image: Upload
-    title: String!
-  ): Event!
-  login(password: String!, username: String!): User!
-  rateUser(fromId: String!, rate: Int!, toId: String!): Boolean
-  register(email: String!, password: String!, username: String!): User!
-  subscribe(eventId: ID!): Event!
-  testUpload(file: Upload!, test: String!): String!
-  unsubscribe(eventId: ID!): Event!
+  test: String
 }
 
 type Query {
-  categories: [Category!]
-  event(eventId: ID!): Event
-  events(category: String): [Event!]
-<<<<<<< HEAD
-<<<<<<< HEAD
-  findByTitle(title: String!): Event!
-=======
-  findByCategory(category: String!): [Event!]
->>>>>>> 289757a (sda)
-=======
->>>>>>> 5a83916 (a)
-  joinedEvents(userId: String): [Event!]
-  me: User
-  myEvents: [Event!]
-  user(userId: String!): User
-  users(test: String!): [User!]
+  test: String
 }
 
 type Rating {
   id: ID!
   rate: Int!
-  rated: User!
-  ratedId: String!
-  rater: User!
-  raterId: String!
+  rated: User
+  ratedId: ID!
+  rater: User
+  raterId: ID!
 }
 
 scalar Upload
 
 type User {
+  appPermissions: BigInt!
   authToken: String
   chats: [ChatMember!]
   chatsCreated: [Chat!]
