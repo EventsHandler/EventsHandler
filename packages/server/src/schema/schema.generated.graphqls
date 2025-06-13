@@ -110,10 +110,28 @@ type Message {
 }
 
 type Mutation {
+  chat_create(name: String!): Chat!
+  chat_delete(id: ID!): Chat!
+  chat_link_event(chatId: ID!, eventId: ID!): Chat!
+  chat_link_group(chatId: ID!, groupId: ID!): Chat!
+  chat_member_accept(chatId: ID!, userId: ID!): ChatMember!
+  chat_member_join(chatId: ID!): ChatMember!
+  chat_member_perm_add(chatId: ID!, permission: String!, userId: ID!): ChatMember!
+  chat_member_perm_remove(chatId: ID!, permission: String!, userId: ID!): ChatMember!
+  chat_member_remove(chatId: ID!, userId: ID!): ChatMember!
+  chat_message_delete(messageId: ID!): Message!
+  chat_message_send(chatId: ID!, message: String!): Message!
+  chat_settings_add(chatId: ID!, setting: String!): Chat!
+  chat_settings_remove(chatId: ID!, setting: String!): Chat!
   test: String
 }
 
 type Query {
+  chat_get_as_member: [Chat!]
+  chat_get_as_owner: [Chat!]
+  chat_get_events(chatId: ID!): [Event!]
+  chat_get_groups(chatId: ID!): [Group!]
+  chat_get_members(chatId: ID!): [ChatMember!]
   test: String
 }
 

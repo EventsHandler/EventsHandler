@@ -9,6 +9,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Mayb
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never }
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never }
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> }
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string | number }
@@ -140,12 +141,105 @@ export type Message = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  chat_create: Chat
+  chat_delete: Chat
+  chat_link_event: Chat
+  chat_link_group: Chat
+  chat_member_accept: ChatMember
+  chat_member_join: ChatMember
+  chat_member_perm_add: ChatMember
+  chat_member_perm_remove: ChatMember
+  chat_member_remove: ChatMember
+  chat_message_delete: Message
+  chat_message_send: Message
+  chat_settings_add: Chat
+  chat_settings_remove: Chat
   test?: Maybe<Scalars['String']['output']>
+}
+
+export type Mutationchat_createArgs = {
+  name: Scalars['String']['input']
+}
+
+export type Mutationchat_deleteArgs = {
+  id: Scalars['ID']['input']
+}
+
+export type Mutationchat_link_eventArgs = {
+  chatId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
+}
+
+export type Mutationchat_link_groupArgs = {
+  chatId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type Mutationchat_member_acceptArgs = {
+  chatId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationchat_member_joinArgs = {
+  chatId: Scalars['ID']['input']
+}
+
+export type Mutationchat_member_perm_addArgs = {
+  chatId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationchat_member_perm_removeArgs = {
+  chatId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationchat_member_removeArgs = {
+  chatId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationchat_message_deleteArgs = {
+  messageId: Scalars['ID']['input']
+}
+
+export type Mutationchat_message_sendArgs = {
+  chatId: Scalars['ID']['input']
+  message: Scalars['String']['input']
+}
+
+export type Mutationchat_settings_addArgs = {
+  chatId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type Mutationchat_settings_removeArgs = {
+  chatId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
 }
 
 export type Query = {
   __typename?: 'Query'
+  chat_get_as_member?: Maybe<Array<Chat>>
+  chat_get_as_owner?: Maybe<Array<Chat>>
+  chat_get_events?: Maybe<Array<Event>>
+  chat_get_groups?: Maybe<Array<Group>>
+  chat_get_members?: Maybe<Array<ChatMember>>
   test?: Maybe<Scalars['String']['output']>
+}
+
+export type Querychat_get_eventsArgs = {
+  chatId: Scalars['ID']['input']
+}
+
+export type Querychat_get_groupsArgs = {
+  chatId: Scalars['ID']['input']
+}
+
+export type Querychat_get_membersArgs = {
+  chatId: Scalars['ID']['input']
 }
 
 export type Rating = {
@@ -568,6 +662,79 @@ export type MutationResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
+  chat_create?: Resolver<
+    ResolversTypes['Chat'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_createArgs, 'name'>
+  >
+  chat_delete?: Resolver<ResolversTypes['Chat'], ParentType, ContextType, RequireFields<Mutationchat_deleteArgs, 'id'>>
+  chat_link_event?: Resolver<
+    ResolversTypes['Chat'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_link_eventArgs, 'chatId' | 'eventId'>
+  >
+  chat_link_group?: Resolver<
+    ResolversTypes['Chat'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_link_groupArgs, 'chatId' | 'groupId'>
+  >
+  chat_member_accept?: Resolver<
+    ResolversTypes['ChatMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_member_acceptArgs, 'chatId' | 'userId'>
+  >
+  chat_member_join?: Resolver<
+    ResolversTypes['ChatMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_member_joinArgs, 'chatId'>
+  >
+  chat_member_perm_add?: Resolver<
+    ResolversTypes['ChatMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_member_perm_addArgs, 'chatId' | 'permission' | 'userId'>
+  >
+  chat_member_perm_remove?: Resolver<
+    ResolversTypes['ChatMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_member_perm_removeArgs, 'chatId' | 'permission' | 'userId'>
+  >
+  chat_member_remove?: Resolver<
+    ResolversTypes['ChatMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_member_removeArgs, 'chatId' | 'userId'>
+  >
+  chat_message_delete?: Resolver<
+    ResolversTypes['Message'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_message_deleteArgs, 'messageId'>
+  >
+  chat_message_send?: Resolver<
+    ResolversTypes['Message'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_message_sendArgs, 'chatId' | 'message'>
+  >
+  chat_settings_add?: Resolver<
+    ResolversTypes['Chat'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_settings_addArgs, 'chatId' | 'setting'>
+  >
+  chat_settings_remove?: Resolver<
+    ResolversTypes['Chat'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_settings_removeArgs, 'chatId' | 'setting'>
+  >
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
 }
 
@@ -575,6 +742,26 @@ export type QueryResolvers<
   ContextType = UserContext,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
+  chat_get_as_member?: Resolver<Maybe<Array<ResolversTypes['Chat']>>, ParentType, ContextType>
+  chat_get_as_owner?: Resolver<Maybe<Array<ResolversTypes['Chat']>>, ParentType, ContextType>
+  chat_get_events?: Resolver<
+    Maybe<Array<ResolversTypes['Event']>>,
+    ParentType,
+    ContextType,
+    RequireFields<Querychat_get_eventsArgs, 'chatId'>
+  >
+  chat_get_groups?: Resolver<
+    Maybe<Array<ResolversTypes['Group']>>,
+    ParentType,
+    ContextType,
+    RequireFields<Querychat_get_groupsArgs, 'chatId'>
+  >
+  chat_get_members?: Resolver<
+    Maybe<Array<ResolversTypes['ChatMember']>>,
+    ParentType,
+    ContextType,
+    RequireFields<Querychat_get_membersArgs, 'chatId'>
+  >
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
 }
 

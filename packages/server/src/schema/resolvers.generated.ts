@@ -1,6 +1,24 @@
 /* This file was automatically generated. DO NOT UPDATE MANUALLY. */
 import type { Resolvers } from './types.generated.js'
+import { chat_get_as_member as Query_chat_get_as_member } from './events/resolvers/Query/chat_get_as_member.js'
+import { chat_get_as_owner as Query_chat_get_as_owner } from './events/resolvers/Query/chat_get_as_owner.js'
+import { chat_get_events as Query_chat_get_events } from './events/resolvers/Query/chat_get_events.js'
+import { chat_get_groups as Query_chat_get_groups } from './events/resolvers/Query/chat_get_groups.js'
+import { chat_get_members as Query_chat_get_members } from './events/resolvers/Query/chat_get_members.js'
 import { test as Query_test } from './events/resolvers/Query/test.js'
+import { chat_create as Mutation_chat_create } from './events/resolvers/Mutation/chat_create.js'
+import { chat_delete as Mutation_chat_delete } from './events/resolvers/Mutation/chat_delete.js'
+import { chat_link_event as Mutation_chat_link_event } from './events/resolvers/Mutation/chat_link_event.js'
+import { chat_link_group as Mutation_chat_link_group } from './events/resolvers/Mutation/chat_link_group.js'
+import { chat_member_accept as Mutation_chat_member_accept } from './events/resolvers/Mutation/chat_member_accept.js'
+import { chat_member_join as Mutation_chat_member_join } from './events/resolvers/Mutation/chat_member_join.js'
+import { chat_member_perm_add as Mutation_chat_member_perm_add } from './events/resolvers/Mutation/chat_member_perm_add.js'
+import { chat_member_perm_remove as Mutation_chat_member_perm_remove } from './events/resolvers/Mutation/chat_member_perm_remove.js'
+import { chat_member_remove as Mutation_chat_member_remove } from './events/resolvers/Mutation/chat_member_remove.js'
+import { chat_message_delete as Mutation_chat_message_delete } from './events/resolvers/Mutation/chat_message_delete.js'
+import { chat_message_send as Mutation_chat_message_send } from './events/resolvers/Mutation/chat_message_send.js'
+import { chat_settings_add as Mutation_chat_settings_add } from './events/resolvers/Mutation/chat_settings_add.js'
+import { chat_settings_remove as Mutation_chat_settings_remove } from './events/resolvers/Mutation/chat_settings_remove.js'
 import { test as Mutation_test } from './events/resolvers/Mutation/test.js'
 import { Announce } from './events/resolvers/Announce.js'
 import { Category } from './events/resolvers/Category.js'
@@ -18,8 +36,30 @@ import { DateTime } from './events/resolvers/DateTime.js'
 import { Upload } from './events/resolvers/Upload.js'
 import { BigIntResolver } from 'graphql-scalars'
 export const resolvers: Resolvers = {
-  Query: { test: Query_test },
-  Mutation: { test: Mutation_test },
+  Query: {
+    chat_get_as_member: Query_chat_get_as_member,
+    chat_get_as_owner: Query_chat_get_as_owner,
+    chat_get_events: Query_chat_get_events,
+    chat_get_groups: Query_chat_get_groups,
+    chat_get_members: Query_chat_get_members,
+    test: Query_test,
+  },
+  Mutation: {
+    chat_create: Mutation_chat_create,
+    chat_delete: Mutation_chat_delete,
+    chat_link_event: Mutation_chat_link_event,
+    chat_link_group: Mutation_chat_link_group,
+    chat_member_accept: Mutation_chat_member_accept,
+    chat_member_join: Mutation_chat_member_join,
+    chat_member_perm_add: Mutation_chat_member_perm_add,
+    chat_member_perm_remove: Mutation_chat_member_perm_remove,
+    chat_member_remove: Mutation_chat_member_remove,
+    chat_message_delete: Mutation_chat_message_delete,
+    chat_message_send: Mutation_chat_message_send,
+    chat_settings_add: Mutation_chat_settings_add,
+    chat_settings_remove: Mutation_chat_settings_remove,
+    test: Mutation_test,
+  },
 
   Announce: Announce,
   Category: Category,

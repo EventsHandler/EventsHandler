@@ -138,12 +138,105 @@ export type Message = {
 
 export type Mutation = {
   __typename?: 'Mutation'
+  chat_create: Chat
+  chat_delete: Chat
+  chat_link_event: Chat
+  chat_link_group: Chat
+  chat_member_accept: ChatMember
+  chat_member_join: ChatMember
+  chat_member_perm_add: ChatMember
+  chat_member_perm_remove: ChatMember
+  chat_member_remove: ChatMember
+  chat_message_delete: Message
+  chat_message_send: Message
+  chat_settings_add: Chat
+  chat_settings_remove: Chat
   test?: Maybe<Scalars['String']['output']>
+}
+
+export type MutationChat_CreateArgs = {
+  name: Scalars['String']['input']
+}
+
+export type MutationChat_DeleteArgs = {
+  id: Scalars['ID']['input']
+}
+
+export type MutationChat_Link_EventArgs = {
+  chatId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
+}
+
+export type MutationChat_Link_GroupArgs = {
+  chatId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type MutationChat_Member_AcceptArgs = {
+  chatId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationChat_Member_JoinArgs = {
+  chatId: Scalars['ID']['input']
+}
+
+export type MutationChat_Member_Perm_AddArgs = {
+  chatId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationChat_Member_Perm_RemoveArgs = {
+  chatId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationChat_Member_RemoveArgs = {
+  chatId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationChat_Message_DeleteArgs = {
+  messageId: Scalars['ID']['input']
+}
+
+export type MutationChat_Message_SendArgs = {
+  chatId: Scalars['ID']['input']
+  message: Scalars['String']['input']
+}
+
+export type MutationChat_Settings_AddArgs = {
+  chatId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type MutationChat_Settings_RemoveArgs = {
+  chatId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
 }
 
 export type Query = {
   __typename?: 'Query'
+  chat_get_as_member?: Maybe<Array<Chat>>
+  chat_get_as_owner?: Maybe<Array<Chat>>
+  chat_get_events?: Maybe<Array<Event>>
+  chat_get_groups?: Maybe<Array<Group>>
+  chat_get_members?: Maybe<Array<ChatMember>>
   test?: Maybe<Scalars['String']['output']>
+}
+
+export type QueryChat_Get_EventsArgs = {
+  chatId: Scalars['ID']['input']
+}
+
+export type QueryChat_Get_GroupsArgs = {
+  chatId: Scalars['ID']['input']
+}
+
+export type QueryChat_Get_MembersArgs = {
+  chatId: Scalars['ID']['input']
 }
 
 export type Rating = {
@@ -177,9 +270,7 @@ export type User = {
   username: Scalars['String']['output']
 }
 
-export type TestMutationVariables = Exact<{
-  name: Scalars['String']['input']
-}>
+export type TestMutationVariables = Exact<{ [key: string]: never }>
 
 export type TestMutation = { __typename?: 'Mutation'; test?: string | null }
 
@@ -194,13 +285,6 @@ export const TestDocument = {
       kind: 'OperationDefinition',
       operation: 'mutation',
       name: { kind: 'Name', value: 'Test' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'name' } },
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
-        },
-      ],
       selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'Field', name: { kind: 'Name', value: 'test' } }] },
     },
   ],

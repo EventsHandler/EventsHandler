@@ -14,11 +14,11 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-  'mutation Test($name: String!) {\n  test\n}': typeof types.TestDocument
+  'mutation Test {\n  test\n}': typeof types.TestDocument
   'query Test2 {\n  test\n}': typeof types.Test2Document
 }
 const documents: Documents = {
-  'mutation Test($name: String!) {\n  test\n}': types.TestDocument,
+  'mutation Test {\n  test\n}': types.TestDocument,
   'query Test2 {\n  test\n}': types.Test2Document,
 }
 
@@ -39,9 +39,7 @@ export function graphql(source: string): unknown
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(
-  source: 'mutation Test($name: String!) {\n  test\n}',
-): (typeof documents)['mutation Test($name: String!) {\n  test\n}']
+export function graphql(source: 'mutation Test {\n  test\n}'): (typeof documents)['mutation Test {\n  test\n}']
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -13,6 +13,137 @@ export const typeDefs = {
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
           directives: [],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_get_as_owner' },
+          arguments: [],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_get_as_member' },
+          arguments: [],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_get_members' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_get_groups' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_get_events' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
       ],
       directives: [],
       interfaces: [],
@@ -27,6 +158,410 @@ export const typeDefs = {
           arguments: [],
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
           directives: [],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_create' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'name' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_delete' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'id' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_member_join' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_member_remove' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_member_accept' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_member_perm_add' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'permission' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_member_perm_remove' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'permission' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_message_send' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'message' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_message_delete' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'messageId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_link_event' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_link_group' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_settings_add' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'setting' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_settings_remove' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'setting' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
         },
       ],
       directives: [],
