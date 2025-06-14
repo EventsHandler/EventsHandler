@@ -239,7 +239,7 @@ export const typeDefs = {
         },
         {
           kind: 'FieldDefinition',
-          name: { kind: 'Name', value: 'chat_member_remove' },
+          name: { kind: 'Name', value: 'chat_member_kick' },
           arguments: [
             {
               kind: 'InputValueDefinition',
@@ -250,6 +250,32 @@ export const typeDefs = {
             {
               kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'chat_member_leave' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
               directives: [],
             },
@@ -563,6 +589,426 @@ export const typeDefs = {
             },
           ],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_create' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'title' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'image' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Upload' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'description' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'address' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'dateStart' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'categoryId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'dateEnd' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'basedGroup' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'settings' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'BigInt' } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_delete' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'id' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_member_join' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_member_kick' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_member_leave' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_member_accept' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_member_perm_add' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'permission' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_member_perm_remove' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'permission' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_link_group' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_link_chat' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_settings_add' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'setting' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'event_settings_remove' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'setting' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageEvents' },
+                },
+              ],
+            },
+          ],
+        },
       ],
       directives: [],
       interfaces: [],
@@ -779,7 +1225,7 @@ export const typeDefs = {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'dateEnd' },
           arguments: [],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'DateTime' } },
           directives: [],
         },
         {

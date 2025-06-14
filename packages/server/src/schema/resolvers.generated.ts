@@ -12,13 +12,26 @@ import { chat_link_event as Mutation_chat_link_event } from './events/resolvers/
 import { chat_link_group as Mutation_chat_link_group } from './events/resolvers/Mutation/chat_link_group.js'
 import { chat_member_accept as Mutation_chat_member_accept } from './events/resolvers/Mutation/chat_member_accept.js'
 import { chat_member_join as Mutation_chat_member_join } from './events/resolvers/Mutation/chat_member_join.js'
+import { chat_member_kick as Mutation_chat_member_kick } from './events/resolvers/Mutation/chat_member_kick.js'
+import { chat_member_leave as Mutation_chat_member_leave } from './events/resolvers/Mutation/chat_member_leave.js'
 import { chat_member_perm_add as Mutation_chat_member_perm_add } from './events/resolvers/Mutation/chat_member_perm_add.js'
 import { chat_member_perm_remove as Mutation_chat_member_perm_remove } from './events/resolvers/Mutation/chat_member_perm_remove.js'
-import { chat_member_remove as Mutation_chat_member_remove } from './events/resolvers/Mutation/chat_member_remove.js'
 import { chat_message_delete as Mutation_chat_message_delete } from './events/resolvers/Mutation/chat_message_delete.js'
 import { chat_message_send as Mutation_chat_message_send } from './events/resolvers/Mutation/chat_message_send.js'
 import { chat_settings_add as Mutation_chat_settings_add } from './events/resolvers/Mutation/chat_settings_add.js'
 import { chat_settings_remove as Mutation_chat_settings_remove } from './events/resolvers/Mutation/chat_settings_remove.js'
+import { event_create as Mutation_event_create } from './events/resolvers/Mutation/event_create.js'
+import { event_delete as Mutation_event_delete } from './events/resolvers/Mutation/event_delete.js'
+import { event_link_chat as Mutation_event_link_chat } from './events/resolvers/Mutation/event_link_chat.js'
+import { event_link_group as Mutation_event_link_group } from './events/resolvers/Mutation/event_link_group.js'
+import { event_member_accept as Mutation_event_member_accept } from './events/resolvers/Mutation/event_member_accept.js'
+import { event_member_join as Mutation_event_member_join } from './events/resolvers/Mutation/event_member_join.js'
+import { event_member_kick as Mutation_event_member_kick } from './events/resolvers/Mutation/event_member_kick.js'
+import { event_member_leave as Mutation_event_member_leave } from './events/resolvers/Mutation/event_member_leave.js'
+import { event_member_perm_add as Mutation_event_member_perm_add } from './events/resolvers/Mutation/event_member_perm_add.js'
+import { event_member_perm_remove as Mutation_event_member_perm_remove } from './events/resolvers/Mutation/event_member_perm_remove.js'
+import { event_settings_add as Mutation_event_settings_add } from './events/resolvers/Mutation/event_settings_add.js'
+import { event_settings_remove as Mutation_event_settings_remove } from './events/resolvers/Mutation/event_settings_remove.js'
 import { test as Mutation_test } from './events/resolvers/Mutation/test.js'
 import { Announce } from './events/resolvers/Announce.js'
 import { Category } from './events/resolvers/Category.js'
@@ -51,13 +64,26 @@ export const resolvers: Resolvers = {
     chat_link_group: Mutation_chat_link_group,
     chat_member_accept: Mutation_chat_member_accept,
     chat_member_join: Mutation_chat_member_join,
+    chat_member_kick: Mutation_chat_member_kick,
+    chat_member_leave: Mutation_chat_member_leave,
     chat_member_perm_add: Mutation_chat_member_perm_add,
     chat_member_perm_remove: Mutation_chat_member_perm_remove,
-    chat_member_remove: Mutation_chat_member_remove,
     chat_message_delete: Mutation_chat_message_delete,
     chat_message_send: Mutation_chat_message_send,
     chat_settings_add: Mutation_chat_settings_add,
     chat_settings_remove: Mutation_chat_settings_remove,
+    event_create: Mutation_event_create,
+    event_delete: Mutation_event_delete,
+    event_link_chat: Mutation_event_link_chat,
+    event_link_group: Mutation_event_link_group,
+    event_member_accept: Mutation_event_member_accept,
+    event_member_join: Mutation_event_member_join,
+    event_member_kick: Mutation_event_member_kick,
+    event_member_leave: Mutation_event_member_leave,
+    event_member_perm_add: Mutation_event_member_perm_add,
+    event_member_perm_remove: Mutation_event_member_perm_remove,
+    event_settings_add: Mutation_event_settings_add,
+    event_settings_remove: Mutation_event_settings_remove,
     test: Mutation_test,
   },
 

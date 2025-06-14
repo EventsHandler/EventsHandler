@@ -81,7 +81,7 @@ export type Event = {
   categoryId: Scalars['ID']['output']
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  dateEnd: Scalars['DateTime']['output']
+  dateEnd?: Maybe<Scalars['DateTime']['output']>
   dateStart: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
@@ -147,13 +147,26 @@ export type Mutation = {
   chat_link_group: Chat
   chat_member_accept: ChatMember
   chat_member_join: ChatMember
+  chat_member_kick: ChatMember
+  chat_member_leave: ChatMember
   chat_member_perm_add: ChatMember
   chat_member_perm_remove: ChatMember
-  chat_member_remove: ChatMember
   chat_message_delete: Message
   chat_message_send: Message
   chat_settings_add: Chat
   chat_settings_remove: Chat
+  event_create: Event
+  event_delete: Event
+  event_link_chat: Event
+  event_link_group: Event
+  event_member_accept: EventMember
+  event_member_join: EventMember
+  event_member_kick: EventMember
+  event_member_leave: EventMember
+  event_member_perm_add: EventMember
+  event_member_perm_remove: EventMember
+  event_settings_add: Event
+  event_settings_remove: Event
   test?: Maybe<Scalars['String']['output']>
 }
 
@@ -184,6 +197,15 @@ export type Mutationchat_member_joinArgs = {
   chatId: Scalars['ID']['input']
 }
 
+export type Mutationchat_member_kickArgs = {
+  chatId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationchat_member_leaveArgs = {
+  chatId: Scalars['ID']['input']
+}
+
 export type Mutationchat_member_perm_addArgs = {
   chatId: Scalars['ID']['input']
   permission: Scalars['String']['input']
@@ -193,11 +215,6 @@ export type Mutationchat_member_perm_addArgs = {
 export type Mutationchat_member_perm_removeArgs = {
   chatId: Scalars['ID']['input']
   permission: Scalars['String']['input']
-  userId: Scalars['ID']['input']
-}
-
-export type Mutationchat_member_removeArgs = {
-  chatId: Scalars['ID']['input']
   userId: Scalars['ID']['input']
 }
 
@@ -217,6 +234,72 @@ export type Mutationchat_settings_addArgs = {
 
 export type Mutationchat_settings_removeArgs = {
   chatId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type Mutationevent_createArgs = {
+  address: Scalars['String']['input']
+  basedGroup?: InputMaybe<Scalars['String']['input']>
+  categoryId: Scalars['ID']['input']
+  dateEnd?: InputMaybe<Scalars['DateTime']['input']>
+  dateStart: Scalars['DateTime']['input']
+  description: Scalars['String']['input']
+  image: Scalars['Upload']['input']
+  settings?: InputMaybe<Scalars['BigInt']['input']>
+  title: Scalars['String']['input']
+}
+
+export type Mutationevent_deleteArgs = {
+  id: Scalars['ID']['input']
+}
+
+export type Mutationevent_link_chatArgs = {
+  chatId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
+}
+
+export type Mutationevent_link_groupArgs = {
+  eventId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type Mutationevent_member_acceptArgs = {
+  eventId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationevent_member_joinArgs = {
+  eventId: Scalars['ID']['input']
+}
+
+export type Mutationevent_member_kickArgs = {
+  eventId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationevent_member_leaveArgs = {
+  eventId: Scalars['ID']['input']
+}
+
+export type Mutationevent_member_perm_addArgs = {
+  eventId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationevent_member_perm_removeArgs = {
+  eventId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationevent_settings_addArgs = {
+  eventId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type Mutationevent_settings_removeArgs = {
+  eventId: Scalars['ID']['input']
   setting: Scalars['String']['input']
 }
 
@@ -587,7 +670,7 @@ export type EventResolvers<
   categoryId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
   comments?: Resolver<Maybe<Array<ResolversTypes['Comment']>>, ParentType, ContextType>
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
-  dateEnd?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
+  dateEnd?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>
   dateStart?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>
@@ -693,6 +776,18 @@ export type MutationResolvers<
     ContextType,
     RequireFields<Mutationchat_member_joinArgs, 'chatId'>
   >
+  chat_member_kick?: Resolver<
+    ResolversTypes['ChatMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_member_kickArgs, 'chatId' | 'userId'>
+  >
+  chat_member_leave?: Resolver<
+    ResolversTypes['ChatMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationchat_member_leaveArgs, 'chatId'>
+  >
   chat_member_perm_add?: Resolver<
     ResolversTypes['ChatMember'],
     ParentType,
@@ -704,12 +799,6 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<Mutationchat_member_perm_removeArgs, 'chatId' | 'permission' | 'userId'>
-  >
-  chat_member_remove?: Resolver<
-    ResolversTypes['ChatMember'],
-    ParentType,
-    ContextType,
-    RequireFields<Mutationchat_member_removeArgs, 'chatId' | 'userId'>
   >
   chat_message_delete?: Resolver<
     ResolversTypes['Message'],
@@ -734,6 +823,78 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<Mutationchat_settings_removeArgs, 'chatId' | 'setting'>
+  >
+  event_create?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_createArgs, 'address' | 'categoryId' | 'dateStart' | 'description' | 'image' | 'title'>
+  >
+  event_delete?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_deleteArgs, 'id'>
+  >
+  event_link_chat?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_link_chatArgs, 'chatId' | 'eventId'>
+  >
+  event_link_group?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_link_groupArgs, 'eventId' | 'groupId'>
+  >
+  event_member_accept?: Resolver<
+    ResolversTypes['EventMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_member_acceptArgs, 'eventId' | 'userId'>
+  >
+  event_member_join?: Resolver<
+    ResolversTypes['EventMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_member_joinArgs, 'eventId'>
+  >
+  event_member_kick?: Resolver<
+    ResolversTypes['EventMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_member_kickArgs, 'eventId' | 'userId'>
+  >
+  event_member_leave?: Resolver<
+    ResolversTypes['EventMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_member_leaveArgs, 'eventId'>
+  >
+  event_member_perm_add?: Resolver<
+    ResolversTypes['EventMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_member_perm_addArgs, 'eventId' | 'permission' | 'userId'>
+  >
+  event_member_perm_remove?: Resolver<
+    ResolversTypes['EventMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_member_perm_removeArgs, 'eventId' | 'permission' | 'userId'>
+  >
+  event_settings_add?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_settings_addArgs, 'eventId' | 'setting'>
+  >
+  event_settings_remove?: Resolver<
+    ResolversTypes['Event'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationevent_settings_removeArgs, 'eventId' | 'setting'>
   >
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
 }
