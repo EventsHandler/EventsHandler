@@ -1,7 +1,7 @@
 import { prisma } from "../../prisma.js"
 import { ChatMember, EventMember, GroupMember } from "../types.generated.js"
 
-export type MemberPermNames = "owner" | "administrator" | "chat:link" | "chat:sendMessage" | "chat:viewMessages" | "chat:deleteMessage" | "chat:manageMembers" | "chat:manager"
+export type MemberPermNames = "owner" | "administrator" | "chat:link" | "chat:sendMessage" | "chat:viewMessages" | "chat:deleteMessage" | "chat:manageMembers" | "chat:manager" | "event:link" | "event:manageMembers" | "event:manager"
 
 export type MemberPerm = {
   bit: bigint
@@ -50,6 +50,21 @@ const perms: MemberPerm[] = [
   {
     bit: 64n,
     name: "chat:manager",
+    description: ""
+  },
+  {
+    bit: 128n,
+    name: "event:link",
+    description: ""
+  },
+  {
+    bit: 256n,
+    name: "event:manageMembers",
+    description: ""
+  },
+  {
+    bit: 512n,
+    name: "event:manager",
     description: ""
   },
 ]

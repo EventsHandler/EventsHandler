@@ -78,7 +78,7 @@ export type Event = {
   categoryId: Scalars['ID']['output']
   comments?: Maybe<Array<Comment>>
   createdAt: Scalars['DateTime']['output']
-  dateEnd: Scalars['DateTime']['output']
+  dateEnd?: Maybe<Scalars['DateTime']['output']>
   dateStart: Scalars['DateTime']['output']
   description: Scalars['String']['output']
   id: Scalars['ID']['output']
@@ -144,13 +144,26 @@ export type Mutation = {
   chat_link_group: Chat
   chat_member_accept: ChatMember
   chat_member_join: ChatMember
+  chat_member_kick: ChatMember
+  chat_member_leave: ChatMember
   chat_member_perm_add: ChatMember
   chat_member_perm_remove: ChatMember
-  chat_member_remove: ChatMember
   chat_message_delete: Message
   chat_message_send: Message
   chat_settings_add: Chat
   chat_settings_remove: Chat
+  event_create: Event
+  event_delete: Event
+  event_link_chat: Event
+  event_link_group: Event
+  event_member_accept: EventMember
+  event_member_join: EventMember
+  event_member_kick: EventMember
+  event_member_leave: EventMember
+  event_member_perm_add: EventMember
+  event_member_perm_remove: EventMember
+  event_settings_add: Event
+  event_settings_remove: Event
   test?: Maybe<Scalars['String']['output']>
 }
 
@@ -181,6 +194,15 @@ export type MutationChat_Member_JoinArgs = {
   chatId: Scalars['ID']['input']
 }
 
+export type MutationChat_Member_KickArgs = {
+  chatId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationChat_Member_LeaveArgs = {
+  chatId: Scalars['ID']['input']
+}
+
 export type MutationChat_Member_Perm_AddArgs = {
   chatId: Scalars['ID']['input']
   permission: Scalars['String']['input']
@@ -190,11 +212,6 @@ export type MutationChat_Member_Perm_AddArgs = {
 export type MutationChat_Member_Perm_RemoveArgs = {
   chatId: Scalars['ID']['input']
   permission: Scalars['String']['input']
-  userId: Scalars['ID']['input']
-}
-
-export type MutationChat_Member_RemoveArgs = {
-  chatId: Scalars['ID']['input']
   userId: Scalars['ID']['input']
 }
 
@@ -214,6 +231,72 @@ export type MutationChat_Settings_AddArgs = {
 
 export type MutationChat_Settings_RemoveArgs = {
   chatId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type MutationEvent_CreateArgs = {
+  address: Scalars['String']['input']
+  basedGroup?: InputMaybe<Scalars['String']['input']>
+  categoryId: Scalars['ID']['input']
+  dateEnd?: InputMaybe<Scalars['DateTime']['input']>
+  dateStart: Scalars['DateTime']['input']
+  description: Scalars['String']['input']
+  image: Scalars['Upload']['input']
+  settings?: InputMaybe<Scalars['BigInt']['input']>
+  title: Scalars['String']['input']
+}
+
+export type MutationEvent_DeleteArgs = {
+  id: Scalars['ID']['input']
+}
+
+export type MutationEvent_Link_ChatArgs = {
+  chatId: Scalars['ID']['input']
+  eventId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Link_GroupArgs = {
+  eventId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Member_AcceptArgs = {
+  eventId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Member_JoinArgs = {
+  eventId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Member_KickArgs = {
+  eventId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Member_LeaveArgs = {
+  eventId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Member_Perm_AddArgs = {
+  eventId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Member_Perm_RemoveArgs = {
+  eventId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationEvent_Settings_AddArgs = {
+  eventId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type MutationEvent_Settings_RemoveArgs = {
+  eventId: Scalars['ID']['input']
   setting: Scalars['String']['input']
 }
 

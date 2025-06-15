@@ -31,7 +31,7 @@ type Event {
   description: String!
   address: String!
   dateStart: DateTime!
-  dateEnd: DateTime!
+  dateEnd: DateTime
   createdAt: DateTime!
 
   settings: BigInt!
@@ -160,7 +160,8 @@ extend type Mutation {
   chat_create(name: String!): Chat!                                                   @auth(perm: manageChats)
   chat_delete(id: ID!): Chat!                                                         @auth(perm: manageChats)
   chat_member_join(chatId: ID!): ChatMember!                                          @auth(perm: manageChats)
-  chat_member_remove(chatId: ID!, userId: ID!): ChatMember!                           @auth(perm: manageChats)
+  chat_member_kick(chatId: ID!, userId: ID!): ChatMember!                             @auth(perm: manageChats)
+  chat_member_leave(chatId: ID!): ChatMember!                                         @auth(perm: manageChats)
   chat_member_accept(chatId: ID!, userId: ID!): ChatMember!                           @auth(perm: manageChats)
   chat_member_perm_add(chatId: ID!, userId: ID!, permission: String!): ChatMember!    @auth(perm: manageChats)
   chat_member_perm_remove(chatId: ID!, userId: ID!, permission: String!): ChatMember! @auth(perm: manageChats)
@@ -170,4 +171,26 @@ extend type Mutation {
   chat_link_group(chatId: ID!, groupId: ID!): Chat!                                   @auth(perm: manageChats)
   chat_settings_add(chatId: ID!, setting: String!): Chat!                             @auth(perm: manageChats)
   chat_settings_remove(chatId: ID!, setting: String!): Chat!                          @auth(perm: manageChats)
+
+  event_create(
+    title: String!,
+    image: Upload!,
+    description: String!,
+    address: String!,
+    dateStart: DateTime!,
+    categoryId: ID!,
+    dateEnd: DateTime,
+    basedGroup: String,
+    settings: BigInt): Event!                                                             @auth(perm: manageEvents) 
+  event_delete(id: ID!): Event!                                                           @auth(perm: manageEvents)
+  event_member_join(eventId: ID!): EventMember!                                           @auth(perm: manageEvents)  
+  event_member_kick(eventId: ID!, userId: ID!): EventMember!                              @auth(perm: manageEvents)
+  event_member_leave(eventId: ID!): EventMember!                                          @auth(perm: manageEvents)
+  event_member_accept(eventId: ID!, userId: ID!): EventMember!                            @auth(perm: manageEvents)
+  event_member_perm_add(eventId: ID!, userId: ID!, permission: String!): EventMember!     @auth(perm: manageEvents)
+  event_member_perm_remove(eventId: ID!, userId: ID!, permission: String!): EventMember!  @auth(perm: manageEvents)
+  event_link_group(eventId: ID!, groupId: ID!): Event!                                    @auth(perm: manageEvents)
+  event_link_chat(eventId: ID!, chatId: ID!): Event!                                      @auth(perm: manageEvents)
+  event_settings_add(eventId: ID!, setting: String!): Event!                              @auth(perm: manageEvents)
+  event_settings_remove(eventId: ID!, setting: String!): Event!                           @auth(perm: manageEvents)
 }

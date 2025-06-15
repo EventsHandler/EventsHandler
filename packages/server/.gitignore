@@ -4,5 +4,6 @@ src/generated/prisma
 src/generated/dbdiagram.dbml
 
 uploads/*
+!uploads/.gitkeep
 
 .env

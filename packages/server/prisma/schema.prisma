@@ -57,7 +57,7 @@ model Event {
   description String   @default("")
   address   String   @default("")
   dateStart DateTime
-  dateEnd   DateTime @default(now())
+  dateEnd   DateTime? @default(now())
   createdAt DateTime @default(now())
 
   settings BigInt @default(0)
