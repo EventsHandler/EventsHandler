@@ -1,6 +1,6 @@
 import { prisma } from '../../../../prisma.js'
 import type { MutationResolvers } from './../../../types.generated.js'
-import { settings } from '../../../settings/settings.js'
+import { settings } from '../../../utils/settings/settings.js'
 export const chat_member_join: NonNullable<MutationResolvers['chat_member_join']> = async (_parent, { chatId }, _ctx) => {
   return await prisma.chatMember.create({
     data: {

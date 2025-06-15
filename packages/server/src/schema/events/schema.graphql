@@ -22,11 +22,12 @@ type User {
   comments: [Comment!]
 
   appPermissions: BigInt!
+  inbox: [Inbox!]
 }
 
 type Event {
   id: ID!
-  title: String!
+  name: String!
   image: String!
   description: String!
   address: String!
@@ -106,7 +107,7 @@ type ChatMember {
 
 type Message {
   id: ID!
-  content: String!
+  message: String!
   userId: ID!
   chatId: ID!    
   user: User
@@ -139,11 +140,19 @@ type Category {
 
 type Comment {
   id: ID!
-  fromId: ID!
-  from: User
+  userId: ID!
+  user: User
   eventId: ID!
   event: Event
   comment: String!
+}
+
+type Inbox {
+  id: ID!
+  title: String!
+  message: String!
+  userId: ID!
+  user: User
 }
 
 extend type Query {
@@ -173,7 +182,7 @@ extend type Mutation {
   chat_settings_remove(chatId: ID!, setting: String!): Chat!                          @auth(perm: manageChats)
 
   event_create(
-    title: String!,
+    name: String!,
     image: Upload!,
     description: String!,
     address: String!,

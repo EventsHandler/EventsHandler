@@ -1,5 +1,5 @@
-import { prisma } from "../../prisma.js"
-import { ChatMember, EventMember, GroupMember } from "../types.generated.js"
+import { prisma } from "../../../prisma.js"
+import { ChatMember, EventMember, GroupMember } from "../../types.generated.js"
 
 export type MemberPermNames = "owner" | "administrator" | "chat:link" | "chat:sendMessage" | "chat:viewMessages" | "chat:deleteMessage" | "chat:manageMembers" | "chat:manager" | "event:link" | "event:manageMembers" | "event:manager"
 
@@ -11,9 +11,9 @@ export type MemberPerm = {
 
 export type MemberPerms = {
   perms: MemberPerm[],
-  has(userId: string, entityId: string, perm: MemberPermNames): Promise<boolean>,
+  has(userId: string, entityId: string, perm: MemberPermNames, targetId?: string, notFoundErr?: string): Promise<boolean>,
   default: bigint,
-  require(userId: string, entityId: string, perm: MemberPermNames, notFoundErr?: string, permErr?: string): Promise<void>
+  require(userId: string, entityId: string, perm: MemberPermNames, targetId?: string, notFoundErr?: string, permErr?: string): Promise<void>
 }
 
 const perms: MemberPerm[] = [
@@ -69,11 +69,18 @@ const perms: MemberPerm[] = [
   },
 ]
 
-async function memberPermHas2(userId: string, entityId: string, perm: MemberPermNames, notFoundErr: string = "Membrul nu a fost gasit.") {
+async function memberPermHas2(userId: string, entityId: string, perm: MemberPermNames, targetId: string, notFoundErr: string = "Membrul nu a fost gasit.") {
   const member: ChatMember | EventMember | GroupMember | null = 
     await prisma.chatMember.findUnique({ where: { userId_chatId: { userId, chatId: entityId } }, include: { chat: true } }) ??
     await prisma.eventMember.findUnique({ where: { userId_eventId: { userId, eventId: entityId } }, include: { event: true } }) ??
     await prisma.groupMember.findUnique({ where: { userId_groupId: { userId, groupId: entityId } }, include: { group: true } })
+  let target : ChatMember | EventMember | GroupMember | null  = null
+  if(targetId) {
+    target = 
+      await prisma.chatMember.findUnique({ where: { userId_chatId: { userId: targetId, chatId: entityId } }, include: { chat: true } }) ??
+      await prisma.eventMember.findUnique({ where: { userId_eventId: { userId: targetId, eventId: entityId } }, include: { event: true } }) ??
+      await prisma.groupMember.findUnique({ where: { userId_groupId: { userId: targetId, groupId: entityId } }, include: { group: true } })
+  }
 
   if(!member) {
     throw new Error(notFoundErr)
@@ -85,17 +92,20 @@ async function memberPermHas2(userId: string, entityId: string, perm: MemberPerm
   if(!entity) {
     throw new Error(notFoundErr)
   }
-  if(entity.ownerId === userId) return true
-  if(member.permissions % 2n && perm !== "owner") return true
+  if(entity.ownerId === targetId) return false // verify if target is the owner
+  if(entity.ownerId === userId) return true // verify if the user is the owner
+  if(member.permissions % 2n && perm !== "owner") return true // verify if user has administrator perm
   const findPerm = perms.find(p => p.name === perm)
-  if(!findPerm) return false
-  return (member.permissions & findPerm.bit) !== 0n
+  if(!findPerm) return false // verify if perm exists
+  if(target && (member.permissions & findPerm.bit) === (target.permissions & findPerm.bit)) return false // verify if target has the same permissions
+  return (member.permissions & findPerm.bit) !== 0n // final rezult
 }
 
 async function requirePerm(userId: string, entityId: string, perm: MemberPermNames,
+  targetId: string,
   notFoundErr: string = "Membrul nu a fost gasit.",
   permErr: string = "Nu ai permisiune sa executi aceasta actiune.") {
-    const hasPerm = await memberPermHas2(userId, entityId, perm, notFoundErr)
+    const hasPerm = await memberPermHas2(userId, entityId, perm, targetId, notFoundErr)
     if(!hasPerm) {
       throw new Error(permErr)
     }

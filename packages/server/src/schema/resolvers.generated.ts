@@ -42,6 +42,7 @@ import { Event } from './events/resolvers/Event.js'
 import { EventMember } from './events/resolvers/EventMember.js'
 import { Group } from './events/resolvers/Group.js'
 import { GroupMember } from './events/resolvers/GroupMember.js'
+import { Inbox } from './events/resolvers/Inbox.js'
 import { Message } from './events/resolvers/Message.js'
 import { Rating } from './events/resolvers/Rating.js'
 import { User } from './events/resolvers/User.js'
@@ -96,6 +97,7 @@ export const resolvers: Resolvers = {
   EventMember: EventMember,
   Group: Group,
   GroupMember: GroupMember,
+  Inbox: Inbox,
   Message: Message,
   Rating: Rating,
   User: User,

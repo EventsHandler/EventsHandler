@@ -1,4 +1,4 @@
-import { User } from "../types.generated.js"
+import { User } from "../../types.generated.js"
 
 export type AppPermNames = "administrator" | "manageChats" | "manageEvents"
 

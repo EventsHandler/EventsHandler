@@ -48,11 +48,12 @@ model User {
   ratingsGiven Rating[] @relation("raitingsGiven")
   ratingsReceived Rating[] @relation("raitingsRecieved")
   comments Comment[] @relation("commentsUser") 
+  inbox Inbox[] @relation("userInboxMail")
 }
 
 model Event {
   id        String   @id @default(cuid(2))
-  title     String
+  name     String
   image     String   @default("")
   description String   @default("")
   address   String   @default("")
@@ -145,7 +146,7 @@ model ChatMember {
 
 model Message {
   id      String @id @default(cuid(2))
-  content String @default("")
+  message String @default("")
   userId  String
   chatId  String    
   user      User @relation("UserMessages_UserMessage", fields: [userId], references: [id])
@@ -186,9 +187,17 @@ model Category {
 
 model Comment {
   id String @id @default(cuid(2))
-  fromId String
-  from User @relation("commentsUser", fields: [fromId], references: [id], onDelete: Cascade)
+  userId String
+  user User @relation("commentsUser", fields: [userId], references: [id], onDelete: Cascade)
   eventId String
   event Event @relation("commentsEvent", fields: [eventId], references: [id], onDelete: Cascade)
   comment String
+}
+
+model Inbox {
+  id String @id @default(cuid(2))
+  title String
+  message String
+  userId String
+  user User @relation("userInboxMail", fields: [userId], references: [id], onDelete: Cascade)
 }

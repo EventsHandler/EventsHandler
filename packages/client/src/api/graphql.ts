@@ -65,9 +65,9 @@ export type Comment = {
   comment: Scalars['String']['output']
   event?: Maybe<Event>
   eventId: Scalars['ID']['output']
-  from?: Maybe<User>
-  fromId: Scalars['ID']['output']
   id: Scalars['ID']['output']
+  user?: Maybe<User>
+  userId: Scalars['ID']['output']
 }
 
 export type Event = {
@@ -86,10 +86,10 @@ export type Event = {
   linkedChats?: Maybe<Array<Chat>>
   linkedGroups?: Maybe<Array<Group>>
   members?: Maybe<Array<EventMember>>
+  name: Scalars['String']['output']
   owner?: Maybe<User>
   ownerId: Scalars['ID']['output']
   settings: Scalars['BigInt']['output']
-  title: Scalars['String']['output']
 }
 
 export type EventMember = {
@@ -126,12 +126,21 @@ export type GroupMember = {
   userId: Scalars['ID']['output']
 }
 
+export type Inbox = {
+  __typename?: 'Inbox'
+  id: Scalars['ID']['output']
+  message: Scalars['String']['output']
+  title: Scalars['String']['output']
+  user?: Maybe<User>
+  userId: Scalars['ID']['output']
+}
+
 export type Message = {
   __typename?: 'Message'
   chat?: Maybe<Chat>
   chatId: Scalars['ID']['output']
-  content: Scalars['String']['output']
   id: Scalars['ID']['output']
+  message: Scalars['String']['output']
   user?: Maybe<User>
   userId: Scalars['ID']['output']
 }
@@ -242,8 +251,8 @@ export type MutationEvent_CreateArgs = {
   dateStart: Scalars['DateTime']['input']
   description: Scalars['String']['input']
   image: Scalars['Upload']['input']
+  name: Scalars['String']['input']
   settings?: InputMaybe<Scalars['BigInt']['input']>
-  title: Scalars['String']['input']
 }
 
 export type MutationEvent_DeleteArgs = {
@@ -346,6 +355,7 @@ export type User = {
   groups?: Maybe<Array<GroupMember>>
   groupsCreated?: Maybe<Array<Group>>
   id: Scalars['ID']['output']
+  inbox?: Maybe<Array<Inbox>>
   messages?: Maybe<Array<Message>>
   password: Scalars['String']['output']
   ratingsGiven?: Maybe<Array<Rating>>

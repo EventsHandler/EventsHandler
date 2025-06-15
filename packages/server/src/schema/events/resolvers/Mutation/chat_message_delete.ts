@@ -1,5 +1,5 @@
 import { prisma } from '../../../../prisma.js'
-import { memberPerms } from '../../../permissions/member.js'
+import { memberPerms } from '../../../utils/permissions/member.js'
 import type { MutationResolvers } from './../../../types.generated.js'
 export const chat_message_delete: NonNullable<MutationResolvers['chat_message_delete']> = async ( _parent, { messageId: id }, _ctx,) => {
   const message = await prisma.message.findUnique({

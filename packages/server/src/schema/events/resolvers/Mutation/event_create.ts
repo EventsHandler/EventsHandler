@@ -1,5 +1,5 @@
 import type { MutationResolvers } from './../../../types.generated.js'
-import { settings as sett } from '../../../settings/settings.js'
+import { settings as sett } from '../../../utils/settings/settings.js'
 import { prisma } from '../../../../prisma.js'
 
 import path from 'path'

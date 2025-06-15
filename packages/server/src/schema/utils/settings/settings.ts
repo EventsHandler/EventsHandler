@@ -1,5 +1,5 @@
-import { prisma } from "../../prisma.js"
-import { Group, Chat, Event } from "../types.generated.js"
+import { prisma } from "../../../prisma.js"
+import { Group, Chat, Event } from "../../types.generated.js"
 
 export type SettingNames = "chat:autojoin" | "event:public" | "event:autojoin"
 

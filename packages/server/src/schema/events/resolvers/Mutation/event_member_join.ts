@@ -1,6 +1,6 @@
 import { prisma } from '../../../../prisma.js'
 import type { MutationResolvers } from './../../../types.generated.js'
-import { settings } from '../../../settings/settings.js'
+import { settings } from '../../../utils/settings/settings.js'
 export const event_member_join: NonNullable<MutationResolvers['event_member_join']> = async (_parent, { eventId }, _ctx) => {
   return await prisma.eventMember.create({
     data: {
