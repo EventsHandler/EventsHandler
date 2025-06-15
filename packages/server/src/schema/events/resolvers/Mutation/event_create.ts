@@ -6,7 +6,7 @@ import path from 'path'
 import { mkdir } from 'fs/promises'
 import fs from 'fs'
 
-export const event_create: NonNullable<MutationResolvers['event_create']> = async (_parent, { title, description, address, dateStart, image, basedGroup, dateEnd, settings, categoryId }, _ctx) => {
+export const event_create: NonNullable<MutationResolvers['event_create']> = async (_parent, { name, description, address, dateStart, image, basedGroup, dateEnd, settings, categoryId }, _ctx) => {
   if(!settings) settings = sett.default
 
   const { createReadStream, filename } = await image
@@ -20,7 +20,7 @@ export const event_create: NonNullable<MutationResolvers['event_create']> = asyn
 
   return await prisma.event.create({
     data: {
-      title, description, address, dateStart, dateEnd, categoryId, settings,
+      name, description, address, dateStart, dateEnd, categoryId, settings,
       image: uniqueFilename,
       ownerId: _ctx.user.id,
       linkedGroups: basedGroup ? { connect: { id: basedGroup } } : undefined

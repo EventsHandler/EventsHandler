@@ -155,8 +155,8 @@ export type Mutation = {
   chat_member_join: ChatMember
   chat_member_kick: ChatMember
   chat_member_leave: ChatMember
-  chat_member_perm_add: ChatMember
-  chat_member_perm_remove: ChatMember
+  chat_member_perm_add: Scalars['Boolean']['output']
+  chat_member_perm_remove: Scalars['Boolean']['output']
   chat_message_delete: Message
   chat_message_send: Message
   chat_settings_add: Chat
@@ -169,8 +169,8 @@ export type Mutation = {
   event_member_join: EventMember
   event_member_kick: EventMember
   event_member_leave: EventMember
-  event_member_perm_add: EventMember
-  event_member_perm_remove: EventMember
+  event_member_perm_add: Scalars['Boolean']['output']
+  event_member_perm_remove: Scalars['Boolean']['output']
   event_settings_add: Event
   event_settings_remove: Event
   test?: Maybe<Scalars['String']['output']>
