@@ -4,7 +4,7 @@ import { GraphQLSchema, defaultFieldResolver } from "graphql"
 import { type User } from '../types.generated.js';
 import { UserContext } from '../../types/context.js';
 
-import { appPerms, type AppPermNames } from '../permissions/app.js';
+import { appPerms, type AppPermNames } from '../utils/permissions/app.js';
 
 function directive (
   directiveName: string,

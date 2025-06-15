@@ -41,9 +41,9 @@ type Comment {
   comment: String!
   event: Event
   eventId: ID!
-  from: User
-  fromId: ID!
   id: ID!
+  user: User
+  userId: ID!
 }
 
 scalar DateTime
@@ -63,10 +63,10 @@ type Event {
   linkedChats: [Chat!]
   linkedGroups: [Group!]
   members: [EventMember!]
+  name: String!
   owner: User
   ownerId: ID!
   settings: BigInt!
-  title: String!
 }
 
 type EventMember {
@@ -100,11 +100,19 @@ type GroupMember {
   userId: ID!
 }
 
+type Inbox {
+  id: ID!
+  message: String!
+  title: String!
+  user: User
+  userId: ID!
+}
+
 type Message {
   chat: Chat
   chatId: ID!
-  content: String!
   id: ID!
+  message: String!
   user: User
   userId: ID!
 }
@@ -132,8 +140,8 @@ type Mutation {
     dateStart: DateTime!
     description: String!
     image: Upload!
+    name: String!
     settings: BigInt
-    title: String!
   ): Event!
   event_delete(id: ID!): Event!
   event_link_chat(chatId: ID!, eventId: ID!): Event!
@@ -182,6 +190,7 @@ type User {
   groups: [GroupMember!]
   groupsCreated: [Group!]
   id: ID!
+  inbox: [Inbox!]
   messages: [Message!]
   password: String!
   ratingsGiven: [Rating!]
