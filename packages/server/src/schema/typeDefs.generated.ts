@@ -350,7 +350,7 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } } },
           directives: [
             {
               kind: 'Directive',
@@ -388,7 +388,7 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ChatMember' } } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } } },
           directives: [
             {
               kind: 'Directive',
@@ -828,7 +828,7 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } } },
           directives: [
             {
               kind: 'Directive',
@@ -866,7 +866,7 @@ export const typeDefs = {
               directives: [],
             },
           ],
-          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'EventMember' } } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } } },
           directives: [
             {
               kind: 'Directive',

@@ -14,7 +14,7 @@ export const chat_message_delete: NonNullable<MutationResolvers['chat_message_de
   if(!message) {
     throw new Error("Nu exista acest mesaj.")
   }
-  if(!memberPerms.has(_ctx.user.id, message.chat.id, "chat:deleteMessage") && message.user.id !== _ctx.user.id) {
+  if(!memberPerms.has({userId: _ctx.user.id, entityId: message.chat.id, perm: "chat:deleteMessage", entityType: "chat"}) && message.user.id !== _ctx.user.id) {
     throw new Error("Nu ai permisiune sa executi aceasta actiune.")
   }
   return await prisma.message.delete({

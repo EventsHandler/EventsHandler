@@ -158,8 +158,8 @@ export type Mutation = {
   chat_member_join: ChatMember
   chat_member_kick: ChatMember
   chat_member_leave: ChatMember
-  chat_member_perm_add: ChatMember
-  chat_member_perm_remove: ChatMember
+  chat_member_perm_add: Scalars['Boolean']['output']
+  chat_member_perm_remove: Scalars['Boolean']['output']
   chat_message_delete: Message
   chat_message_send: Message
   chat_settings_add: Chat
@@ -172,8 +172,8 @@ export type Mutation = {
   event_member_join: EventMember
   event_member_kick: EventMember
   event_member_leave: EventMember
-  event_member_perm_add: EventMember
-  event_member_perm_remove: EventMember
+  event_member_perm_add: Scalars['Boolean']['output']
+  event_member_perm_remove: Scalars['Boolean']['output']
   event_settings_add: Event
   event_settings_remove: Event
   test?: Maybe<Scalars['String']['output']>
@@ -485,6 +485,7 @@ export type ResolversTypes = {
     Omit<Message, 'chat' | 'user'> & { chat?: Maybe<ResolversTypes['Chat']>; user?: Maybe<ResolversTypes['User']> }
   >
   Mutation: ResolverTypeWrapper<{}>
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
   Query: ResolverTypeWrapper<{}>
   Rating: ResolverTypeWrapper<
     Omit<Rating, 'rated' | 'rater'> & { rated?: Maybe<ResolversTypes['User']>; rater?: Maybe<ResolversTypes['User']> }
@@ -519,7 +520,6 @@ export type ResolversTypes = {
       ratingsReceived?: Maybe<Array<ResolversTypes['Rating']>>
     }
   >
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>
 }
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -566,6 +566,7 @@ export type ResolversParentTypes = {
     user?: Maybe<ResolversParentTypes['User']>
   }
   Mutation: {}
+  Boolean: Scalars['Boolean']['output']
   Query: {}
   Rating: Omit<Rating, 'rated' | 'rater'> & {
     rated?: Maybe<ResolversParentTypes['User']>
@@ -599,7 +600,6 @@ export type ResolversParentTypes = {
     ratingsGiven?: Maybe<Array<ResolversParentTypes['Rating']>>
     ratingsReceived?: Maybe<Array<ResolversParentTypes['Rating']>>
   }
-  Boolean: Scalars['Boolean']['output']
 }
 
 export type AnnounceResolvers<
@@ -817,13 +817,13 @@ export type MutationResolvers<
     RequireFields<Mutationchat_member_leaveArgs, 'chatId'>
   >
   chat_member_perm_add?: Resolver<
-    ResolversTypes['ChatMember'],
+    ResolversTypes['Boolean'],
     ParentType,
     ContextType,
     RequireFields<Mutationchat_member_perm_addArgs, 'chatId' | 'permission' | 'userId'>
   >
   chat_member_perm_remove?: Resolver<
-    ResolversTypes['ChatMember'],
+    ResolversTypes['Boolean'],
     ParentType,
     ContextType,
     RequireFields<Mutationchat_member_perm_removeArgs, 'chatId' | 'permission' | 'userId'>
@@ -901,13 +901,13 @@ export type MutationResolvers<
     RequireFields<Mutationevent_member_leaveArgs, 'eventId'>
   >
   event_member_perm_add?: Resolver<
-    ResolversTypes['EventMember'],
+    ResolversTypes['Boolean'],
     ParentType,
     ContextType,
     RequireFields<Mutationevent_member_perm_addArgs, 'eventId' | 'permission' | 'userId'>
   >
   event_member_perm_remove?: Resolver<
-    ResolversTypes['EventMember'],
+    ResolversTypes['Boolean'],
     ParentType,
     ContextType,
     RequireFields<Mutationevent_member_perm_removeArgs, 'eventId' | 'permission' | 'userId'>
