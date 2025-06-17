@@ -144,6 +144,137 @@ export const typeDefs = {
             },
           ],
         },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_get_as_owner' },
+          arguments: [],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_get_as_member' },
+          arguments: [],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_get_members' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'GroupMember' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_get_chats' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_get_events' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: {
+            kind: 'ListType',
+            type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Event' } } },
+          },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
       ],
       directives: [],
       interfaces: [],
@@ -584,6 +715,378 @@ export const typeDefs = {
                   kind: 'Argument',
                   name: { kind: 'Name', value: 'perm' },
                   value: { kind: 'EnumValue', value: 'manageChats' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_create' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'name' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_delete' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'id' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_member_join' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'GroupMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_member_kick' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'GroupMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_member_leave' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'GroupMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_member_accept' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'GroupMember' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_member_perm_add' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'permission' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_member_perm_remove' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'userId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'permission' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Boolean' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_link_event' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'eventId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_link_chat' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'chatId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Chat' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_settings_add' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'setting' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          kind: 'FieldDefinition',
+          name: { kind: 'Name', value: 'group_settings_remove' },
+          arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'setting' },
+              type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } } },
+              directives: [],
+            },
+          ],
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'Group' } } },
+          directives: [
+            {
+              kind: 'Directive',
+              name: { kind: 'Name', value: 'auth' },
+              arguments: [
+                {
+                  kind: 'Argument',
+                  name: { kind: 'Name', value: 'perm' },
+                  value: { kind: 'EnumValue', value: 'manageGroups' },
                 },
               ],
             },

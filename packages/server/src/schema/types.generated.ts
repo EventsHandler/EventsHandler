@@ -176,6 +176,18 @@ export type Mutation = {
   event_member_perm_remove: Scalars['Boolean']['output']
   event_settings_add: Event
   event_settings_remove: Event
+  group_create: Group
+  group_delete: Group
+  group_link_chat: Chat
+  group_link_event: Group
+  group_member_accept: GroupMember
+  group_member_join: GroupMember
+  group_member_kick: GroupMember
+  group_member_leave: GroupMember
+  group_member_perm_add: Scalars['Boolean']['output']
+  group_member_perm_remove: Scalars['Boolean']['output']
+  group_settings_add: Group
+  group_settings_remove: Group
   test?: Maybe<Scalars['String']['output']>
 }
 
@@ -312,6 +324,64 @@ export type Mutationevent_settings_removeArgs = {
   setting: Scalars['String']['input']
 }
 
+export type Mutationgroup_createArgs = {
+  name: Scalars['String']['input']
+}
+
+export type Mutationgroup_deleteArgs = {
+  id: Scalars['ID']['input']
+}
+
+export type Mutationgroup_link_chatArgs = {
+  chatId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_link_eventArgs = {
+  eventId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_member_acceptArgs = {
+  groupId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_member_joinArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_member_kickArgs = {
+  groupId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_member_leaveArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_member_perm_addArgs = {
+  groupId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_member_perm_removeArgs = {
+  groupId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type Mutationgroup_settings_addArgs = {
+  groupId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type Mutationgroup_settings_removeArgs = {
+  groupId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
 export type Query = {
   __typename?: 'Query'
   chat_get_as_member?: Maybe<Array<Chat>>
@@ -319,6 +389,11 @@ export type Query = {
   chat_get_events?: Maybe<Array<Event>>
   chat_get_groups?: Maybe<Array<Group>>
   chat_get_members?: Maybe<Array<ChatMember>>
+  group_get_as_member?: Maybe<Array<Group>>
+  group_get_as_owner?: Maybe<Array<Group>>
+  group_get_chats?: Maybe<Array<Chat>>
+  group_get_events?: Maybe<Array<Event>>
+  group_get_members?: Maybe<Array<GroupMember>>
   test?: Maybe<Scalars['String']['output']>
 }
 
@@ -332,6 +407,18 @@ export type Querychat_get_groupsArgs = {
 
 export type Querychat_get_membersArgs = {
   chatId: Scalars['ID']['input']
+}
+
+export type Querygroup_get_chatsArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type Querygroup_get_eventsArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type Querygroup_get_membersArgs = {
+  groupId: Scalars['ID']['input']
 }
 
 export type Rating = {
@@ -924,6 +1011,78 @@ export type MutationResolvers<
     ContextType,
     RequireFields<Mutationevent_settings_removeArgs, 'eventId' | 'setting'>
   >
+  group_create?: Resolver<
+    ResolversTypes['Group'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_createArgs, 'name'>
+  >
+  group_delete?: Resolver<
+    ResolversTypes['Group'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_deleteArgs, 'id'>
+  >
+  group_link_chat?: Resolver<
+    ResolversTypes['Chat'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_link_chatArgs, 'chatId' | 'groupId'>
+  >
+  group_link_event?: Resolver<
+    ResolversTypes['Group'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_link_eventArgs, 'eventId' | 'groupId'>
+  >
+  group_member_accept?: Resolver<
+    ResolversTypes['GroupMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_member_acceptArgs, 'groupId' | 'userId'>
+  >
+  group_member_join?: Resolver<
+    ResolversTypes['GroupMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_member_joinArgs, 'groupId'>
+  >
+  group_member_kick?: Resolver<
+    ResolversTypes['GroupMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_member_kickArgs, 'groupId' | 'userId'>
+  >
+  group_member_leave?: Resolver<
+    ResolversTypes['GroupMember'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_member_leaveArgs, 'groupId'>
+  >
+  group_member_perm_add?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_member_perm_addArgs, 'groupId' | 'permission' | 'userId'>
+  >
+  group_member_perm_remove?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_member_perm_removeArgs, 'groupId' | 'permission' | 'userId'>
+  >
+  group_settings_add?: Resolver<
+    ResolversTypes['Group'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_settings_addArgs, 'groupId' | 'setting'>
+  >
+  group_settings_remove?: Resolver<
+    ResolversTypes['Group'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationgroup_settings_removeArgs, 'groupId' | 'setting'>
+  >
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
 }
 
@@ -950,6 +1109,26 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<Querychat_get_membersArgs, 'chatId'>
+  >
+  group_get_as_member?: Resolver<Maybe<Array<ResolversTypes['Group']>>, ParentType, ContextType>
+  group_get_as_owner?: Resolver<Maybe<Array<ResolversTypes['Group']>>, ParentType, ContextType>
+  group_get_chats?: Resolver<
+    Maybe<Array<ResolversTypes['Chat']>>,
+    ParentType,
+    ContextType,
+    RequireFields<Querygroup_get_chatsArgs, 'groupId'>
+  >
+  group_get_events?: Resolver<
+    Maybe<Array<ResolversTypes['Event']>>,
+    ParentType,
+    ContextType,
+    RequireFields<Querygroup_get_eventsArgs, 'groupId'>
+  >
+  group_get_members?: Resolver<
+    Maybe<Array<ResolversTypes['GroupMember']>>,
+    ParentType,
+    ContextType,
+    RequireFields<Querygroup_get_membersArgs, 'groupId'>
   >
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
 }
