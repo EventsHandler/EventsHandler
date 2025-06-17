@@ -1,7 +1,7 @@
 import { prisma } from "../../../prisma.js"
 import { Group, Chat, Event } from "../../types.generated.js"
 
-export type SettingNames = "chat:autojoin" | "event:public" | "event:autojoin"
+export type SettingNames = "chat:autojoin" | "event:public" | "event:autojoin" | "group:autojoin"
 
 export type Setting = {
   bit: bigint
@@ -30,6 +30,11 @@ const eSettings: Setting[] = [
   {
     bit: 4n,
     name: "event:autojoin",
+    description: ""
+  },
+  {
+    bit: 8n,
+    name: "group:autojoin",
     description: ""
   }
 ]

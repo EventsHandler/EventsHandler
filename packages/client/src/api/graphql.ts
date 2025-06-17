@@ -173,6 +173,18 @@ export type Mutation = {
   event_member_perm_remove: Scalars['Boolean']['output']
   event_settings_add: Event
   event_settings_remove: Event
+  group_create: Group
+  group_delete: Group
+  group_link_chat: Chat
+  group_link_event: Group
+  group_member_accept: GroupMember
+  group_member_join: GroupMember
+  group_member_kick: GroupMember
+  group_member_leave: GroupMember
+  group_member_perm_add: Scalars['Boolean']['output']
+  group_member_perm_remove: Scalars['Boolean']['output']
+  group_settings_add: Group
+  group_settings_remove: Group
   test?: Maybe<Scalars['String']['output']>
 }
 
@@ -309,6 +321,64 @@ export type MutationEvent_Settings_RemoveArgs = {
   setting: Scalars['String']['input']
 }
 
+export type MutationGroup_CreateArgs = {
+  name: Scalars['String']['input']
+}
+
+export type MutationGroup_DeleteArgs = {
+  id: Scalars['ID']['input']
+}
+
+export type MutationGroup_Link_ChatArgs = {
+  chatId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Link_EventArgs = {
+  eventId: Scalars['ID']['input']
+  groupId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Member_AcceptArgs = {
+  groupId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Member_JoinArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Member_KickArgs = {
+  groupId: Scalars['ID']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Member_LeaveArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Member_Perm_AddArgs = {
+  groupId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Member_Perm_RemoveArgs = {
+  groupId: Scalars['ID']['input']
+  permission: Scalars['String']['input']
+  userId: Scalars['ID']['input']
+}
+
+export type MutationGroup_Settings_AddArgs = {
+  groupId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
+export type MutationGroup_Settings_RemoveArgs = {
+  groupId: Scalars['ID']['input']
+  setting: Scalars['String']['input']
+}
+
 export type Query = {
   __typename?: 'Query'
   chat_get_as_member?: Maybe<Array<Chat>>
@@ -316,6 +386,11 @@ export type Query = {
   chat_get_events?: Maybe<Array<Event>>
   chat_get_groups?: Maybe<Array<Group>>
   chat_get_members?: Maybe<Array<ChatMember>>
+  group_get_as_member?: Maybe<Array<Group>>
+  group_get_as_owner?: Maybe<Array<Group>>
+  group_get_chats?: Maybe<Array<Chat>>
+  group_get_events?: Maybe<Array<Event>>
+  group_get_members?: Maybe<Array<GroupMember>>
   test?: Maybe<Scalars['String']['output']>
 }
 
@@ -329,6 +404,18 @@ export type QueryChat_Get_GroupsArgs = {
 
 export type QueryChat_Get_MembersArgs = {
   chatId: Scalars['ID']['input']
+}
+
+export type QueryGroup_Get_ChatsArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type QueryGroup_Get_EventsArgs = {
+  groupId: Scalars['ID']['input']
+}
+
+export type QueryGroup_Get_MembersArgs = {
+  groupId: Scalars['ID']['input']
 }
 
 export type Rating = {

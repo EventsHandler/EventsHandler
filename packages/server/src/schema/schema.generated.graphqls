@@ -154,6 +154,18 @@ type Mutation {
   event_member_perm_remove(eventId: ID!, permission: String!, userId: ID!): Boolean!
   event_settings_add(eventId: ID!, setting: String!): Event!
   event_settings_remove(eventId: ID!, setting: String!): Event!
+  group_create(name: String!): Group!
+  group_delete(id: ID!): Group!
+  group_link_chat(chatId: ID!, groupId: ID!): Chat!
+  group_link_event(eventId: ID!, groupId: ID!): Group!
+  group_member_accept(groupId: ID!, userId: ID!): GroupMember!
+  group_member_join(groupId: ID!): GroupMember!
+  group_member_kick(groupId: ID!, userId: ID!): GroupMember!
+  group_member_leave(groupId: ID!): GroupMember!
+  group_member_perm_add(groupId: ID!, permission: String!, userId: ID!): Boolean!
+  group_member_perm_remove(groupId: ID!, permission: String!, userId: ID!): Boolean!
+  group_settings_add(groupId: ID!, setting: String!): Group!
+  group_settings_remove(groupId: ID!, setting: String!): Group!
   test: String
 }
 
@@ -163,6 +175,11 @@ type Query {
   chat_get_events(chatId: ID!): [Event!]
   chat_get_groups(chatId: ID!): [Group!]
   chat_get_members(chatId: ID!): [ChatMember!]
+  group_get_as_member: [Group!]
+  group_get_as_owner: [Group!]
+  group_get_chats(groupId: ID!): [Chat!]
+  group_get_events(groupId: ID!): [Event!]
+  group_get_members(groupId: ID!): [GroupMember!]
   test: String
 }
 

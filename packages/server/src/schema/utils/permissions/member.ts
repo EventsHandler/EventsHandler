@@ -2,7 +2,12 @@ import { prisma } from "../../../prisma.js"
 import { ExtendedUser, MemberPermsCtx } from "../../../types/context.js"
 import { ChatMember, EventMember, GroupMember, User } from "../../types.generated.js"
 
-export type MemberPermNames = "owner" | "administrator" | "chat:link" | "chat:sendMessage" | "chat:viewMessages" | "chat:deleteMessage" | "chat:manageMembers" | "chat:manager" | "event:link" | "event:manageMembers" | "event:manager"
+export type MemberPermNamesGeneral = "owner" | "administrator" 
+export type MemberPermNamesChat = "chat:link" | "chat:sendMessage" | "chat:viewMessages" | "chat:deleteMessage" | "chat:manageMembers" | "chat:manager" 
+export type MemberPermNamesEvent = "event:link" | "event:manageMembers" | "event:manager"
+export type MemberPermNamesGroup = "group:link" | "group:manageMembers" | "group:manager"
+
+export type MemberPermNames = MemberPermNamesGeneral | MemberPermNamesChat | MemberPermNamesEvent | MemberPermNamesGroup
 
 export type MemberPerm = {
   bit: bigint
@@ -83,8 +88,22 @@ const perms: MemberPerm[] = [
     name: "event:manager",
     description: ""
   },
+  {
+    bit: 1024n,
+    name: "group:link",
+    description: ""
+  },
+  {
+    bit: 2048n,
+    name: "group:manageMembers",
+    description: ""
+  },
+  {
+    bit: 4096n,
+    name: "group:manageMembers",
+    description: ""
+  }
 ]
-
 
 async function memberPermHas2({
   userId,
