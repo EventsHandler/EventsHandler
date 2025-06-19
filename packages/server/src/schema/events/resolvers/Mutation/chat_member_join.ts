@@ -6,7 +6,7 @@ export const chat_member_join: NonNullable<MutationResolvers['chat_member_join']
     data: {
       userId: _ctx.user.id,
       chatId,
-      accepted: await settings.has2(chatId, "chat:autojoin"),
+      accepted: await settings.has2({entityId: chatId, setting: "chat:autojoin", entityType: "chat"}),
       // permissions: chat.defaultPerms @TODO
     }
   })

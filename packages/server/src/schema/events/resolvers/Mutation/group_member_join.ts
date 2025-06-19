@@ -5,7 +5,7 @@ export const group_member_join: NonNullable<MutationResolvers['group_member_join
   return await prisma.groupMember.create({
     data: {
       userId: _ctx.user.id, groupId,
-      accepted: await settings.has2(groupId, "group:autojoin")
+      accepted: await settings.has2({entityId: groupId, setting: "group:autojoin", entityType: "group"})
       // permissions: group.defaultPerms @TODO
     }
   })

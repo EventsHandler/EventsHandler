@@ -6,7 +6,7 @@ export const event_member_join: NonNullable<MutationResolvers['event_member_join
     data: {
       userId: _ctx.user.id,
       eventId,
-      accepted: await settings.has2(eventId, "event:autojoin"),
+      accepted: await settings.has2({entityId: eventId, setting: "event:autojoin", entityType: "event"}),
       // permissions: @TODO
     }
   })
