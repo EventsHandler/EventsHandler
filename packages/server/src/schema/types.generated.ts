@@ -189,6 +189,8 @@ export type Mutation = {
   group_settings_add: Group
   group_settings_remove: Group
   test?: Maybe<Scalars['String']['output']>
+  user_login: User
+  user_register: User
 }
 
 export type Mutationchat_createArgs = {
@@ -380,6 +382,17 @@ export type Mutationgroup_settings_addArgs = {
 export type Mutationgroup_settings_removeArgs = {
   groupId: Scalars['ID']['input']
   setting: Scalars['String']['input']
+}
+
+export type Mutationuser_loginArgs = {
+  email: Scalars['String']['input']
+  password: Scalars['String']['input']
+}
+
+export type Mutationuser_registerArgs = {
+  email: Scalars['String']['input']
+  password: Scalars['String']['input']
+  username: Scalars['String']['input']
 }
 
 export type Query = {
@@ -1084,6 +1097,18 @@ export type MutationResolvers<
     RequireFields<Mutationgroup_settings_removeArgs, 'groupId' | 'setting'>
   >
   test?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  user_login?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationuser_loginArgs, 'email' | 'password'>
+  >
+  user_register?: Resolver<
+    ResolversTypes['User'],
+    ParentType,
+    ContextType,
+    RequireFields<Mutationuser_registerArgs, 'email' | 'password' | 'username'>
+  >
 }
 
 export type QueryResolvers<

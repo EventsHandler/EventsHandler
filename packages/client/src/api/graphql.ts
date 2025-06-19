@@ -186,6 +186,8 @@ export type Mutation = {
   group_settings_add: Group
   group_settings_remove: Group
   test?: Maybe<Scalars['String']['output']>
+  user_login: User
+  user_register: User
 }
 
 export type MutationChat_CreateArgs = {
@@ -377,6 +379,17 @@ export type MutationGroup_Settings_AddArgs = {
 export type MutationGroup_Settings_RemoveArgs = {
   groupId: Scalars['ID']['input']
   setting: Scalars['String']['input']
+}
+
+export type MutationUser_LoginArgs = {
+  email: Scalars['String']['input']
+  password: Scalars['String']['input']
+}
+
+export type MutationUser_RegisterArgs = {
+  email: Scalars['String']['input']
+  password: Scalars['String']['input']
+  username: Scalars['String']['input']
 }
 
 export type Query = {

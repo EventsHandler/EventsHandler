@@ -157,6 +157,7 @@ type Inbox {
 
 extend type Query {
   test: String
+
   chat_get_as_owner: [Chat!]                                                          @auth(perm: manageChats)
   chat_get_as_member: [Chat!]                                                         @auth(perm: manageChats)
   chat_get_members(chatId: ID!): [ChatMember!]                                        @auth(perm: manageChats)
@@ -172,6 +173,10 @@ extend type Query {
 
 extend type Mutation {
   test: String
+
+  user_register(username: String!, email: String!, password: String!): User!
+  user_login(email: String!, password: String!): User!
+
   chat_create(name: String!): Chat!                                                   @auth(perm: manageChats)
   chat_delete(id: ID!): Chat!                                                         @auth(perm: manageChats)
   chat_member_join(chatId: ID!): ChatMember!                                          @auth(perm: manageChats)

@@ -167,6 +167,8 @@ type Mutation {
   group_settings_add(groupId: ID!, setting: String!): Group!
   group_settings_remove(groupId: ID!, setting: String!): Group!
   test: String
+  user_login(email: String!, password: String!): User!
+  user_register(email: String!, password: String!, username: String!): User!
 }
 
 type Query {

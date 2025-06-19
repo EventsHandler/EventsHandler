@@ -50,6 +50,8 @@ import { group_member_perm_remove as Mutation_group_member_perm_remove } from '.
 import { group_settings_add as Mutation_group_settings_add } from './events/resolvers/Mutation/group_settings_add.js'
 import { group_settings_remove as Mutation_group_settings_remove } from './events/resolvers/Mutation/group_settings_remove.js'
 import { test as Mutation_test } from './events/resolvers/Mutation/test.js'
+import { user_login as Mutation_user_login } from './events/resolvers/Mutation/user_login.js'
+import { user_register as Mutation_user_register } from './events/resolvers/Mutation/user_register.js'
 import { Announce } from './events/resolvers/Announce.js'
 import { Category } from './events/resolvers/Category.js'
 import { Chat } from './events/resolvers/Chat.js'
@@ -120,6 +122,8 @@ export const resolvers: Resolvers = {
     group_settings_add: Mutation_group_settings_add,
     group_settings_remove: Mutation_group_settings_remove,
     test: Mutation_test,
+    user_login: Mutation_user_login,
+    user_register: Mutation_user_register,
   },
 
   Announce: Announce,
