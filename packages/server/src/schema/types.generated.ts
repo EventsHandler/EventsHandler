@@ -218,6 +218,7 @@ export type Mutationchat_member_acceptArgs = {
 
 export type Mutationchat_member_joinArgs = {
   chatId: Scalars['ID']['input']
+  groupId?: InputMaybe<Scalars['ID']['input']>
 }
 
 export type Mutationchat_member_kickArgs = {
@@ -293,6 +294,7 @@ export type Mutationevent_member_acceptArgs = {
 
 export type Mutationevent_member_joinArgs = {
   eventId: Scalars['ID']['input']
+  groupId?: InputMaybe<Scalars['ID']['input']>
 }
 
 export type Mutationevent_member_kickArgs = {
