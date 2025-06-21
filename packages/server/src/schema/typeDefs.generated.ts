@@ -394,6 +394,12 @@ export const typeDefs = {
           arguments: [
             {
               kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+              directives: [],
+            },
+            {
+              kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'chatId' },
               type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } } },
               directives: [],
@@ -1242,6 +1248,12 @@ export const typeDefs = {
           kind: 'FieldDefinition',
           name: { kind: 'Name', value: 'event_member_join' },
           arguments: [
+            {
+              kind: 'InputValueDefinition',
+              name: { kind: 'Name', value: 'groupId' },
+              type: { kind: 'NamedType', name: { kind: 'Name', value: 'ID' } },
+              directives: [],
+            },
             {
               kind: 'InputValueDefinition',
               name: { kind: 'Name', value: 'eventId' },
