@@ -14,18 +14,45 @@ let permsToUse = memberPerms.default;
       }
     })
   }
-  if(!groupId){
-    return await addWithPermissions();
-  }else{
-    const user = await prisma.groupMember.findUnique({
+  const inheritPermissions = await settings.has2({entityId: chatId, setting: "chat:inheritPermissions", entityType: "chat"})
+  async function memberJoin(){
+    if(!groupId || !inheritPermissions){
+      return await addWithPermissions();
+    }else{
+      const user = await prisma.groupMember.findUnique({
+        where: {
+          userId_groupId: {
+            userId: _ctx.user.id,
+            groupId: groupId
+          }
+        }
+      })
+      permsToUse = user?.permissions ?? memberPerms.default
+      return await addWithPermissions()
+    }
+  }
+   const isPrivate = await settings.has2({entityId: chatId,setting: "chat:private", entityType: "chat"})
+  
+  if(isPrivate){
+    const chat = await prisma.chat.findUnique({
       where: {
-        userId_groupId: {
-          userId: _ctx.user.id,
-          groupId: groupId
+        id: chatId
+      },
+      include: {
+        linkedGroups: {
+          include: {
+            members: true
+          }
         }
       }
     })
-    permsToUse = user?.permissions ?? memberPerms.default
-    return await addWithPermissions()
+    const isMember = chat?.linkedGroups.find(group => group.members.find(member => member.id === _ctx.user.id))
+    if(isMember){
+      return await memberJoin()
+    }else{
+      throw new Error(`Nu sunteți membru în nici un grup/`)
+    }
+  }else{
+    return await memberJoin()
   }
 }

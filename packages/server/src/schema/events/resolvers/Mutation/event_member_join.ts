@@ -9,22 +9,49 @@ export const event_member_join: NonNullable<MutationResolvers['event_member_join
       data: {
       userId: _ctx.user.id, eventId,
       accepted: await settings.has2({entityId: eventId, setting: "event:autojoin", entityType: "event"}),
-        permissions: permsToUse
+      permissions: permsToUse
       }
     })
+  };
+  const inheritPermissions = await settings.has2({entityId: eventId, setting: "event:inheritPermissions", entityType: "event" }) 
+  async function memberJoin() {
+    if(!groupId || !inheritPermissions){
+      return await addWithPermissions();
+    }else{
+      const user = await prisma.groupMember.findUnique({
+        where: {
+          userId_groupId: {
+            userId: _ctx.user.id,
+            groupId: groupId
+          }
+        }
+      })
+      permsToUse = user?.permissions ?? memberPerms.default
+      return await addWithPermissions()
+    } 
   }
-  if(!groupId){
-    return await addWithPermissions();
-  }else{
-    const user = await prisma.groupMember.findUnique({
+  const isPrivate = await settings.has2({entityId: eventId,setting: "event:private", entityType: "event"})
+
+  if(isPrivate){
+    const event = await prisma.event.findUnique({
       where: {
-        userId_groupId: {
-          userId: _ctx.user.id,
-          groupId: groupId
+        id: eventId
+      },
+      include: {
+        linkedGroups: {
+          include: {
+            members: true
+          }
         }
       }
     })
-    permsToUse = user?.permissions ?? memberPerms.default
-    return await addWithPermissions()
+    const isMember = event?.linkedGroups.find(group => group.members.find(member => member.id === _ctx.user.id))
+    if(isMember){
+      return await memberJoin()
+    }else{
+      throw new Error(`Nu sunteți membru în nici un grup/`)
+    }
+  }else{
+    return await memberJoin()
   }
 }
