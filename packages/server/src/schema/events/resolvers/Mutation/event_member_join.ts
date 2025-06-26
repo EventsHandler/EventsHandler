@@ -3,7 +3,12 @@ import type { MutationResolvers } from './../../../types.generated.js'
 import { settings } from '../../../utils/settings/settings.js'
 import { memberPerms } from '../../../utils/permissions/member.js';
 export const event_member_join: NonNullable<MutationResolvers['event_member_join']> = async (_parent, { eventId, groupId }, _ctx) => {
-  let permsToUse = memberPerms.default;
+  const event = await prisma.event.findUnique({
+    where: {
+      id: eventId
+    }
+  })
+  let permsToUse = event?.defaultPermissions;
    async function addWithPermissions(){ 
     return await prisma.eventMember.create({
       data: {

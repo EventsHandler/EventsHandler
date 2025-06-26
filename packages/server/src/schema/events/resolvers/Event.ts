@@ -65,4 +65,7 @@ export const Event: EventResolvers = {
   name: async (_parent, _arg, _ctx) => {
     /* Event.name resolver is required because Event.name exists but EventMapper.name does not */
   },
+  defaultPermissions: async (_parent, _arg, _ctx) => {
+    /* Event.defaultPermissions resolver is required because Event.defaultPermissions exists but EventMapper.defaultPermissions does not */
+  },
 }

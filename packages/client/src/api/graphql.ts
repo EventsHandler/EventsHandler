@@ -161,6 +161,8 @@ export type Mutation = {
   chat_message_send: Message
   chat_settings_add: Chat
   chat_settings_remove: Chat
+  defaultPermissions_add: Scalars['Boolean']['output']
+  defaultPermissions_remove: Scalars['Boolean']['output']
   event_create: Event
   event_delete: Event
   event_link_chat: Event
@@ -256,6 +258,18 @@ export type MutationChat_Settings_AddArgs = {
 export type MutationChat_Settings_RemoveArgs = {
   chatId: Scalars['ID']['input']
   setting: Scalars['String']['input']
+}
+
+export type MutationDefaultPermissions_AddArgs = {
+  entityId: Scalars['ID']['input']
+  entityType: Scalars['String']['input']
+  permission: Scalars['String']['input']
+}
+
+export type MutationDefaultPermissions_RemoveArgs = {
+  entityId: Scalars['ID']['input']
+  entityType: Scalars['String']['input']
+  permission: Scalars['String']['input']
 }
 
 export type MutationEvent_CreateArgs = {

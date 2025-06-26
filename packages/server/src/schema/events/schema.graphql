@@ -166,9 +166,9 @@ extend type Query {
 
   group_get_as_owner: [Group!]                                                        @auth(perm: manageGroups)
   group_get_as_member: [Group!]                                                       @auth(perm: manageGroups)
-  group_get_members(groupId: ID!): [GroupMember!]                                    @auth(perm: manageGroups)
-  group_get_chats(groupId: ID!): [Chat!]                                             @auth(perm: manageGroups)
-  group_get_events(groupId: ID!): [Event!]                                           @auth(perm: manageGroups)
+  group_get_members(groupId: ID!): [GroupMember!]                                     @auth(perm: manageGroups)
+  group_get_chats(groupId: ID!): [Chat!]                                              @auth(perm: manageGroups)
+  group_get_events(groupId: ID!): [Event!]                                            @auth(perm: manageGroups)
 }
 
 extend type Mutation {
@@ -179,7 +179,7 @@ extend type Mutation {
 
   chat_create(name: String!): Chat!                                                   @auth(perm: manageChats)
   chat_delete(id: ID!): Chat!                                                         @auth(perm: manageChats)
-  chat_member_join(groupId: ID, chatId: ID!): ChatMember!                                          @auth(perm: manageChats)
+  chat_member_join(groupId: ID, chatId: ID!): ChatMember!                             @auth(perm: manageChats)
   chat_member_kick(chatId: ID!, userId: ID!): ChatMember!                             @auth(perm: manageChats)
   chat_member_leave(chatId: ID!): ChatMember!                                         @auth(perm: manageChats)
   chat_member_accept(chatId: ID!, userId: ID!): ChatMember!                           @auth(perm: manageChats)
@@ -216,7 +216,7 @@ extend type Mutation {
     basedGroup: String,
     settings: BigInt): Event!                                                             @auth(perm: manageEvents) 
   event_delete(id: ID!): Event!                                                           @auth(perm: manageEvents)
-  event_member_join(groupId: ID, eventId: ID!): EventMember!                                           @auth(perm: manageEvents)  
+  event_member_join(groupId: ID, eventId: ID!): EventMember!                              @auth(perm: manageEvents)  
   event_member_kick(eventId: ID!, userId: ID!): EventMember!                              @auth(perm: manageEvents)
   event_member_leave(eventId: ID!): EventMember!                                          @auth(perm: manageEvents)
   event_member_accept(eventId: ID!, userId: ID!): EventMember!                            @auth(perm: manageEvents)
@@ -226,4 +226,7 @@ extend type Mutation {
   event_link_chat(eventId: ID!, chatId: ID!): Event!                                      @auth(perm: manageEvents)
   event_settings_add(eventId: ID!, setting: String!): Event!                              @auth(perm: manageEvents)
   event_settings_remove(eventId: ID!, setting: String!): Event!                           @auth(perm: manageEvents)
+
+  defaultPermissions_add(entityType: String!, entityId: ID!, permission: String!): Boolean!               
+  defaultPermissions_remove(entityType: String!, entityId: ID!, permission: String!): Boolean!            
 }

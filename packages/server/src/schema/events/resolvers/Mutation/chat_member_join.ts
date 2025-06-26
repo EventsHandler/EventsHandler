@@ -3,7 +3,12 @@ import type { MutationResolvers } from './../../../types.generated.js'
 import { settings } from '../../../utils/settings/settings.js'
 import { memberPerms } from '../../../utils/permissions/member.js';
 export const chat_member_join: NonNullable<MutationResolvers['chat_member_join']> = async (_parent, { chatId, groupId }, _ctx) => {
-let permsToUse = memberPerms.default;
+  const chat = await prisma.chat.findUnique({
+    where: {
+      id: chatId
+    }
+  })
+  let permsToUse = chat?.defaultPermissions;
    async function addWithPermissions(){ 
     return await prisma.chatMember.create({
       data: {

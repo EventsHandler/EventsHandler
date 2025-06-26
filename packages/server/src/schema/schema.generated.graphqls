@@ -132,6 +132,8 @@ type Mutation {
   chat_message_send(chatId: ID!, message: String!): Message!
   chat_settings_add(chatId: ID!, setting: String!): Chat!
   chat_settings_remove(chatId: ID!, setting: String!): Chat!
+  defaultPermissions_add(entityId: ID!, entityType: String!, permission: String!): Boolean!
+  defaultPermissions_remove(entityId: ID!, entityType: String!, permission: String!): Boolean!
   event_create(
     address: String!
     basedGroup: String

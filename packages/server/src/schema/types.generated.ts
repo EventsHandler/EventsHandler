@@ -164,6 +164,8 @@ export type Mutation = {
   chat_message_send: Message
   chat_settings_add: Chat
   chat_settings_remove: Chat
+  defaultPermissions_add: Scalars['Boolean']['output']
+  defaultPermissions_remove: Scalars['Boolean']['output']
   event_create: Event
   event_delete: Event
   event_link_chat: Event
@@ -259,6 +261,18 @@ export type Mutationchat_settings_addArgs = {
 export type Mutationchat_settings_removeArgs = {
   chatId: Scalars['ID']['input']
   setting: Scalars['String']['input']
+}
+
+export type MutationdefaultPermissions_addArgs = {
+  entityId: Scalars['ID']['input']
+  entityType: Scalars['String']['input']
+  permission: Scalars['String']['input']
+}
+
+export type MutationdefaultPermissions_removeArgs = {
+  entityId: Scalars['ID']['input']
+  entityType: Scalars['String']['input']
+  permission: Scalars['String']['input']
 }
 
 export type Mutationevent_createArgs = {
@@ -953,6 +967,18 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<Mutationchat_settings_removeArgs, 'chatId' | 'setting'>
+  >
+  defaultPermissions_add?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationdefaultPermissions_addArgs, 'entityId' | 'entityType' | 'permission'>
+  >
+  defaultPermissions_remove?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationdefaultPermissions_removeArgs, 'entityId' | 'entityType' | 'permission'>
   >
   event_create?: Resolver<
     ResolversTypes['Event'],
