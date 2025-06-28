@@ -1,7 +1,7 @@
 import { prisma } from "../../../prisma.js"
 import { Group, Chat, Event } from "../../types.generated.js"
 
-export type SettingNames = "chat:autojoin" | "event:public" | "event:autojoin" | "group:autojoin"
+export type SettingNames = "chat:autojoin" | "event:public" | "event:autojoin" | "group:autojoin" | "chat:inheritPermissions" | "event:inheritPermissions" | "chat:private" | "event:private"
 
 export type Setting = {
   bit: bigint
@@ -49,7 +49,27 @@ const eSettings: Setting[] = [
     bit: 8n,
     name: "group:autojoin",
     description: ""
-  }
+  },
+  {
+    bit: 16n,
+    name: "chat:inheritPermissions",
+    description: ""
+  },
+  {
+    bit: 32n,
+    name: "event:inheritPermissions",
+    description: ""
+  },
+  {
+    bit: 64n,
+    name: "chat:private",
+    description: ""
+  },
+  {
+    bit: 128n,
+    name: "event:private",
+    description: ""
+  },
 ]
 
 function settingHas(entity: Chat | Group | Event, setting: SettingNames): boolean {

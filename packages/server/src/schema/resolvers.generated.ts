@@ -25,6 +25,8 @@ import { chat_message_delete as Mutation_chat_message_delete } from './events/re
 import { chat_message_send as Mutation_chat_message_send } from './events/resolvers/Mutation/chat_message_send.js'
 import { chat_settings_add as Mutation_chat_settings_add } from './events/resolvers/Mutation/chat_settings_add.js'
 import { chat_settings_remove as Mutation_chat_settings_remove } from './events/resolvers/Mutation/chat_settings_remove.js'
+import { defaultPermissions_add as Mutation_defaultPermissions_add } from './events/resolvers/Mutation/defaultPermissions_add.js'
+import { defaultPermissions_remove as Mutation_defaultPermissions_remove } from './events/resolvers/Mutation/defaultPermissions_remove.js'
 import { event_create as Mutation_event_create } from './events/resolvers/Mutation/event_create.js'
 import { event_delete as Mutation_event_delete } from './events/resolvers/Mutation/event_delete.js'
 import { event_link_chat as Mutation_event_link_chat } from './events/resolvers/Mutation/event_link_chat.js'
@@ -97,6 +99,8 @@ export const resolvers: Resolvers = {
     chat_message_send: Mutation_chat_message_send,
     chat_settings_add: Mutation_chat_settings_add,
     chat_settings_remove: Mutation_chat_settings_remove,
+    defaultPermissions_add: Mutation_defaultPermissions_add,
+    defaultPermissions_remove: Mutation_defaultPermissions_remove,
     event_create: Mutation_event_create,
     event_delete: Mutation_event_delete,
     event_link_chat: Mutation_event_link_chat,

@@ -100,7 +100,7 @@ const perms: MemberPerm[] = [
   },
   {
     bit: 4096n,
-    name: "group:manageMembers",
+    name: "group:manager",
     description: ""
   }
 ]

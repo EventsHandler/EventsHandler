@@ -73,6 +73,7 @@ model Event {
   category    Category @relation("eventCategory", fields: [categoryId], references: [id])
   linkedGroups Group[] @relation("events_groups_link")
   linkedChats Chat[] @relation("events_chats_link")
+  defaultPermissions BigInt @default(0)
 }
 
 model Group {
@@ -86,6 +87,7 @@ model Group {
   members     GroupMember[] @relation("GroupMembers_GroupMember")
   linkedEvents Event[] @relation("events_groups_link")
   linkedChats Chat[] @relation("groups_chats_link")
+  defaultPermissions BigInt @default(0)
 }
 
 model Chat {
@@ -100,6 +102,7 @@ model Chat {
   messages  Message[] @relation("ChatMessages_ChatMessage")
   linkedEvents Event[] @relation("events_chats_link")
   linkedGroups Group[] @relation("groups_chats_link")
+  defaultPermissions BigInt @default(0)
 }
 
 model EventMember {

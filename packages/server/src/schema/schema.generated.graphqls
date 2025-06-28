@@ -123,7 +123,7 @@ type Mutation {
   chat_link_event(chatId: ID!, eventId: ID!): Chat!
   chat_link_group(chatId: ID!, groupId: ID!): Chat!
   chat_member_accept(chatId: ID!, userId: ID!): ChatMember!
-  chat_member_join(chatId: ID!): ChatMember!
+  chat_member_join(chatId: ID!, groupId: ID): ChatMember!
   chat_member_kick(chatId: ID!, userId: ID!): ChatMember!
   chat_member_leave(chatId: ID!): ChatMember!
   chat_member_perm_add(chatId: ID!, permission: String!, userId: ID!): Boolean!
@@ -132,6 +132,8 @@ type Mutation {
   chat_message_send(chatId: ID!, message: String!): Message!
   chat_settings_add(chatId: ID!, setting: String!): Chat!
   chat_settings_remove(chatId: ID!, setting: String!): Chat!
+  defaultPermissions_add(entityId: ID!, entityType: String!, permission: String!): Boolean!
+  defaultPermissions_remove(entityId: ID!, entityType: String!, permission: String!): Boolean!
   event_create(
     address: String!
     basedGroup: String
@@ -147,7 +149,7 @@ type Mutation {
   event_link_chat(chatId: ID!, eventId: ID!): Event!
   event_link_group(eventId: ID!, groupId: ID!): Event!
   event_member_accept(eventId: ID!, userId: ID!): EventMember!
-  event_member_join(eventId: ID!): EventMember!
+  event_member_join(eventId: ID!, groupId: ID): EventMember!
   event_member_kick(eventId: ID!, userId: ID!): EventMember!
   event_member_leave(eventId: ID!): EventMember!
   event_member_perm_add(eventId: ID!, permission: String!, userId: ID!): Boolean!
